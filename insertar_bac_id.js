@@ -1,7 +1,7 @@
 
 document.querySelector('#insertar_bac_id').addEventListener('click', insertarBACID);
 
-var capa_datos3 = "insertar_bac_id/";
+var capa_datos3 = "https://bac-id-new.azurewebsites.net/insertar_bac_id/";
 
 function insertarBACID(){
 

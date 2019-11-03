@@ -6,7 +6,7 @@ document.querySelector('#selectCategorias').addEventListener('click', cargarProd
 
 //var conexion_capa_datos = "https://bac-id-new.azurewebsites.net/";
 
-var capa_datos1 = "consultas_para_dropdownlist/";
+var capa_datos1 = "https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/";
 
 
 function obtenerPaises(){
