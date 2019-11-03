@@ -24,12 +24,42 @@
 
         Tipo de Anuncio: <select id="selectTipoAnuncio"><option>Tipo Anuncio</option></select><br /> <br />
         
+        <label><input type="checkbox" value=2 id="call_center" name="call_center" onchange="validarCheckbox(this.value)">Call Center</label>
+
+        <label><input type="checkbox" value=1 id="email" name="email" onchange="validarCheckbox(this.value)">Email</label>
+
+        <label><input type="checkbox" value=3 id="pag_web" name="pag_web" onchange="validarCheckbox(this.value)">Página web</label>
+
+        <label><input type="checkbox" value=4 id="atm" name="atm" onchange="validarCheckbox(this.value)">ATM</label>
+
+        <label><input type="checkbox" value=5 id="bel" name="bel" onchange="validarCheckbox(this.value)">BeL</label>
+
+        <label><input type="checkbox" value=6 id="sms" name="sms" onchange="validarCheckbox(this.value)">SMS</label>
+
+        <label><input type="checkbox" value=9 id="otro" name="otro" onchange="validarCheckbox(this.value)">OTRO</label>
+
+        <label><input type="checkbox" value=8 id="not_push" name="not_push" onchange="validarCheckbox(this.value)">Notificaciones Push</label>
+
+        <label><input type="checkbox" value=7 id="canal_dig" name="canal_dig" onchange="validarCheckbox(this.value)">Canales Digitales</label>
+        <br/><br />
+
+        Probar Checkbox:<input value="Presione" type="button" id="botonProbarChec" name="botonProbarChec" /></Input>
+
+        <br/><br />
+
         Generar BAC ID:<input value="Presione" type="button" id="botonGenerarBACID" name="botonGenerarBACID" /></Input>
 
         <br/><br />
+        
         BAC ID GENERADO: <input size="80" type="text" id="campo_bac_id" name="campo_bac_id"><br>
 
+        <br/><br />
+        
+        INSERTAR BAC ID: <input size="80" value="Presione" type="button" id="insertar_bac_id" name="insertar_bac_id"><br>
+
         <script src="generar_bac_id.js"></script>
-        <script src="consultas_dropdownlist.js"></script>    
+        <script src="consultas_dropdownlist.js"></script> 
+        <script src="validacion_checkbox.js"></script> 
+        <script src="insertar_bac_id.js"></script>    
     </body>
     </html>

@@ -6,14 +6,12 @@ document.querySelector('#selectCategorias').addEventListener('click', cargarProd
 
 //var conexion_capa_datos = "https://bac-id-new.azurewebsites.net/";
 
-var capa_datos1 = "https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/";
+var capa_datos1 = "consultas_para_dropdownlist/";
 
 
 function obtenerPaises(){
 
         var paises = [];
-
-        console.log('dentro de la función');
 
         const xhttp = new XMLHttpRequest();
 
@@ -27,7 +25,7 @@ function obtenerPaises(){
                 if(this.readyState == 4 && this.status == 200){
      
                         let datos = JSON.parse(this.responseText);
-                        console.log(datos);
+               
 
                         for(let item of datos){
                              paises.push(item.nombre);
@@ -48,8 +46,6 @@ function obtenerOrigenClientes(){
 
         var origen_clientes = [];
 
-        console.log('dentro de la función');
-
         const xhttp = new XMLHttpRequest();
 
         xhttp.open('GET',capa_datos1+'obtener_origen_clientes.php',true);
@@ -61,7 +57,7 @@ function obtenerOrigenClientes(){
                 if(this.readyState == 4 && this.status == 200){
      
                         let datos = JSON.parse(this.responseText);
-                        console.log(datos);
+             
 
                         for(let item of datos){
                              origen_clientes.push(item.nombre_origen);
@@ -81,7 +77,6 @@ function obtenerCategorias(){
 
         var categorias = [];
 
-        console.log('dentro de la función');
 
         const xhttp = new XMLHttpRequest();
 
@@ -94,7 +89,7 @@ function obtenerCategorias(){
                 if(this.readyState == 4 && this.status == 200){
      
                         let datos = JSON.parse(this.responseText);
-                        console.log(datos);
+                 
 
                         for(let item of datos){
                              categorias.push(item.nombre_categoria);
@@ -114,8 +109,6 @@ function obtenerProductos(categoriaSeleccionada){
 
         var productos = [];
 
-        console.log('dentro de la función');
-
         const xhttp = new XMLHttpRequest();
 
    
@@ -128,7 +121,7 @@ function obtenerProductos(categoriaSeleccionada){
                 if(this.readyState == 4 && this.status == 200){
      
                         let datos = JSON.parse(this.responseText);
-                        console.log(datos);
+
 
                         for(let item of datos){
                                 productos.push(item.nombre_producto);
@@ -146,9 +139,8 @@ function obtenerProductos(categoriaSeleccionada){
 
 function obtenerCanales(){
 
-        var categorias = [];
-
-        console.log('dentro de la función');
+        var indice_canales = [];
+        var nombre_canales = [];
 
         const xhttp = new XMLHttpRequest();
 
@@ -161,23 +153,22 @@ function obtenerCanales(){
                 if(this.readyState == 4 && this.status == 200){
      
                         let datos = JSON.parse(this.responseText);
-                        console.log(datos);
+
 
                         for(let item of datos){
-                             categorias.push(item.indice +"-"+ item.nombre_canal);
+                             indice_canales.push(item.indice);
+                             nombre_canales.push(item.nombre_canal);
                         }
                        
                 }
-                console.log(categorias);
-
+                console.log(indice_canales);
+                console.log(nombre_canales);
         }
 }
 
 function obtenerPortafolios(){
 
         var portafolios = [];
-
-        console.log('dentro de la función');
 
         const xhttp = new XMLHttpRequest();
 
@@ -190,7 +181,6 @@ function obtenerPortafolios(){
                 if(this.readyState == 4 && this.status == 200){
      
                         let datos = JSON.parse(this.responseText);
-                        console.log(datos);
 
                         for(let item of datos){
                              portafolios.push(item.nombre_portafolio);
@@ -210,8 +200,6 @@ function obtenerTiposCampana(){
 
         var tipos = [];
 
-        console.log('dentro de la función');
-
         const xhttp = new XMLHttpRequest();
 
         xhttp.open('GET',capa_datos1+'obtener_tipo_campana.php',true);
@@ -223,7 +211,6 @@ function obtenerTiposCampana(){
                 if(this.readyState == 4 && this.status == 200){
      
                         let datos = JSON.parse(this.responseText);
-                        console.log(datos);
 
                         for(let item of datos){
                             tipos.push(item.nombre);
@@ -243,8 +230,6 @@ function obtenerObjetivos(){
 
         var objetivos = [];
 
-        console.log('dentro de la función');
-
         const xhttp = new XMLHttpRequest();
 
         xhttp.open('GET',capa_datos1+'obtener_objetivos.php',true);
@@ -256,7 +241,6 @@ function obtenerObjetivos(){
                 if(this.readyState == 4 && this.status == 200){
      
                         let datos = JSON.parse(this.responseText);
-                        console.log(datos);
 
                         for(let item of datos){
                            objetivos.push(item.nombre_objetivo);
@@ -276,8 +260,6 @@ function obtenerCanalesDigitales(){
 
         var canales = [];
 
-        console.log('dentro de la función');
-
         const xhttp = new XMLHttpRequest();
 
         xhttp.open('GET',capa_datos1+'obtener_canal_digital.php',true);
@@ -289,7 +271,6 @@ function obtenerCanalesDigitales(){
                 if(this.readyState == 4 && this.status == 200){
      
                         let datos = JSON.parse(this.responseText);
-                        console.log(datos);
 
                         for(let item of datos){
                             canales.push(item.nombre);
@@ -321,7 +302,6 @@ function obtenerTipoAnuncio(canalDigitalSeleccionado){
                 if(this.readyState == 4 && this.status == 200){
      
                         let datos = JSON.parse(this.responseText);
-                        console.log(datos);
 
                         for(let item of datos){
                             anuncios.push(item.nombre);
@@ -348,6 +328,8 @@ function cargarSelects(){
         obtenerTiposCampana();
         obtenerObjetivos();
         obtenerCanalesDigitales();
+
+        obtenerCanales();
 }
 
 function limpiarSelects(){
