@@ -15,6 +15,7 @@ var codigo_tipo_campana;
 var codigo_objetivo;
 var codigo_canal_digital;
 var codigo_tipo_anuncio;
+var codigo_grupo_anuncio;
 var bac_id_final;
 
 
@@ -278,11 +279,38 @@ function obtenerAnuncioSeleccionado(anuncioSeleccionado){
      
 }
 
+function obtenerGrupoAnuncioSeleccionado(anuncioSeleccionado){
+
+    var dato;
+
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open('GET',capa_datos2+'obtener_grupo_anuncio_seleccionado.php?grupo_anuncio_seleccionado='+anuncioSeleccionado,true);
+
+    xhttp.send();
+
+    xhttp.onreadystatechange = function(){
+
+            if(this.readyState == 4 && this.status == 200){
+ 
+                    var datos = JSON.parse(this.responseText);
+            
+
+                    for(let item of datos){
+                        codigo_grupo_anuncio = item.codigo;
+                    }
+                    construirBacId();
+            }
+           
+    }
+     
+}
+
 
 function construirBacId(){
     
     
-    bac_id_final = abreviatura_pais+codigo_origen_clientes+"-"+codigo_categoria+"-"+codigo_producto+"-000000-"+codigo_portafolio+"-"+codigo_tipo_campana+"-"+codigo_objetivo+"-"+codigo_canal_digital+"-grupo-"+codigo_tipo_anuncio; 
+    bac_id_final = abreviatura_pais+codigo_origen_clientes+"-"+codigo_categoria+"-"+codigo_producto+"-000000-"+codigo_portafolio+"-"+codigo_tipo_campana+"-"+codigo_objetivo+"-"+codigo_canal_digital+"-"+codigo_grupo_anuncio+"-"+codigo_tipo_anuncio; 
     
     console.log("BAC ID:"+bac_id_final);
     document.getElementById("campo_bac_id").value = bac_id_final;
@@ -307,6 +335,8 @@ function funcionesDatosSeleccionados(){
     obtenerCanalDigitalSeleccionado(document.getElementById("selectCanalDigital").value);
 
     obtenerAnuncioSeleccionado(document.getElementById("selectTipoAnuncio").value);
+
+    obtenerGrupoAnuncioSeleccionado(document.getElementById("selectGrupoAnuncio").value);
 }
 
 

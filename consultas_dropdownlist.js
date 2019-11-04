@@ -1,6 +1,8 @@
 
 document.querySelector('#selectCanalDigital').addEventListener('click', cargarAunciosSegunCanalDigital);
 
+document.querySelector('#selectCanalDigital').addEventListener('click', cargarGruposAunciosSegunCanalDigital);
+
 document.querySelector('#selectCategorias').addEventListener('click', cargarProductosSegunCategoria);
 
 
@@ -306,11 +308,41 @@ function obtenerTipoAnuncio(canalDigitalSeleccionado){
                         for(let item of datos){
                             anuncios.push(item.nombre);
                         }
-                       x|x
+                       
                 }
                 for(var i in anuncios)
                 { 
                    document.getElementById("selectTipoAnuncio").innerHTML += "<option value='"+anuncios[i]+"'>"+anuncios[i]+"</option>"; 
+
+                }
+
+        }
+}
+
+function obtenerGruposAnuncios(canalDigitalSeleccionado){
+
+        var grupos = [];
+
+        const xhttp = new XMLHttpRequest();
+
+        xhttp.open('GET',capa_datos1+'obtener_grupos_anuncios.php?canal_digital='+canalDigitalSeleccionado,true);
+
+        xhttp.send();
+
+        xhttp.onreadystatechange = function(){
+
+                if(this.readyState == 4 && this.status == 200){
+     
+                        let datos = JSON.parse(this.responseText);
+
+                        for(let item of datos){
+                            grupos.push(item.nombre_categoria);
+                        }
+                       
+                }
+                for(var i in grupos)
+                { 
+                   document.getElementById("selectGrupoAnuncio").innerHTML += "<option value='"+grupos[i]+"'>"+grupos[i]+"</option>"; 
 
                 }
 
@@ -354,4 +386,11 @@ function cargarAunciosSegunCanalDigital(){
         document.getElementById("selectTipoAnuncio").length=0;
         obtenerTipoAnuncio(document.getElementById("selectCanalDigital").value);
 }
+
+function cargarGruposAunciosSegunCanalDigital(){
+
+        document.getElementById("selectGrupoAnuncio").length=0;
+        obtenerGruposAnuncios(document.getElementById("selectCanalDigital").value);
+}
+
 
