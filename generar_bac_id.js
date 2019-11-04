@@ -2,6 +2,7 @@
 
 document.querySelector('#botonGenerarBACID').addEventListener('click', funcionesDatosSeleccionados);
 
+//var conexion_capa_datos = "https://bac-id-new.azurewebsites.net/";
 
 var capa_datos2 = "https://bac-id-new.azurewebsites.net/consultas_generar_bac_id/";
 

@@ -306,7 +306,7 @@ function obtenerTipoAnuncio(canalDigitalSeleccionado){
                         for(let item of datos){
                             anuncios.push(item.nombre);
                         }
-                       
+                       x|x
                 }
                 for(var i in anuncios)
                 { 
