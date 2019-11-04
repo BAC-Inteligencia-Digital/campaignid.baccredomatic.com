@@ -24,6 +24,8 @@
 
         Tipo de Anuncio: <select id="selectTipoAnuncio"><option>Tipo Anuncio</option></select><br /> <br />
         
+        Grupos de Anuncios: <select id="selectGrupoAnuncio"><option>Grupo Anuncio</option></select><br /> <br />
+    
         <label><input type="checkbox" value=2 id="call_center" name="call_center" onchange="validarCheckbox(this.value)">Call Center</label>
 
         <label><input type="checkbox" value=1 id="email" name="email" onchange="validarCheckbox(this.value)">Email</label>
@@ -57,10 +59,14 @@
         
         INSERTAR BAC ID: <input size="80" value="Presione" type="button" id="insertar_bac_id" name="insertar_bac_id"><br>
 
-   
+        <br/><br />
+        
+        Probar Autenticacion: <input size="80" value="Presione" type="button" id="autenticacionBoton" name="autenticacionBoton"><br>
+
         <script src="generar_bac_id.js"></script>
         <script src="consultas_dropdownlist.js"></script> 
         <script src="validacion_checkbox.js"></script> 
-        <script src="insertar_bac_id.js"></script>    
+        <script src="insertar_bac_id.js"></script> 
+        <script src="autenticar_usuario.js"></script>    
     </body>
     </html>
