@@ -1,12 +1,12 @@
 
-document.querySelector('#insertar_bac_id').addEventListener('click', consultarBACID);
+document.querySelector('#insertar_bac_id').addEventListener('click', insertarBACID);
 
-var capa_datos3 = "insertar_bac_id/";
+var capa_datos3 = "https://bac-id-new.azurewebsites.net/insertar_bac_id/";
 
 function insertarBACID(){
 
-    var bac_id = 'campo'; //aqui te traes el valor del campo de bac_id
-    //var id_usuario = 2; //aqui nos traemos el id del usuario para asociarlo con los bac id creados
+    var bac_id = 'GUAB-COMP-AML-123456-AA-aw-pr-wa-D4-zp'; //aqui te traes el valor del campo de bac_id
+    var id_usuario = 2; //aqui nos traemos el id del usuario para asociarlo con los bac id creados
 
     const xhttp = new XMLHttpRequest();
 
@@ -22,18 +22,45 @@ function insertarBACID(){
             }
             
     }
+
+    var lista_sub_bacids = ["sub1","sub2","sub3","sub4"]; //almacena cada uno de los sub_id asociado al bac_id padre
+
+    for (var i = 0; i < lista_sub_bacids.length; i++) {
+        insertarSUBBACID(bac_id,lista_sub_bacids[i]); //se inserta uno por uno los sub_bac_id
+    }
+
+    consultarBACIDCreado(bac_id); //llamamos esta función para mostrar los datos correspondientes al BAC ID Creado
+    
 }
 
-function consultarBACID(){
+function insertarSUBBACID(bac_id_padre,sub_bacid){
 
-    var bac_id_registrado = 'GUAB-COMP-AML-123456-AA-aw-pr-wa-D4-zp'; //aqui te traes el valor del campo de bac_id
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open('GET',capa_datos3+'insertar_sub_bacid.php?bac_id_padre='+bac_id_padre+'&sub_bac_id='+sub_bacid,true);
+
+    xhttp.send();
+    
+    xhttp.onreadystatechange = function(){
+
+            if(this.readyState == 4 && this.status == 200){
+
+                    
+            }
+            
+    }
+
+   
+}
+
+function consultarBACIDCreado(bac_id_registrado ){
 
     const xhttp = new XMLHttpRequest();
 
     xhttp.open('GET',capa_datos3+'consulta_bac_id_postinsercion.php?pais_bacid='+bac_id_registrado.substring(0,3)+
     '&origen_bacid='+bac_id_registrado.substring(3,4)+'&categoria_bacid='+bac_id_registrado.substring(5,9)+
     '&producto_bacid='+bac_id_registrado.substring(10,13)+'&portafolio_bacid='+bac_id_registrado.substring(21,23)+'&tipo_campana_bacid='+bac_id_registrado.substring(24,26)+
-    '&objetivo_bacid='+bac_id_registrado.substring(27,29),true);
+    '&objetivo_bacid='+bac_id_registrado.substring(27,29)+'&canal_digital_bacid='+bac_id_registrado.substring(30,32),true);
 
     xhttp.send();
     
@@ -50,13 +77,14 @@ function consultarBACID(){
             console.log("Portafolio: "+datos[4].nombre_portafolio);
             console.log("Tipo Campaña: "+datos[5].nombre_campana);
             console.log("Objetivo: "+datos[6].nombre_objetivo);
-            obtenerCanalesInsertados(bac_id_registrado.substring(14,20));
+            console.log("Canal Digital: "+datos[7].nombre_canal_digital);
+            obtenerCanalesInsertados(bac_id_registrado.substring(14,20));//la función siguiente
         }
             
     }
 }
 
-function obtenerCanalesInsertados(codigo_canales){ //el codigo canales serían los ceros: 000000
+function obtenerCanalesInsertados(codigo_canales){ //esta función es para obtener los nombres de los canales según el siguiente valor: Ejemplo:001236
     
     console.log(codigo_canales.substring(1,1));
 
@@ -84,7 +112,7 @@ function obtenerCanalesInsertados(codigo_canales){ //el codigo canales serían l
                   resultado = resultado +", "+ datos[4].nombre_canal5; 
                   resultado = resultado +" y "+ datos[5].nombre_canal6;    
             }
-            console.log("Canales: "+resultado); //resultado devuele los canales seleccionados por los clientes
+            console.log("Canales Tradicionales: "+resultado); //resultado devuele los canales seleccionados por los clientes
     }
     
 

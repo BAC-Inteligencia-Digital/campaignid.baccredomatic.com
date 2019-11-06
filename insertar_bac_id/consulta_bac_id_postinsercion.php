@@ -8,6 +8,7 @@
        $portafolio_bacid = $_GET['portafolio_bacid'];
        $tipo_campana_bacid = $_GET['tipo_campana_bacid'];
        $objetivo_bacid = $_GET['objetivo_bacid'];
+       $canal_digital_bacid = $_GET['canal_digital_bacid'];
 
         $return_arr = array();
 	
@@ -103,6 +104,19 @@
       while($row = mysqli_fetch_array($resultado_objetivo)){
 
          $row_array['nombre_objetivo'] = $row['nombre_objetivo'];
+   
+         array_push($return_arr,$row_array);
+      }  
+  }
+
+  $consulta_canal_digital = "SELECT nombre_canal_digital FROM canal_digital where codigo='$canal_digital_bacid'";
+   $resultado_canal_digital = mysqli_query( $conexion, $consulta_canal_digital) or die ( "Algo ha ido mal en la consulta a la base de datos");
+
+  if ($conexion)
+  {
+      while($row = mysqli_fetch_array($resultado_canal_digital)){
+
+         $row_array['nombre_canal_digital'] = $row['nombre_canal_digital'];
    
          array_push($return_arr,$row_array);
       }  
