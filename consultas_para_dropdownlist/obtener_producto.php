@@ -20,7 +20,7 @@
               $codigo_obtenido = $dato['indice'];
         }
 	
-        $consulta_productos = "SELECT * FROM producto where codigo_categoria = $codigo_obtenido";
+        $consulta_productos = "SELECT 0 as indice, null as codigo, 'Seleccione un producto' as nombre_producto union SELECT indice,codigo,nombre_producto FROM producto where codigo_categoria = $codigo_obtenido";
 
 	$resultado = mysqli_query( $conexion, $consulta_productos ) or die ( "Algo ha ido mal en la consulta a la base de datos");
 
