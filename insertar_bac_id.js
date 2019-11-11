@@ -26,7 +26,7 @@ function insertarBACID(){
             
     }
 
-    var lista_sub_bacids = ["Intereses-la-nombre1","Conexiones-si-nombre2","Educación-if-nombre3"]; //almacena cada uno de los sub_id asociado al bac_id padre
+    var lista_sub_bacids = ["Intereses-la-nombre1/"+nombre_campana,"Conexiones-si-nombre2/"+nombre_campana,"Educación-if-nombre3/"+nombre_campana]; //almacena cada uno de los sub_id asociado al bac_id padre
 
     for (var i = 0; i < lista_sub_bacids.length; i++) {
         insertarSUBBACID(bac_id,lista_sub_bacids[i]); //se inserta uno por uno los sub_bac_id
@@ -58,6 +58,8 @@ function insertarSUBBACID(bac_id_padre,sub_bacid){
 
 function consultarBACIDCreado(bac_id_registrado,nombre_campana,fecha_creacion){
 
+    document.getElementById("result_raiz_codigo").innerHTML  = bac_id_registrado; //mostrar el codigo raiz en la tabla
+
     const xhttp = new XMLHttpRequest();
 
     xhttp.open('GET',capa_datos3+'consulta_bac_id_postinsercion.php?pais_bacid='+bac_id_registrado.substring(0,3)+
@@ -84,11 +86,11 @@ function consultarBACIDCreado(bac_id_registrado,nombre_campana,fecha_creacion){
             document.getElementById("result_tipocampana").innerHTML  = datos[5].nombre_campana;
             document.getElementById("result_objetivos").innerHTML  = datos[6].nombre_objetivo;
             document.getElementById("result_canaldigital").innerHTML  = datos[7].nombre_canal_digital;
-
-            
+                        
         }
             
     }
+    
 }
 
 function obtenerCanalesInsertados(codigo_canales){ //esta función es para obtener los nombres de los canales según el siguiente valor: Ejemplo:001236

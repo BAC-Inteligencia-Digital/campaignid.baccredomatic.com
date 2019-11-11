@@ -163,8 +163,7 @@ function obtenerCanales(){
                         }
                        
                 }
-                console.log(indice_canales);
-                console.log(nombre_canales);
+
         }
 }
 

@@ -3,7 +3,7 @@ document.querySelector('#autenticacionBoton').addEventListener('click', autentic
 
 //var conexion_capa_datos = "https://bac-id-new.azurewebsites.net/";
 
-var capa_datos4 = "consulta_login/";
+var capa_datos4 = "https://bac-id-new.azurewebsites.net/consulta_login/";
 
 function autenticarUsuario(){
 
