@@ -7,10 +7,13 @@ function insertarBACID(){
 
     var bac_id = 'GUAB-COMP-AML-123456-AA-aw-pr-wa-D4-zp'; //aqui te traes el valor del campo de bac_id
     var id_usuario = 2; //aqui nos traemos el id del usuario para asociarlo con los bac id creados
+    var nombre_campana = 'ejemplo'; // aquí va el nombre de la campaña que digita el usuario
+    var fecha_creacion = '2019-01-01'; //se ingresa la fecha de creación
 
     const xhttp = new XMLHttpRequest();
 
-    xhttp.open('GET',capa_datos3+'insertar_bac_id.php?bac_id='+bac_id+'&id_usuario='+id_usuario,true);
+    xhttp.open('GET',capa_datos3+'insertar_bac_id.php?bac_id='+bac_id+'&id_usuario='+id_usuario
+    +'&nombre_campana='+nombre_campana+'&fecha_creacion='+fecha_creacion,true);
 
     xhttp.send();
     
@@ -29,7 +32,7 @@ function insertarBACID(){
         insertarSUBBACID(bac_id,lista_sub_bacids[i]); //se inserta uno por uno los sub_bac_id
     }
 
-    consultarBACIDCreado(bac_id); //llamamos esta función para mostrar los datos correspondientes al BAC ID Creado
+    consultarBACIDCreado(bac_id,nombre_campana,fecha_creacion); //llamamos esta función para mostrar los datos correspondientes al BAC ID Creado
     
 }
 
@@ -53,7 +56,7 @@ function insertarSUBBACID(bac_id_padre,sub_bacid){
    
 }
 
-function consultarBACIDCreado(bac_id_registrado ){
+function consultarBACIDCreado(bac_id_registrado,nombre_campana,fecha_creacion){
 
     const xhttp = new XMLHttpRequest();
 
@@ -70,15 +73,19 @@ function consultarBACIDCreado(bac_id_registrado ){
      
             let datos = JSON.parse(this.responseText);
 
-            console.log("Pais: "+datos[0].nombre_pais);
-            console.log("Origen Clientes: "+datos[1].nombre_origen);
-            console.log("Categoria: "+datos[2].nombre_categoria);
-            console.log("Producto: "+datos[3].nombre_producto);
-            console.log("Portafolio: "+datos[4].nombre_portafolio);
-            console.log("Tipo Campaña: "+datos[5].nombre_campana);
-            console.log("Objetivo: "+datos[6].nombre_objetivo);
-            console.log("Canal Digital: "+datos[7].nombre_canal_digital);
+            document.getElementById("result_nombre_campana").innerHTML  = nombre_campana;
+            document.getElementById("result_creacion").innerHTML  = fecha_creacion;
+            document.getElementById("result_pais").innerHTML  = datos[0].nombre_pais;
+            document.getElementById("result_origen").innerHTML  = datos[1].nombre_origen;
+            document.getElementById("result_categoria").innerHTML  = datos[2].nombre_categoria;
+            document.getElementById("result_producto").innerHTML  = datos[3].nombre_producto;
             obtenerCanalesInsertados(bac_id_registrado.substring(14,20));//la función siguiente
+            document.getElementById("result_portafolio").innerHTML  = datos[4].nombre_portafolio;
+            document.getElementById("result_tipocampana").innerHTML  = datos[5].nombre_campana;
+            document.getElementById("result_objetivos").innerHTML  = datos[6].nombre_objetivo;
+            document.getElementById("result_canaldigital").innerHTML  = datos[7].nombre_canal_digital;
+
+            
         }
             
     }
@@ -112,7 +119,7 @@ function obtenerCanalesInsertados(codigo_canales){ //esta función es para obten
                   resultado = resultado +", "+ datos[4].nombre_canal5; 
                   resultado = resultado +" y "+ datos[5].nombre_canal6;    
             }
-            console.log("Canales Tradicionales: "+resultado); //resultado devuele los canales seleccionados por los clientes
+            document.getElementById("result_canales").innerHTML  = resultado;
     }
     
 

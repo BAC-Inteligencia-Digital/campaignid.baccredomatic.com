@@ -2,7 +2,21 @@
     <head>
             <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
     </head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <style>
+            table, th, td {
+              border: 1px solid black;
+              border-collapse: collapse;
+            }
+            th, td {
+              padding: 15px;
+              text-align: left;
+            }
+            table#t01 {
+              width: 50%;    
+              background-color: #f1f1c1;
+            }
+            </style>
     <body onload="cargarSelects();">
         
       
@@ -62,6 +76,106 @@
         <br/><br />
         
         Probar Autenticacion: <input size="80" value="Presione" type="button" id="autenticacionBoton" name="autenticacionBoton"><br>
+        
+        <br/><br />
+        <table id="t01" class="TablaBACID">
+
+
+            <tr>
+          
+              <td>Nombre Campaña:</td>
+          
+              <td><label id="result_nombre_campana"></label></td>
+          
+            </tr>
+          
+            <tr>
+          
+              <td>Fecha Creción:</td>
+          
+              <td><label id="result_creacion"></td>
+          
+          
+            </tr>
+
+            <tr>
+          
+                <td>Pais:</td>
+            
+                <td><label id="result_pais"></td>
+            
+            
+              </tr>
+
+              <tr>
+          
+                <td>Origen Clientes:</td>
+            
+                <td><label id="result_origen"></td>
+            
+            
+              </tr>
+
+              <tr>
+          
+                <td>Categoría:</td>
+            
+                <td><label id="result_categoria"></td>
+            
+            
+              </tr>
+
+              <tr>
+          
+                <td>Producto:</td>
+            
+                <td><label id="result_producto"></td>
+            
+            
+              </tr>
+
+              <tr>
+          
+                <td>Canales:</td>
+            
+                <td><label id="result_canales"></td>
+            
+            
+              </tr>
+
+              <tr>
+          
+                <td>Portafolio:</td>
+            
+                <td><label id="result_portafolio"></td>
+            
+              </tr>
+
+              <tr>
+          
+                <td>Tipo de Campaña:</td>
+            
+                <td><label id="result_tipocampana"></td>
+            
+              </tr>
+          
+              <tr>
+          
+                <td>Objetivos:</td>
+            
+                <td><label id="result_objetivos"></td>
+            
+              </tr>
+
+              <tr>
+          
+                <td>Canal digital:</td>
+            
+                <td><label id="result_canaldigital"></td>
+            
+              </tr>
+
+          </table>
 
         <script src="generar_bac_id.js"></script>
         <script src="consultas_dropdownlist.js"></script> 
@@ -70,3 +184,4 @@
         <script src="autenticar_usuario.js"></script>    
     </body>
     </html>
+
