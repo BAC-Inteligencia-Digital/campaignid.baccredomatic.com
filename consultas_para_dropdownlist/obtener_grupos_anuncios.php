@@ -19,10 +19,9 @@
         while ($dato = mysqli_fetch_array($resultado_codigo)){
               $grupo_obtenido = $dato['grupo_anuncios'];
         }
-	
-        $consulta_productos = "SELECT * FROM grupos_anuncios where numero_grupo = $grupo_obtenido";
 
-	$resultado = mysqli_query( $conexion, $consulta_productos ) or die ( "Algo ha ido mal en la consulta a la base de datos");
+        $consulta_grupos = "SELECT 0 as indice, null as codigo_grupo, 'Seleccione un grupo' as nombre_categoria union select indice,codigo_grupo,nombre_categoria from grupos_anuncios where numero_grupo = $grupo_obtenido";;
+	$resultado = mysqli_query( $conexion, $consulta_grupos ) or die ( "Algo ha ido mal en la consulta a la base de datos");
 
    if ($conexion)
    {
