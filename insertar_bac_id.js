@@ -26,14 +26,14 @@ function insertarBACID(){
             
     }
 
-    var lista_sub_bacids = ["sub1","sub2","sub3","sub4"]; //almacena cada uno de los sub_id asociado al bac_id padre
+    var lista_sub_bacids = ["Intereses-la-nombre1","Conexiones-si-nombre2","Educación-if-nombre3"]; //almacena cada uno de los sub_id asociado al bac_id padre
 
     for (var i = 0; i < lista_sub_bacids.length; i++) {
         insertarSUBBACID(bac_id,lista_sub_bacids[i]); //se inserta uno por uno los sub_bac_id
     }
 
     consultarBACIDCreado(bac_id,nombre_campana,fecha_creacion); //llamamos esta función para mostrar los datos correspondientes al BAC ID Creado
-    
+    consultarSUBACIDCreados(lista_sub_bacids);
 }
 
 function insertarSUBBACID(bac_id_padre,sub_bacid){
@@ -123,4 +123,47 @@ function obtenerCanalesInsertados(codigo_canales){ //esta función es para obten
     }
     
 
+}
+
+function consultarSUBACIDCreados(lista_sub_bacids){
+
+
+        for (var i = 0; i < lista_sub_bacids.length; i++) {
+        
+        const xhttp = new XMLHttpRequest();
+
+        xhttp.open('GET',capa_datos3+'consulta_sub_bacids_postinsercion.php?nombre_grupo='+lista_sub_bacids[i].split("-")[0]+'&codigo_anuncio='+lista_sub_bacids[i].split("-")[1]
+        +'&nombre_anuncio='+lista_sub_bacids[i].split("-")[2]+'&sub_codigo='+lista_sub_bacids[i],true);
+
+        xhttp.send();
+        
+        xhttp.onreadystatechange = function(){
+
+                if(this.readyState == 4 && this.status == 200){
+                    let datos = JSON.parse(this.responseText);
+
+                    for(let item of datos){
+
+                        var table = document.getElementById("t02");
+                        {
+                            var row = table.insertRow(1);
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            var cell3 = row.insertCell(2);
+                            var cell4 = row.insertCell(3);
+                            var cell5 = row.insertCell(4);
+                
+                            cell1.innerHTML = item.nombre_categoria;
+                            cell2.innerHTML = item.descripcion;
+                            cell3.innerHTML = item.nombre_tipo_anuncio;
+                            cell4.innerHTML = item.nombre_anuncio;
+                            cell5.innerHTML = item.sub_codigo;
+                        }                        
+                    }
+                        
+                }
+                            
+        }
+       
+     }
 }
