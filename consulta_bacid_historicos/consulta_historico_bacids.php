@@ -9,7 +9,7 @@
 	// Selección del a base de datos a utilizar
 	$db = mysqli_select_db( $conexion, $basededatos ) or die ( "Upps! Pues va a ser que no se ha podido conectar a la base de datos" );
 	// establecer y realizar consulta. guardamos en variable.
-	$consulta = "select a.nombre_bac_id, a.nombre_campana, b.nombre as nombre_pais, c.nombre_origen, d.nombre_categoria, e.nombre_producto from bac_id_generados as a
+	$consulta = "select a.id,a.nombre_bac_id, a.nombre_campana, b.nombre as nombre_pais, c.nombre_origen, d.nombre_categoria, e.nombre_producto from bac_id_generados as a
     join pais as b
     on b.abreviatura = substring(a.nombre_bac_id,1,3)
     join origen_clientes as c
@@ -23,6 +23,7 @@
    if ($conexion)
    {
        while($row = mysqli_fetch_array($resultado)){
+        $row_array['id'] = $row['id'];
           $row_array['nombre_bac_id'] = $row['nombre_bac_id'];
 	      $row_array['nombre_campana'] = $row['nombre_campana'];
           $row_array['nombre_pais'] = $row['nombre_pais'];

@@ -5,7 +5,7 @@ var capa_datos3 = "https://bac-id-new.azurewebsites.net/insertar_bac_id/";
 
 function insertarBACID(){
 
-    var bac_id = 'GUAB-COMP-AML-123456-AA-aw-pr-wa-D4-zp'; //aqui te traes el valor del campo de bac_id
+    var bac_id = 'GUAB-COMP-AML-123456-AA-aw-pr-wa'; //aqui te traes el valor del campo de bac_id
     var id_usuario = 2; //aqui nos traemos el id del usuario para asociarlo con los bac id creados
     var nombre_campana = 'ejemplo'; // aquí va el nombre de la campaña que digita el usuario
     var fecha_creacion = '2019-01-01'; //se ingresa la fecha de creación
