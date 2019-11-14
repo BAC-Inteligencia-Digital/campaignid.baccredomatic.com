@@ -18,7 +18,7 @@
         $consulta_sub = "select distinct a.nombre_categoria, a.descripcion, b.nombre_tipo_anuncio, '$nombre_anuncio' as nombre_anuncio, '$sub_codigo' as sub_codigo from 
         grupos_anuncios as a
         join tipo_anuncio as b
-        where a.codigo_grupo = '$nombre_grupo'
+        where a.nombre_categoria = '$nombre_grupo'
         and b.codigo = '$codigo_anuncio'";
 
 	$resultado = mysqli_query( $conexion, $consulta_sub ) or die ( "Algo ha ido mal en la consulta a la base de datos");
