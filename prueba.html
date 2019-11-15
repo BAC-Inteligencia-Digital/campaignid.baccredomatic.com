@@ -30,7 +30,9 @@
 
         Categoría:<select id="selectCategorias"><option>Categorias</option></select><br /> <br />
             
-        Producto: <select id="selectProductos"><option>Productos</option></select><br /> <br />
+        Producto: <select id="selectProductos"><option>Productos</option></select>
+        
+        <select multiple id="selectMultiProductos" size="10" style="visibility:hidden"><option>---Selección Multiproducto---</option></select><br /><br />
 
         Portafolio: <select id="selectPortafolios"><option>Portafolios</option></select><br /> <br />
 
@@ -212,6 +214,33 @@
         <script src="consultas_dropdownlist.js"></script> 
         <script src="validacion_checkbox.js"></script> 
         <script src="insertar_bac_id.js"></script> 
-        <script src="autenticar_usuario.js"></script>    
+        <script src="autenticar_usuario.js"></script>
+
+        <script type="text/javascript">
+          $(document).ready(function() { // esta función valida que sólo se seleccionen tres multiproductos
+            var last_valid_selection = null;
+            $('#selectMultiProductos').mousedown(function(event) {
+               if ($(this).val().length > 3) {
+               $(this).val(last_valid_selection);
+             } else {
+               last_valid_selection = $(this).val();
+             }
+           });
+         });
+         </script>
+         <script type="text/javascript">
+         $("#selectMultiProductos").mousedown(function(e){
+            e.preventDefault();
+
+            var select = this;
+            var scroll = select .scrollTop;
+            e.target.selected = !e.target.selected;
+
+            setTimeout(function(){select.scrollTop = scroll;}, 0);
+
+            $(select ).focus();
+            }).mousemove(function(e){e.preventDefault()});
+
+         </script>    
     </body>
     </html>

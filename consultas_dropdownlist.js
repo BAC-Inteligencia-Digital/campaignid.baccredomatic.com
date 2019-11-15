@@ -79,7 +79,6 @@ function obtenerCategorias(){
 
         var categorias = [];
 
-
         const xhttp = new XMLHttpRequest();
 
         xhttp.open('GET',capa_datos1+'obtener_categoria.php',true);
@@ -109,30 +108,73 @@ function obtenerCategorias(){
 
 function obtenerProductos(categoriaSeleccionada){
 
-        var productos = [];
+        if (categoriaSeleccionada=="Multiproducto"){
+                obtenerMultiproductos();
+                document.getElementById("selectMultiProductos").style.visibility = 'visible';
+                document.getElementById("selectProductos").style.visibility = 'hidden';
+        }
+        else{
+
+                document.getElementById("selectProductos").style.visibility = 'visible';
+                document.getElementById("selectMultiProductos").style.visibility = 'hidden';
+
+                var productos = [];
+
+                const xhttp = new XMLHttpRequest();
+
+        
+                xhttp.open('GET',capa_datos1+'obtener_producto.php?categoria='+categoriaSeleccionada,true);
+
+                xhttp.send();
+
+                xhttp.onreadystatechange = function(){
+
+                        if(this.readyState == 4 && this.status == 200){
+        
+                                let datos = JSON.parse(this.responseText);
+
+
+                                for(let item of datos){
+                                        productos.push(item.nombre_producto);
+                                }
+                        
+                        }
+                        for(var i in productos)
+                        { 
+                        document.getElementById("selectProductos").innerHTML += "<option value='"+productos[i]+"'>"+productos[i]+"</option>"; 
+
+                        }
+
+                }
+        }
+}
+
+function obtenerMultiproductos(){
+
+        var multiproductos = [];
 
         const xhttp = new XMLHttpRequest();
 
-   
-        xhttp.open('GET',capa_datos1+'obtener_producto.php?categoria='+categoriaSeleccionada,true);
+
+        xhttp.open('GET',capa_datos1+'obtener_multiproducto.php',true);
 
         xhttp.send();
 
         xhttp.onreadystatechange = function(){
 
                 if(this.readyState == 4 && this.status == 200){
-     
+
                         let datos = JSON.parse(this.responseText);
 
 
                         for(let item of datos){
-                                productos.push(item.nombre_producto);
+                                multiproductos.push(item.nombre_campana);
                         }
-                       
+                
                 }
-                for(var i in productos)
+                for(var i in multiproductos)
                 { 
-                   document.getElementById("selectProductos").innerHTML += "<option value='"+productos[i]+"'>"+productos[i]+"</option>"; 
+                   document.getElementById("selectMultiProductos").innerHTML += "<option value='"+multiproductos[i]+"'>"+multiproductos[i]+"</option>"; 
 
                 }
 

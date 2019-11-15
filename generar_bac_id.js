@@ -109,8 +109,6 @@ function obtenerProductoSeleccionado(productoSeleccionado){
 
     var dato;
 
-
-
     const xhttp = new XMLHttpRequest();
 
     xhttp.open('GET',capa_datos2+'obtener_producto_seleccionado.php?producto_seleccionado='+productoSeleccionado,true);
@@ -134,11 +132,42 @@ function obtenerProductoSeleccionado(productoSeleccionado){
      
 }
 
+function obtenerMultiProductosSeleccionados(){
+
+    var codigo_multiproductos = "";
+    var multiseleccion =  document.getElementById("selectMultiProductos");
+    var multiproductos = [];
+
+    for(var i = 0; i < multiseleccion.selectedOptions.length; i++) {
+        multiproductos.push(multiseleccion.selectedOptions[i].value);
+    }
+
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open('GET',capa_datos2+'obtener_multiproductos_seleccionados.php?producto1_seleccionado='+multiproductos[0]+
+    "&producto2_seleccionado="+multiproductos[1]+"&producto3_seleccionado="+multiproductos[2],true);
+
+    xhttp.send();
+
+    xhttp.onreadystatechange = function(){
+
+            if(this.readyState == 4 && this.status == 200){
+ 
+                    var datos = JSON.parse(this.responseText);
+          
+                    for(let item of datos){
+                        codigo_multiproductos = codigo_multiproductos + item.codigo;
+                    }
+                    
+            }
+            alert(codigo_multiproductos); // este sería el valor de tres dígitos que representa a multiproducto
+    }
+     
+}
+
 function obtenerPortafolioSeleccionado(portafolioSeleccionado){
 
     var dato;
-
-
 
     const xhttp = new XMLHttpRequest();
 
@@ -166,8 +195,6 @@ function obtenerPortafolioSeleccionado(portafolioSeleccionado){
 function obtenerTipoCampanaSeleccionada(tipoSeleccionado){
 
     var dato;
-
-
 
     const xhttp = new XMLHttpRequest();
 
@@ -314,6 +341,7 @@ function construirBacId(){
     
     console.log("BAC ID:"+bac_id_final);
     document.getElementById("campo_bac_id").value = bac_id_final;
+
 }
 
 function funcionesDatosSeleccionados(){
@@ -337,6 +365,8 @@ function funcionesDatosSeleccionados(){
     obtenerAnuncioSeleccionado(document.getElementById("selectTipoAnuncio").value);
 
     obtenerGrupoAnuncioSeleccionado(document.getElementById("selectGrupoAnuncio").value);
+
+    obtenerMultiProductosSeleccionados();
 }
 
 
