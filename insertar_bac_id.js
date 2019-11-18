@@ -1,11 +1,11 @@
 
 document.querySelector('#insertar_bac_id').addEventListener('click', insertarBACID);
 
-var capa_datos3 = "https://bac-id-new.azurewebsites.net/insertar_bac_id/";
+var capa_datos3 = "insertar_bac_id/";
 
 function insertarBACID(){
 
-    var bac_id = 'GUAB-COMP-AML-123456-AA-aw-pr-wa'; //aqui te traes el valor del campo de bac_id
+    var bac_id = 'GUAB-COMP-AML-000126-AA-AW-PR-WA'; //aqui te traes el valor del campo de bac_id
     var id_usuario = 2; //aqui nos traemos el id del usuario para asociarlo con los bac id creados
     var nombre_campana = 'ejemplo'; // aquí va el nombre de la campaña que digita el usuario
     var fecha_creacion = '2019-01-01'; //se ingresa la fecha de creación
@@ -26,7 +26,7 @@ function insertarBACID(){
             
     }
 
-    var lista_sub_bacids = ["Intereses-la-nombre1/"+nombre_campana,"Conexiones-si-nombre2/"+nombre_campana,"Educación-if-nombre3/"+nombre_campana]; //almacena cada uno de los sub_id asociado al bac_id padre
+    var lista_sub_bacids = ["b8-la-nombre1/"+nombre_campana,"c1-si-nombre2/"+nombre_campana,"c1-if-nombre3/"+nombre_campana]; //almacena cada uno de los sub_id asociado al bac_id padre
 
     for (var i = 0; i < lista_sub_bacids.length; i++) {
         insertarSUBBACID(bac_id,lista_sub_bacids[i]); //se inserta uno por uno los sub_bac_id
@@ -97,7 +97,7 @@ function obtenerCanalesInsertados(codigo_canales){ //esta función es para obten
     
     console.log(codigo_canales.substring(1,1));
 
-    var resultado;
+    var resultado = [];
 
     const xhttp = new XMLHttpRequest();
 
@@ -114,12 +114,24 @@ function obtenerCanalesInsertados(codigo_canales){ //esta función es para obten
 
                   let datos = JSON.parse(this.responseText);
 
-                  resultado = datos[0].nombre_canal1;  
-                  resultado = resultado +", "+datos[1].nombre_canal2;
-                  resultado = resultado +", "+ datos[2].nombre_canal3;
-                  resultado = resultado +", "+ datos[3].nombre_canal4; 
-                  resultado = resultado +", "+ datos[4].nombre_canal5; 
-                  resultado = resultado +" y "+ datos[5].nombre_canal6;    
+                  if(!datos[0].nombre_canal1==""){
+                    resultado.push(datos[0].nombre_canal1); 
+                  }
+                  if(!datos[1].nombre_canal2==""){
+                    resultado.push(datos[1].nombre_canal2); 
+                  }
+                  if(!datos[2].nombre_canal3==""){
+                    resultado.push(datos[2].nombre_canal3);  
+                  }
+                  if(!datos[3].nombre_canal4==""){
+                    resultado.push(datos[3].nombre_canal4); 
+                  }
+                  if(!datos[4].nombre_canal5==""){
+                    resultado.push(datos[4].nombre_canal5);  
+                  }
+                  if(!datos[5].nombre_canal6==""){
+                    resultado.push(datos[5].nombre_canal6); 
+                  }   
             }
             document.getElementById("result_canales").innerHTML  = resultado;
     }
@@ -129,6 +141,7 @@ function obtenerCanalesInsertados(codigo_canales){ //esta función es para obten
 
 function consultarSUBACIDCreados(lista_sub_bacids){
 
+        console.log(lista_sub_bacids[0].split("-")[0]);
 
         for (var i = 0; i < lista_sub_bacids.length; i++) {
         

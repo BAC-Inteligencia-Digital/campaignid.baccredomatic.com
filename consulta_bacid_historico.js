@@ -2,8 +2,8 @@ document.querySelector('#botonProbarBACID').addEventListener('click', consultaHi
 
 document.querySelector('#botonDetalleBACID').addEventListener('click', consultaDetalleBACID);
 
-var capa_datos4 = "https://bac-id-new.azurewebsites.net/consulta_bacid_historicos/";
-var capa_datos5 = "https://bac-id-new.azurewebsites.net/insertar_bac_id/";
+var capa_datos4 = "consulta_bacid_historicos/";
+var capa_datos5 = "insertar_bac_id/";
 
 function consultaHistoricoBACID(){
 
@@ -55,8 +55,8 @@ function consultaHistoricoBACID(){
 
 function consultaDetalleBACID(){
 
-    var bac_id = 'GUAB-COMP-AML-123456-AA-aw-pr-wa'; //aquí se pasa el valor del bac id seleccionado
-    var indice =  1;
+    var bac_id = 'CRIC-CORE-TJC-123456-GL-AW-PR-GG'; //aquí se pasa el valor del bac id seleccionado
+    var indice =  19;
 
     const xhttp = new XMLHttpRequest();
 
@@ -93,8 +93,8 @@ function consultaDetalleBACID(){
 
 function obtenerCanalesBACID(codigo_canales){ //esta función es para obtener los nombres de los canales según el siguiente valor: Ejemplo:001236
     
-    var resultado = "";
-
+    var resultado = [];
+    
     const xhttp = new XMLHttpRequest();
 
     xhttp.open('GET',capa_datos5+'consulta_canales_insertados.php?canal1_seleccionado='+codigo_canales.substring(0,1)+
@@ -108,25 +108,26 @@ function obtenerCanalesBACID(codigo_canales){ //esta función es para obtener lo
 
             if(this.readyState == 4 && this.status == 200){
 
+              
                   let datos = JSON.parse(this.responseText);
 
                   if(!datos[0].nombre_canal1==""){
-                    resultado = datos[0].nombre_canal1; 
+                    resultado.push(datos[0].nombre_canal1); 
                   }
                   if(!datos[1].nombre_canal2==""){
-                    resultado = resultado+", "+datos[1].nombre_canal2; 
+                    resultado.push(datos[1].nombre_canal2); 
                   }
                   if(!datos[2].nombre_canal3==""){
-                    resultado = resultado+", "+datos[2].nombre_canal3; 
+                    resultado.push(datos[2].nombre_canal3);  
                   }
                   if(!datos[3].nombre_canal4==""){
-                    resultado = resultado+", "+datos[3].nombre_canal4; 
+                    resultado.push(datos[3].nombre_canal4); 
                   }
                   if(!datos[4].nombre_canal5==""){
-                    resultado = resultado+", "+datos[4].nombre_canal5; 
+                    resultado.push(datos[4].nombre_canal5);  
                   }
                   if(!datos[5].nombre_canal6==""){
-                    resultado = resultado+", "+datos[5].nombre_canal6; 
+                    resultado.push(datos[5].nombre_canal6); 
                   }
                   
             }
@@ -158,6 +159,7 @@ function consultaDetalleSUBACID(id_padre){
                         }
                        
                 }
+                console.log(lista_sub_bacids);
                 consultarSUBACIDUnicos(lista_sub_bacids);                
         }
         
