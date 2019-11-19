@@ -66,17 +66,23 @@
 
    if ($conexion)
   {
-      while($row = mysqli_fetch_array($resultado_producto) and $row2 = mysqli_fetch_array($resultado_multiproducto)){
+      if ("MULT" == $categoria_bacid){
 
-         if(empty($row['nombre_producto']) and $categoria_bacid == "MULT"){
-            $row_array['nombre_producto'] = $row2['nombre_producto'];
-         }
-         else{
-            $row_array['nombre_producto'] = $row['nombre_producto'];
-         }
+         while($row2 = mysqli_fetch_array($resultado_multiproducto)){
             
-         array_push($return_arr,$row_array);
-      }  
+            $row_array['nombre_producto'] = $row2['nombre_producto'];
+                        
+            array_push($return_arr,$row_array);
+         }
+      }
+      else{
+         while($row = mysqli_fetch_array($resultado_producto)){
+            
+            $row_array['nombre_producto'] = $row['nombre_producto'];
+                        
+            array_push($return_arr,$row_array);
+         }
+      }
   }
   
    $consulta_portafolio = "SELECT nombre_portafolio FROM portafolio where codigo='$portafolio_bacid '";
