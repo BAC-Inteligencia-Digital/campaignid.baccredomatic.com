@@ -3,13 +3,13 @@ document.querySelector('#autenticacionBoton').addEventListener('click', autentic
 
 //var conexion_capa_datos = "https://bac-id-new.azurewebsites.net/";
 
-var capa_datos4 = "https://bac-id-new.azurewebsites.net/consulta_login/";
+var capa_datos4 = "consulta_login/";
 
 function autenticarUsuario(){
 
     var id;
 
-    var usuario = 'jmurillo' ; //aquí se captura el usuario ingresado 
+    var usuario = 'jmurillo@baccredomatic.com' ; //aquí se captura el usuario de red o el correo 
     var contrasena = 'jorge45' ; //aquí se captura la contraseña ingresada
     
     const xhttp = new XMLHttpRequest();
