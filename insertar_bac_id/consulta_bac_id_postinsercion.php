@@ -57,15 +57,24 @@
       }  
   }
 
-   $consulta_producto = "SELECT nombre_producto FROM producto where codigo='$producto_bacid '";
+   $consulta_producto = "SELECT codigo,nombre_producto FROM producto where codigo='$producto_bacid'";
    $resultado_producto = mysqli_query( $conexion, $consulta_producto ) or die ( "Algo ha ido mal en la consulta a la base de datos");
 
-  if ($conexion)
-  {
-      while($row = mysqli_fetch_array($resultado_producto)){
+   $consulta_multiproducto = "SELECT GROUP_CONCAT('[',(select nombre_campana from multiproducto where codigo = SUBSTRING('$producto_bacid', 1, 1)),']-[',(select nombre_campana from multiproducto where codigo = SUBSTRING('$producto_bacid', 2, 1)),']-[',(select nombre_campana from multiproducto where codigo = SUBSTRING('$producto_bacid', 3, 1)),']')
+   as nombre_producto";
+   $resultado_multiproducto = mysqli_query( $conexion, $consulta_multiproducto ) or die ( "Algo ha ido mal en la consulta a la base de datos");
 
-         $row_array['nombre_producto'] = $row['nombre_producto'];
-   
+   if ($conexion)
+  {
+      while($row = mysqli_fetch_array($resultado_producto) and $row2 = mysqli_fetch_array($resultado_multiproducto)){
+
+         if(empty($row['nombre_producto']) and $categoria_bacid == "MULT"){
+            $row_array['nombre_producto'] = $row2['nombre_producto'];
+         }
+         else{
+            $row_array['nombre_producto'] = $row['nombre_producto'];
+         }
+            
          array_push($return_arr,$row_array);
       }  
   }
