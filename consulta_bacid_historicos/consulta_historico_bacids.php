@@ -43,7 +43,7 @@
         join origen_clientes as c
         on c.codigo = substring(a.nombre_bac_id,4,1)
         join categoria as d
-        on d.codigo = substring(a.nombre_bac_id,6,4) and "MULT" = substring(a.nombre_bac_id,6,4)
+        on d.codigo = substring(a.nombre_bac_id,6,4) and 'MULT' = substring(a.nombre_bac_id,6,4)
         join multiproducto as e
         on e.codigo = substring(a.nombre_bac_id,11,1) or e.codigo = substring(a.nombre_bac_id,12,1) or e.codigo = substring(a.nombre_bac_id,13,1)
     group by a.id";
