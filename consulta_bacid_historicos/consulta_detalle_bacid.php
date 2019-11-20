@@ -29,7 +29,28 @@
         on h.codigo = substring(nombre_bac_id,28,2)
         join canal_digital as i
         on i.codigo = substring(nombre_bac_id,31,2)
-        where a.id = '$id'";
+        where a.id = '$id'
+    union all
+    select a.nombre_bac_id, a.nombre_campana, a.fecha_creacion,b.nombre as nombre_pais, c.nombre_origen, d.nombre_categoria, GROUP_CONCAT('[',e.nombre_campana,']') as nombre_producto,
+        f.nombre_portafolio, g.nombre_campaña, h.nombre_objetivo, i.nombre_canal_digital from bac_id_generados as a
+            join pais as b
+            on b.abreviatura = substring(a.nombre_bac_id,1,3)
+            join origen_clientes as c
+            on c.codigo = substring(a.nombre_bac_id,4,1)
+            join categoria as d
+            on d.codigo = substring(a.nombre_bac_id,6,4)
+            join multiproducto as e
+            on e.codigo = substring(nombre_bac_id,11,1) or e.codigo = substring(nombre_bac_id,12,1) or e.codigo = substring(nombre_bac_id,13,1)
+            join portafolio as f
+            on f.codigo = substring(nombre_bac_id,22,2)
+            join tipo_campaña as g
+            on g.codigo = substring(nombre_bac_id,25,2)
+            join objetivos as h
+            on h.codigo = substring(nombre_bac_id,28,2)
+            join canal_digital as i
+            on i.codigo = substring(nombre_bac_id,31,2)
+            where a.id = '$id'
+            group by a.id";
 	$resultado = mysqli_query( $conexion, $consulta ) or die ( "Algo ha ido mal en la consulta a la base de datos");
 
    if ($conexion)
