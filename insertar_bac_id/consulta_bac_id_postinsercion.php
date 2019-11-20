@@ -75,7 +75,7 @@
             array_push($return_arr,$row_array);
          }
       }
-      else{
+      if ("MULT" != $categoria_bacid){
          while($row = mysqli_fetch_array($resultado_producto)){
             
             $row_array['nombre_producto'] = $row['nombre_producto'];
@@ -111,7 +111,7 @@
       }  
   }
 
-  $consulta_objetivo = "SELECT nombre_objetivo FROM objetivos where codigo='$objetivo_bacid'";
+   $consulta_objetivo = "SELECT nombre_objetivo FROM objetivos where codigo='$objetivo_bacid'";
    $resultado_objetivo = mysqli_query( $conexion, $consulta_objetivo) or die ( "Algo ha ido mal en la consulta a la base de datos");
 
   if ($conexion)
