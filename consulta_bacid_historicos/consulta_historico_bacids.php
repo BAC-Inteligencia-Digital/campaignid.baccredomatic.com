@@ -49,7 +49,7 @@
                 on e.codigo = substring(a.nombre_bac_id,11,1) or e.codigo = substring(a.nombre_bac_id,12,1) or e.codigo = substring(a.nombre_bac_id,13,1)
             group by a.id
         ) tt
-        order by tt.fecha_creacion";
+        order by tt.fecha_creacion desc";
 	$resultado = mysqli_query( $conexion, $consulta ) or die ( "Algo ha ido mal en la consulta a la base de datos");
 
    if ($conexion)
