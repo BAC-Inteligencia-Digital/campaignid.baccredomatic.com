@@ -1,5 +1,5 @@
 <?php
-   	include 'conexion_base_datos.php';
+   	include '../archivo_conexion_db/conexion_base_datos.php';
 
     $bac_id_padre = $_GET['bac_id_padre'];
     $sub_bac_id = $_GET['sub_bac_id'];
