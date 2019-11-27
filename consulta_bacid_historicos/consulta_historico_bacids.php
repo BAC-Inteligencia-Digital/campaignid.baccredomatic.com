@@ -1,5 +1,5 @@
 <?php
-   	include 'conexion_base_datos.php';
+   	include '../archivo_conexion_db/conexion_base_datos.php';
 
     /*$nombre_usuario = $_GET['nombre_usuario'];
     $pais_usuario;
@@ -21,10 +21,10 @@
     }*/
     
     $return_arr = array();
-	// creaci¨®n de la conexi¨®n a la base de datos con mysql_connect()
+	// creaciÃ³n de la conexiÃ³n a la base de datos con mysql_connect()
 	$conexion = mysqli_connect( $servidor, $usuario, $password ) or die ("No se ha podido conectar al servidor de Base de datos");
 	
-	// Selecci¨®n del a base de datos a utilizar
+	// SelecciÃ³n del a base de datos a utilizar
 	$db = mysqli_select_db( $conexion, $basededatos ) or die ( "Upps! Pues va a ser que no se ha podido conectar a la base de datos" );
 	// establecer y realizar consulta. guardamos en variable.
 	$consulta = "select * from (
