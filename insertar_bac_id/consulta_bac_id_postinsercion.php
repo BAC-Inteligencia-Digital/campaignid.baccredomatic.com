@@ -1,5 +1,5 @@
 <?php
-	   include 'conexion_base_datos.php';
+	   include '../archivo_conexion_db/conexion_base_datos.php';
 	   
        $pais_bacid = $_GET['pais_bacid'];
        $origen_bacid = $_GET['origen_bacid'];
