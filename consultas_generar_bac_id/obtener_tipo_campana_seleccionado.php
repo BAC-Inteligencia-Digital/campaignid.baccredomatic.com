@@ -1,5 +1,5 @@
  <?php
-   	include 'conexion_base_datos.php';
+   	include '../archivo_conexion_db/conexion_base_datos.php';
 
 	   $tipo_seleccionado = $_GET['tipo_seleccionado'];
         $return_arr = array();

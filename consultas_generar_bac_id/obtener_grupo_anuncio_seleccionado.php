@@ -1,5 +1,5 @@
 <?php
-	   include 'conexion_base_datos.php';
+	   include '../archivo_conexion_db/conexion_base_datos.php';
 	   
 	   $grupo_seleccionado = $_GET['grupo_anuncio_seleccionado'];
 
