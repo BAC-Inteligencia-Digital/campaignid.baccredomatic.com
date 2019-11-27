@@ -1,6 +1,6 @@
  <?php
    	
-	include 'conexion_base_datos.php';
+	include '../archivo_conexion_db/conexion_base_datos.php';
 	
 	$conn = new mysqli($servidor, $usuario, $password ,$basededatos); 
         $result = $conn->query("select nombre from pais"); 

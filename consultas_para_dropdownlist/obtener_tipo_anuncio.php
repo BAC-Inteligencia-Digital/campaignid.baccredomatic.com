@@ -1,5 +1,5 @@
  <?php
-   	include 'conexion_base_datos.php';
+   	include '../archivo_conexion_db/conexion_base_datos.php';
 
         $nombre_canal_elejido = $_GET['canal_digital'];
 	
