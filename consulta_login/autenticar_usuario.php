@@ -12,14 +12,15 @@
 	// Selección del a base de datos a utilizar
 	$db = mysqli_select_db( $conexion, $basededatos ) or die ( "Upps! Pues va a ser que no se ha podido conectar a la base de datos" );
 	// establecer y realizar consulta. guardamos en variable.
-	$consulta = "SELECT id FROM usuarios where (correo='$usuario_ingresado' or usuario_red='$usuario_ingresado') and contraseña='$contrasena_ingresada'";
+	$consulta = "SELECT * FROM usuarios where (correo='$usuario_ingresado' or usuario_red='$usuario_ingresado') and contraseña='$contrasena_ingresada'";
 	$resultado = mysqli_query( $conexion, $consulta ) or die ( "Algo ha ido mal en la consulta a la base de datos");
 
    if ($conexion)
    {
        while($row = mysqli_fetch_array($resultado)){
-	  $row_array['id'] = $row['id'];
-
+	      $row_array['id'] = $row['id'];
+          $row_array['nombre_usuario'] = $row['nombre'];
+          $row_array['apellidos_usuario'] = $row['apellidos'];
           array_push($return_arr,$row_array);
        }  
    }
