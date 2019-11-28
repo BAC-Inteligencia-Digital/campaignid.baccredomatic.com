@@ -1,9 +1,8 @@
 <?php
-    include 'conexion_base_datos.php';
+    include '../archivo_conexion_db/conexion_base_datos.php';
 
-    $identificador_bacid_padre  = $_GET['identificador_bacid_padre'];
+
     $identificador_subac_id     = $_GET['identificador_subac_id'];
-
     
     $grupo_anuncio = $_GET['grupo_anuncio'];
     $tipo_anuncio = $_GET['tipo_anuncio'];
@@ -57,7 +56,7 @@
 
     $actualizar = "UPDATE sub_bacid_generados 
     SET nombre_subbacid = '$subac_id_actualizado', fecha_modificacion = DATE_SUB(NOW(),INTERVAL 6 HOUR)
-    WHERE id_sub_bacid='$identificador_subac_id' and id_bacid_padre='$identificador_bacid_padre'";
+    WHERE id_sub_bacid='$identificador_subac_id'";
 
     if ($conexion->query($actualizar) === TRUE) {
         echo "Record updated successfully";

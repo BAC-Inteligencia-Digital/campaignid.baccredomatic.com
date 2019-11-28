@@ -1,8 +1,7 @@
 <?php
-	include 'conexion_base_datos.php';
+	include '../archivo_conexion_db/conexion_base_datos.php';
        
-
-    $identificador     = $_GET['identificador'];
+    $identificador   = $_GET['identificador'];
 
     $nombre_campana = $_GET['nombre_campana'];
     $pais = $_GET['pais'];
@@ -23,7 +22,8 @@
     $ab_tipo_campana;
     $ab_objetivo;
     $ab_canal_digital;
-     
+    
+    $return_arr = array();
 	
 	// creación de la conexión a la base de datos con mysql_connect()
 	$conexion = mysqli_connect( $servidor, $usuario, $password, $basededatos ) or die ("No se ha podido conectar al servidor de Base de datos");
@@ -124,6 +124,18 @@
        }  
     }
     
+    $consulta_subid = "SELECT * FROM sub_bacid_generados where id_bacid_padre='$identificador'";
+	$resultado_subid = mysqli_query($conexion, $consulta_subid ) or die ( "Algo ha ido mal en la consulta a la base de datos");
+
+    if ($conexion)
+    {
+       while($row = mysqli_fetch_array($resultado_subid)){
+          $row_array['id_subacid'] = $row['id_sub_bacid'];
+          $row_array['nombre_subbacid'] = $row['nombre_subbacid'];
+          array_push($return_arr,$row_array);
+        }  
+    }
+    echo json_encode($return_arr);
 
     //sección para realizar la actualización del BAC_ID
 
@@ -134,11 +146,14 @@
     WHERE id='$identificador'";
 
     if ($conexion->query($actualizar) === TRUE) {
-        echo "Record updated successfully";
+
     } else {
         echo "Error updating record: " . $conexion->error;
     }
 
+  
     mysqli_close($conexion);
+
+    
 
 ?>
