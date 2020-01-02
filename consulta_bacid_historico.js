@@ -2,12 +2,65 @@ document.querySelector('#botonProbarBACID').addEventListener('click', consultaHi
 
 document.querySelector('#botonDetalleBACID').addEventListener('click', consultaDetalleBACID);
 
+document.querySelector('#botonFiltrosBACID').addEventListener('click', consultaHistoricoBACIDFiltros);
+
 var capa_datos4 = "consulta_bacid_historicos/";
 var capa_datos5 = "insertar_bac_id/";
 
-function consultaHistoricoBACID(){
+function consultaHistoricoBACIDFiltros(){
+    
+    var nombre_campana = 'Inst';
+    var nombre_pais =  'Costa Rica';
+    var fecha_inicial = '18/11/2019'; //el formato de la fecha ay que acomodarlo así ejemplo dia/mes/año
+    var fecha_final   = '29/11/2019';
+  
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open('GET',capa_datos4+'consulta_bac_id_filtros.php?nombre_campana='+nombre_campana+
+    "&nombre_pais="+nombre_pais+"&fecha_desde="+fecha_inicial+"&fecha_hasta="+fecha_final,true);
+
+    xhttp.send();
+    
+    xhttp.onreadystatechange = function(){
+
+            if(this.readyState == 4 && this.status == 200){
+                let datos = JSON.parse(this.responseText);
+
+                for(let item of datos){
+
+                    var table = document.getElementById("t03");
+                    {
+                        var row = table.insertRow(1);
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        var cell3 = row.insertCell(2);
+                        var cell4 = row.insertCell(3);
+                        var cell5 = row.insertCell(4);
+                        var cell6 = row.insertCell(5);
+                        var cell7 = row.insertCell(6);
+                        var cell8 = row.insertCell(7);
+
+                        cell1.innerHTML = "<input type='hidden' value='"+item.id+"'>";
+                        //cell1.innerHTML = item.id;
+                        cell2.innerHTML = item.nombre_bac_id;
+                        cell3.innerHTML = item.nombre_campana;
+                        cell4.innerHTML = item.nombre_pais;
+                        cell5.innerHTML = item.nombre_origen;
+                        cell6.innerHTML = item.nombre_categoria;
+                        cell7.innerHTML = item.nombre_producto;
+                        cell8.innerHTML = "<input value='Presione' text='nano' type='button' id='"+item.nombre_bac_id+"' name='"+item.nombre_bac_id+"'/></Input>";
+                    }                        
+                }
+                    
+            }
+                        
+}
 
         
+
+}
+function consultaHistoricoBACID(){
+
         const xhttp = new XMLHttpRequest();
 
         xhttp.open('GET',capa_datos4+'consulta_historico_bacids.php',true);
