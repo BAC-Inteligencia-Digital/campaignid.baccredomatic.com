@@ -38,7 +38,7 @@
             join origen_clientes as c
             on c.codigo = substring(a.nombre_bac_id,4,1)
             join categoria as d
-            on d.codigo = substring(a.nombre_bac_id,6,4)
+            on d.codigo = substring(a.nombre_bac_id,6,4) and substring(a.nombre_bac_id,6,4) = 'MULT'
             join multiproducto as e
             on e.codigo = substring(nombre_bac_id,11,1) or e.codigo = substring(nombre_bac_id,12,1) or e.codigo = substring(nombre_bac_id,13,1)
             join portafolio as f
