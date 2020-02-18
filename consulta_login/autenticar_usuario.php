@@ -21,6 +21,7 @@
 	      $row_array['id'] = $row['id'];
           $row_array['nombre_usuario'] = $row['nombre'];
           $row_array['apellidos_usuario'] = $row['apellidos'];
+          $row_array['pais'] = $row['pais'];
           array_push($return_arr,$row_array);
        }  
    }

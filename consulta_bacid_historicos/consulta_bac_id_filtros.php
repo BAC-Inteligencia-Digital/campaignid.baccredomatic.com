@@ -14,19 +14,77 @@
 	// Selección del a base de datos a utilizar
 	$db = mysqli_select_db( $conexion, $basededatos ) or die ( "Upps! Pues va a ser que no se ha podido conectar a la base de datos" );
 	// establecer y realizar consulta. guardamos en variable.
-	$consulta = "select a.id, a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
-    c.nombre_origen, d.nombre_categoria, e.nombre_producto from bac_id_generados as a 
-    join pais as b 
-    on SUBSTRING(a.nombre_bac_id, 1, 3) = b.abreviatura
-    join origen_clientes as c
-    on SUBSTRING(a.nombre_bac_id, 4, 1) = c.codigo
-    join categoria as d
-    on SUBSTRING(a.nombre_bac_id, 6, 4) = d.codigo
-    join producto as e
-    on SUBSTRING(a.nombre_bac_id, 11, 3) = e.codigo
-    where a.nombre_campana like '%$nombre_campana%'
-    and SUBSTRING(a.nombre_bac_id, 1, 3) = (select abreviatura from pais where nombre = '$nombre_pais')
-    and a.fecha_creacion between '$fecha_desde' and '$fecha_hasta'";
+    $consulta;
+
+    if ($nombre_pais == 'Costa Rica' || $nombre_pais == 'El Salvador' || $nombre_pais == 'Panama' || $nombre_pais == 'Honduras' || $nombre_pais == 'Guatemala' || $nombre_pais == 'Nicaragua') {
+
+        $consulta = "select * from (
+            select a.id, a.fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
+            c.nombre_origen, d.nombre_categoria, e.nombre_producto from bac_id_generados as a 
+            join pais as b 
+            on SUBSTRING(a.nombre_bac_id, 1, 3) = b.abreviatura
+            join origen_clientes as c
+            on SUBSTRING(a.nombre_bac_id, 4, 1) = c.codigo
+            join categoria as d
+            on SUBSTRING(a.nombre_bac_id, 6, 4) = d.codigo
+            join producto as e
+            on SUBSTRING(a.nombre_bac_id, 11, 3) = e.codigo
+            where a.nombre_campana like '%$nombre_campana%'
+            and SUBSTRING(a.nombre_bac_id, 1, 3) = (select abreviatura from pais where nombre = '$nombre_pais')
+            and a.fecha_creacion between '$fecha_desde' and '$fecha_hasta'
+            union all
+            select a.id, a.fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
+            c.nombre_origen, d.nombre_categoria, GROUP_CONCAT('[',e.nombre_campana,']') as nombre_producto from bac_id_generados as a 
+            join pais as b 
+            on SUBSTRING(a.nombre_bac_id, 1, 3) = b.abreviatura
+            join origen_clientes as c
+            on SUBSTRING(a.nombre_bac_id, 4, 1) = c.codigo
+            join categoria as d
+            on d.codigo = substring(a.nombre_bac_id,6,4) and 'MULT' = substring(a.nombre_bac_id,6,4)
+            join multiproducto as e
+            on e.codigo = substring(a.nombre_bac_id,11,1) or e.codigo = substring(a.nombre_bac_id,12,1) or e.codigo = substring(a.nombre_bac_id,13,1)
+            where a.nombre_campana like '%$nombre_campana%'
+            and SUBSTRING(a.nombre_bac_id, 1, 3) = (select abreviatura from pais where nombre = '$nombre_pais')
+            and a.fecha_creacion between '$fecha_desde' and '$fecha_hasta'
+            group by a.id
+        ) tt
+        order by tt.fecha_creacion desc";
+
+    }
+    else{
+
+        $consulta = "select * from (
+            select a.id, a.fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
+            c.nombre_origen, d.nombre_categoria, e.nombre_producto from bac_id_generados as a 
+            join pais as b 
+            on SUBSTRING(a.nombre_bac_id, 1, 3) = b.abreviatura
+            join origen_clientes as c
+            on SUBSTRING(a.nombre_bac_id, 4, 1) = c.codigo
+            join categoria as d
+            on SUBSTRING(a.nombre_bac_id, 6, 4) = d.codigo
+            join producto as e
+            on SUBSTRING(a.nombre_bac_id, 11, 3) = e.codigo
+            where a.nombre_campana like '%$nombre_campana%'
+            and a.fecha_creacion between '$fecha_desde' and '$fecha_hasta'
+            union all
+            select a.id, a.fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
+            c.nombre_origen, d.nombre_categoria, GROUP_CONCAT('[',e.nombre_campana,']') as nombre_producto from bac_id_generados as a 
+            join pais as b 
+            on SUBSTRING(a.nombre_bac_id, 1, 3) = b.abreviatura
+            join origen_clientes as c
+            on SUBSTRING(a.nombre_bac_id, 4, 1) = c.codigo
+            join categoria as d
+            on d.codigo = substring(a.nombre_bac_id,6,4) and 'MULT' = substring(a.nombre_bac_id,6,4)
+            join multiproducto as e
+            on e.codigo = substring(a.nombre_bac_id,11,1) or e.codigo = substring(a.nombre_bac_id,12,1) or e.codigo = substring(a.nombre_bac_id,13,1)
+            where a.nombre_campana like '%$nombre_campana%'
+            and a.fecha_creacion between '$fecha_desde' and '$fecha_hasta'
+            group by a.id
+        ) tt
+        order by tt.fecha_creacion desc";
+
+    }
+
 	$resultado = mysqli_query( $conexion, $consulta ) or die ( "Algo ha ido mal en la consulta a la base de datos");
 
    if ($conexion)

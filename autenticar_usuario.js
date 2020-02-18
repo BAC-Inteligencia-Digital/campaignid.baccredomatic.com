@@ -30,6 +30,7 @@ function autenticarUsuario(){
                          if(id>0){
                             alert(item.nombre_usuario+" "+item.apellidos_usuario); //se obtiene el nombre y apellidos del usuario
                             console.log('registrado');
+                            console.log(item.pais) // aquí se obtiene el país del usuario
                          }
                          else{
                             console.log('no registrado'); 

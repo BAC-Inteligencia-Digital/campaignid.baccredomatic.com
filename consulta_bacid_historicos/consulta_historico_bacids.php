@@ -1,24 +1,9 @@
 <?php
    	include '../archivo_conexion_db/conexion_base_datos.php';
 
-    /*$nombre_usuario = $_GET['nombre_usuario'];
-    $pais_usuario;
-
+    $id_usuario = $_GET['id_usuario'];
+    $pais_obtenido;
     
-
-    $conn = new mysqli( $servidor, $usuario, $password , $basededatos);
-
-    $consulta_pais = "SELECT pais FROM usuarios where usuario_red='$nombre_usuario' or correo='$nombre_usuario'";
-    $resultado_pais = mysqli_query( $conn, $consulta_pais ) or die ( "Algo ha ido mal en la consulta a la base de datos");
-
-    if ($conn)
-    {
-        while($row = mysqli_fetch_array($resultado_pais)){
-
-            $pais_usuario = $row['pais'];
-
-        }  
-    }*/
     
     $return_arr = array();
 	// creación de la conexión a la base de datos con mysql_connect()
@@ -26,7 +11,19 @@
 	
 	// Selección del a base de datos a utilizar
 	$db = mysqli_select_db( $conexion, $basededatos ) or die ( "Upps! Pues va a ser que no se ha podido conectar a la base de datos" );
-	// establecer y realizar consulta. guardamos en variable.
+    
+    
+    $consulta_obtener_pais = "select pais from usuarios where id = $id_usuario";
+    $resultado_pais = mysqli_query( $conexion, $consulta_obtener_pais)
+    if ($conexion)
+    {
+       while($row = mysqli_fetch_array($resultado_pais)){
+        $pais_obtenido = $row['pais'];
+       }  
+    }
+    
+    
+    // establecer y realizar consulta. guardamos en variable.
 	$consulta = "select * from (
         select a.id,a.nombre_bac_id, a.fecha_creacion,a.nombre_campana, b.nombre as nombre_pais, c.nombre_origen, d.nombre_categoria, e.nombre_producto from bac_id_generados as a
             join pais as b
@@ -50,10 +47,11 @@
             group by a.id
         ) tt
         order by tt.fecha_creacion desc";
-	$resultado = mysqli_query( $conexion, $consulta ) or die ( "Algo ha ido mal en la consulta a la base de datos");
+    
+    $resultado = mysqli_query( $conexion, $consulta ) or die ( "Algo ha ido mal en la consulta a la base de datos");
 
-   if ($conexion)
-   {
+    if ($conexion)
+    {
        while($row = mysqli_fetch_array($resultado)){
         $row_array['id'] = $row['id'];
           $row_array['nombre_bac_id'] = $row['nombre_bac_id'];
@@ -64,7 +62,7 @@
 	      $row_array['nombre_producto'] = $row['nombre_producto'];
           array_push($return_arr,$row_array);
        }  
-   }
+    }
 
 mysqli_close($conexion);
 
