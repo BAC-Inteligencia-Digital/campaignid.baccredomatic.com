@@ -1,8 +1,5 @@
 <?php
    	include '../archivo_conexion_db/conexion_base_datos.php';
-
-    $id_usuario = $_GET['id_usuario'];
-    $pais_obtenido;
     
     
     $return_arr = array();
@@ -11,17 +8,7 @@
 	
 	// Selección del a base de datos a utilizar
 	$db = mysqli_select_db( $conexion, $basededatos ) or die ( "Upps! Pues va a ser que no se ha podido conectar a la base de datos" );
-    
-    
-    $consulta_obtener_pais = "select pais from usuarios where id = $id_usuario";
-    $resultado_pais = mysqli_query( $conexion, $consulta_obtener_pais)
-    if ($conexion)
-    {
-       while($row = mysqli_fetch_array($resultado_pais)){
-        $pais_obtenido = $row['pais'];
-       }  
-    }
-    
+       
     
     // establecer y realizar consulta. guardamos en variable.
 	$consulta = "select * from (
