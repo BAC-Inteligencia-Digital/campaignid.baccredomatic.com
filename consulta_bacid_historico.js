@@ -63,7 +63,7 @@ function consultaHistoricoBACID(){
 
         const xhttp = new XMLHttpRequest();
 
-        xhttp.open('GET',capa_datos4+'consulta_historico_bacids.php',true);
+        xhttp.open('GET',capa_datos4+'consulta_historico_bacids.php',true);//Agregar el parametro de nombre pais
 
         xhttp.send();
         
