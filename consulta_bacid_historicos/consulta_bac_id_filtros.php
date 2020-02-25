@@ -19,7 +19,7 @@
     if ($nombre_pais == 'Costa Rica' || $nombre_pais == 'El Salvador' || $nombre_pais == 'Panama' || $nombre_pais == 'Honduras' || $nombre_pais == 'Guatemala' || $nombre_pais == 'Nicaragua') {
 
         $consulta = "select * from (
-            select a.id, STR_TO_DATE(a.fecha_creacion, '%e/%c/%Y') as fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
+            select a.id, STR_TO_DATE(a.fecha_creacion, '%d/%m/%Y') as fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
             c.nombre_origen, d.nombre_categoria, e.nombre_producto from bac_id_generados as a 
             join pais as b 
             on SUBSTRING(a.nombre_bac_id, 1, 3) = b.abreviatura
@@ -33,7 +33,7 @@
             and SUBSTRING(a.nombre_bac_id, 1, 3) = (select abreviatura from pais where nombre = '$nombre_pais')
             and a.fecha_creacion between '$fecha_desde' and '$fecha_hasta'
             union all
-            select a.id, STR_TO_DATE(a.fecha_creacion, '%e/%c/%Y') as fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
+            select a.id, STR_TO_DATE(a.fecha_creacion, '%d/%m/%Y') as fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
             c.nombre_origen, d.nombre_categoria, GROUP_CONCAT('[',e.nombre_campana,']') as nombre_producto from bac_id_generados as a 
             join pais as b 
             on SUBSTRING(a.nombre_bac_id, 1, 3) = b.abreviatura
@@ -48,14 +48,14 @@
             and a.fecha_creacion between '$fecha_desde' and '$fecha_hasta'
             group by a.id
         ) tt
-        where tt.fecha_creacion between STR_TO_DATE('$fecha_desde', '%e/%c/%Y') and STR_TO_DATE('$fecha_hasta', '%e/%c/%Y')
+        where tt.fecha_creacion between STR_TO_DATE('$fecha_desde', '%d/%m/%Y') and STR_TO_DATE('$fecha_hasta', '%d/%m/%Y')
         order by tt.fecha_creacion desc";
 
     }
     else{
 
         $consulta = "select * from (
-            select a.id, STR_TO_DATE(a.fecha_creacion, '%e/%c/%Y') as fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
+            select a.id, STR_TO_DATE(a.fecha_creacion, '%d/%m/%Y') as fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
             c.nombre_origen, d.nombre_categoria, e.nombre_producto from bac_id_generados as a 
             join pais as b 
             on SUBSTRING(a.nombre_bac_id, 1, 3) = b.abreviatura
@@ -67,7 +67,7 @@
             on SUBSTRING(a.nombre_bac_id, 11, 3) = e.codigo
             where a.nombre_campana like '%$nombre_campana%'
             union all
-            select a.id, STR_TO_DATE(a.fecha_creacion, '%e/%c/%Y') as fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
+            select a.id, STR_TO_DATE(a.fecha_creacion, '%d/%m/%Y') as fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
             c.nombre_origen, d.nombre_categoria, GROUP_CONCAT('[',e.nombre_campana,']') as nombre_producto from bac_id_generados as a 
             join pais as b 
             on SUBSTRING(a.nombre_bac_id, 1, 3) = b.abreviatura
@@ -80,7 +80,7 @@
             where a.nombre_campana like '%$nombre_campana%'
             group by a.id
         ) tt
-         where tt.fecha_creacion between STR_TO_DATE('$fecha_desde', '%e/%c/%Y') and STR_TO_DATE('$fecha_hasta', '%e/%c/%Y')
+         where tt.fecha_creacion between STR_TO_DATE('$fecha_desde', '%d/%m/%Y') and STR_TO_DATE('$fecha_hasta', '%d/%m/%Y')
          order by tt.fecha_creacion desc";
 
     }
