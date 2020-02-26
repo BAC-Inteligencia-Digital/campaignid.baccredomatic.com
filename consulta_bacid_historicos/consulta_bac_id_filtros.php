@@ -6,17 +6,7 @@
     $fecha_desde = $_GET['fecha_desde'];
     $fecha_hasta = $_GET['fecha_hasta'];
 
-    list($dia1, $mes1, $año1) = split('[/]', $fecha_desde);
-    list($dia2, $mes2, $año2) = split('[/]', $fecha_hasta);
-
-    if (strlen($dia1) = 1){
-        $fecha_desde =  "0".$fecha_desde;
-    }
-
-    if (strlen($dia2) = 1){
-        $fecha_hasta =  "0".$fecha_hasta;
-    }
-
+   
     $return_arr = array();
 	
 	// creación de la conexión a la base de datos con mysql_connect()
