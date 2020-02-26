@@ -7,8 +7,7 @@
     $fecha_hasta = $_GET['fecha_hasta'];
 
     $iparr = split ("/", $fecha_desde);  
-    echo $iparr[0];
-
+   
     $return_arr = array();
 	
 	// creación de la conexión a la base de datos con mysql_connect()
