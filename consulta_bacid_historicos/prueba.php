@@ -1,6 +1,6 @@
 <?php
 
-$fecha  = "15/2/2020";
+$fecha  = $_GET['fecha_desde'];
 list($dia) = explode("/", $fecha);
 echo $dia; 
 
