@@ -10,7 +10,11 @@
     list($dia2) = explode("/", $fecha_hasta); 
     
     if (strlen($dia)==1){
-        echo "nanito";
+        $fecha_desde = "0".$fecha_desde;
+    }
+
+    if (strlen($dia2)==1){
+        $fecha_hasta = "0".$fecha_hasta;
     }
 
     $return_arr = array();
