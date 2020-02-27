@@ -7,7 +7,11 @@
     $fecha_hasta = $_GET['fecha_hasta'];
 
     list($dia) = explode("/", $fecha_desde);
-    list($dia2) = explode("/", $fecha_hasta);    
+    list($dia2) = explode("/", $fecha_hasta); 
+    
+    if (strlen($dia)==1){
+        echo "nanito";
+    }
 
     $return_arr = array();
 	
