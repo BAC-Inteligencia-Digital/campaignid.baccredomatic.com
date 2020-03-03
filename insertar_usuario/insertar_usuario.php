@@ -16,7 +16,7 @@
         die("Connection failed: " . $conn->connect_error);
     }
     $sql = "INSERT INTO usuarios (usuario_red,contraseña,correo,tipo_usuario,pais,nombre,apellidos)
-    VALUES ('$usuario_red', $contrasena,'$correo','$tipo_usuario','$pais','$nombre','$apellidos')";
+    VALUES ('$usuario_red', '$contrasena','$correo','$tipo_usuario','$pais','$nombre','$apellidos')";
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
     } else {
