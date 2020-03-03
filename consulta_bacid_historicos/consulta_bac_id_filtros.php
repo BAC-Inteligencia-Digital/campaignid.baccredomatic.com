@@ -9,8 +9,8 @@
 
     //** VALIDAR EL DÍA DEL FILTRO PARA AGREGARLE UN CERO Y LA BASE DE DATOS LEA EL FILTRO CORRECTAMENTE
 
-    list($dia) = explode("/", $fecha_desde);
-    list($dia2) = explode("/", $fecha_hasta); 
+    list($dia,$mes) = explode("/", $fecha_desde);
+    list($dia2,$mes2) = explode("/", $fecha_hasta); 
     
     if (strlen($dia)==1){
         $fecha_desde = "0".$fecha_desde;
