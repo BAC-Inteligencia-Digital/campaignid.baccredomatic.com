@@ -1,4 +1,5 @@
 
+document.querySelector('#insercionBoton').addEventListener('click', insertarUsuario);
 
 var capa_datos_insertaruser = "https://bac-id-new.azurewebsites.net/insertar_usuario/"
 
