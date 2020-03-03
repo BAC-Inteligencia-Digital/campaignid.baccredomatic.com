@@ -15,7 +15,7 @@ function insertarUsuario(){
 
     const xhttp = new XMLHttpRequest();
 
-    xhttp.open('GET',capa_datos_insertaruser+'insertar_usuario?usuario_red='+usuario_red+'&contrasena='+contrasena
+    xhttp.open('GET',capa_datos_insertaruser+'insertar_usuario.php?usuario_red='+usuario_red+'&contrasena='+contrasena
     +'&correo='+correo+'&tipo_usuario='+tipo_usuario+'&pais='+pais+'&nombre='+nombre+'&apellidos='+apellidos,true);
 
     xhttp.send();
