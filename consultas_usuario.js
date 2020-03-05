@@ -1,6 +1,7 @@
 
 document.querySelector('#insercionBoton').addEventListener('click', insertarUsuario);
 document.querySelector('#buscarBoton').addEventListener('click', buscarUsuario);
+document.querySelector('#actualizarBoton').addEventListener('click', actualizarUsuario);
 
 var capa_datos_insertaruser = "https://bac-id-new.azurewebsites.net/consultas_usuario/"
 
@@ -58,6 +59,35 @@ function buscarUsuario(){
                      console.log(item.pais);
                      console.log(item.tipo_usuario);
                }   
+            }
+            
+    }
+}
+
+function actualizarUsuario(){
+
+    var id_usuario = 1; //Este id sería ideal que lo guarde en un local storage luego de llamar la función buscar_usuario
+    
+    var usuario_red = 'jose.navarror';
+    var contrasena = 'nano77nueva';
+    var correo = 'navrojd77@gmail.com';
+    var tipo_usuario = '1'; //1 si es administrador 2 si es usuario normal
+    var pais = 'REG';// CRI, GUA, NIC, etc
+    var nombre = 'José';
+    var apellidos = 'Navarro Romero';
+
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open('GET',capa_datos_insertaruser+'actualizar_usuario.php?id_usuario='+id_usuario+'&usuario_red='+usuario_red+'&contrasena='+contrasena
+    +'&correo='+correo+'&tipo_usuario='+tipo_usuario+'&pais='+pais+'&nombre='+nombre+'&apellidos='+apellidos,true);
+
+    xhttp.send();
+    
+    xhttp.onreadystatechange = function(){
+
+            if(this.readyState == 4 && this.status == 200){
+
+                    
             }
             
     }
