@@ -46,6 +46,8 @@ function buscarUsuario(){
 
             if(this.readyState == 4 && this.status == 200){
 
+                let datos = JSON.parse(this.responseText);
+                
                 for(let item of datos){
                      console.log(item.id);
                      console.log(item.usuario_red);
