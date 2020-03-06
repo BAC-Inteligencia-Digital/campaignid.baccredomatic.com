@@ -32,6 +32,7 @@ function autenticarUsuario(){
                             console.log('registrado');
                             console.log(item.pais) // aquí se obtiene el país del usuario
                             console.log(item.tipo_usuario) // aquí se obtiene el tipo de rol del usuario
+                            console.log(item.estado) // aquí se obtiene el estado del usuario
                          }
                          else{
                             console.log('no registrado'); 
