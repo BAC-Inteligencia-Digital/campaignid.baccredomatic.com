@@ -58,6 +58,7 @@ function buscarUsuario(){
                      console.log(item.apellidos_usuario);
                      console.log(item.pais);
                      console.log(item.tipo_usuario);
+                     console.log(item.estado);
                }   
             }
             
@@ -75,11 +76,12 @@ function actualizarUsuario(){
     var pais = 'REG';// CRI, GUA, NIC, etc
     var nombre = 'José';
     var apellidos = 'Navarro Romero';
+    var estado = '1';// 1 si está activo ; 0 si no está activo
 
     const xhttp = new XMLHttpRequest();
 
     xhttp.open('GET',capa_datos_insertaruser+'actualizar_usuario.php?id_usuario='+id_usuario+'&usuario_red='+usuario_red+'&contrasena='+contrasena
-    +'&correo='+correo+'&tipo_usuario='+tipo_usuario+'&pais='+pais+'&nombre='+nombre+'&apellidos='+apellidos,true);
+    +'&correo='+correo+'&tipo_usuario='+tipo_usuario+'&pais='+pais+'&nombre='+nombre+'&apellidos='+apellidos+'&estado='+estado,true);
 
     xhttp.send();
     

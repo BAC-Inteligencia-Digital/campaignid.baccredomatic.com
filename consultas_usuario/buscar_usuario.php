@@ -25,6 +25,7 @@
           $row_array['apellidos_usuario'] = $row['apellidos'];
           $row_array['pais'] = $row['pais'];
           $row_array['tipo_usuario'] = $row['tipo_usuario'];
+          $row_array['estado'] = $row['estado'];
           array_push($return_arr,$row_array);
        }  
    }
