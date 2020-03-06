@@ -31,6 +31,7 @@ function autenticarUsuario(){
                             alert(item.nombre_usuario+" "+item.apellidos_usuario); //se obtiene el nombre y apellidos del usuario
                             console.log('registrado');
                             console.log(item.pais) // aquí se obtiene el país del usuario
+                            console.log(item.tipo_usuario) // aquí se obtiene el tipo de rol del usuario
                          }
                          else{
                             console.log('no registrado'); 

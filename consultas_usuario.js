@@ -15,6 +15,7 @@ function insertarUsuario(){
     var pais = document.getElementById("id_pais").value;
     var nombre = document.getElementById("id_nombre").value;
     var apellidos = document.getElementById("id_apellidos").value;
+    var estado = 1; //1 si es activo y 0 es inactivo
 
     const xhttp = new XMLHttpRequest();
 
