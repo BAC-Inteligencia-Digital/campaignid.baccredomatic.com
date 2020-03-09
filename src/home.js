@@ -29,6 +29,7 @@ const initController = (() => {
         drops.getDigitalChannels();
         procedurs.getUser();
         datePicker();
+        procedurs.showUserAdminBtn();
     };
 
 })();
@@ -527,7 +528,7 @@ const getAd = (chanelSelected) => {
                     let codeAd = item.codigo;
                     let ads = item.nombre;
                     let ids = ads.split(" ").join("");
-                    document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='' maxlength='5' name='nombre-anuncio' />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' />" + "</div>" + "</div>" + "<hr>";
+                    document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='' maxlength='5' name='nombre-anuncio' />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
                 }
 
 
@@ -570,7 +571,6 @@ function este(valor) {
 }
 
 const loadAdsByChannel = () => {
-    debugger;
     dllAd = document.getElementsByClassName("dllAd");
     let getSection = document.querySelectorAll(".line-selects");
     let index;
@@ -1185,6 +1185,7 @@ onchange = function () {
         }
         element3[num].value = "";
         element1[num].value = "";
+         element3[num].disabled = true;
     };
 
     if (target.checked == true) {
@@ -1199,6 +1200,7 @@ onchange = function () {
                 }
             }
             element3[num].disabled = true;
+            element1[num].disabled = true;
             let ele3val = element3[num].value = "00000";
             element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + ele3val + "/" + txtCampaignName.value;
         } else {
@@ -1209,14 +1211,24 @@ onchange = function () {
                     num = b;
                 }
             }
-            debugger;
             element3[num].disabled = false;
-            element1[num].value = getGroupSelected + "-" + target.defaultValue + "-";
+            element1[num].disabled = true;
+            element3[num].value = "0000";
+            element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + element3[num].value + "/" + txtCampaignName.value;
             element3[num].addEventListener("input", updateValue);
 
             function updateValue(e) {
                 getKey = e.target.value;
                 element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + getKey + "/" + txtCampaignName.value;
+            }
+            element3[num].onfocus = () => {
+                element3[num].value = "";
+            }
+            element3[num].onblur = () => {
+                if(!element3[num].value){
+                    element3[num].value = "00000";
+                    element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + element3[num].value + "/" + txtCampaignName.value;
+                }
             }
             element3[num].onkeypress = (e) => {
 

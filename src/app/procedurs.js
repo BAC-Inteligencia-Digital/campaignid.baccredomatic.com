@@ -717,8 +717,6 @@ const procedurs = (() => {
                 }
             };
 
-            
-
             function getProducts(selectedCate){
                 xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/obtener_producto.php?categoria=' + selectedCate, true);
                 xhttp.send();
@@ -744,7 +742,179 @@ const procedurs = (() => {
                    }
                }
         }
+
+
         
+    }
+
+    const getCountries = () => {
+        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        const xhttp = new XMLHttpRequest();
+        let countries = [];
+        xhttp.open('GET', cnxn + 'obtener_paises.php', true);
+        xhttp.send();
+
+        xhttp.onreadystatechange = function () {    
+            if (this.readyState == 4 && this.status == 200) {
+                let datos = JSON.parse(this.responseText);
+                console.log(datos);
+                for (let item of datos) {
+                    countries.push(item.nombre);
+                }
+                for (let i in countries) {
+                    document.getElementById("dllCountries").innerHTML += "<option value='" + countries[i] + "'>" + countries[i] + "</option>";
+                }
+            }
+        }
+    };
+
+    const insertarUsuario = (netUserName, pass, email, userType, country, name, firstName, userState) => {
+        var capa_datos_insertaruser = "https://bac-id-new.azurewebsites.net/consultas_usuario/";
+        var usuario_red = netUserName;
+        var contrasena = pass;
+        var correo = email;
+        var tipo_usuario = userType;
+        var pais = country;
+        var nombre = name;
+        var apellidos = firstName;
+        var estado = userState; 
+
+        const xhttp = new XMLHttpRequest();
+
+        xhttp.open('GET', capa_datos_insertaruser + 'insertar_usuario.php?usuario_red=' + usuario_red + '&contrasena=' + contrasena
+            + '&correo=' + correo + '&tipo_usuario=' + tipo_usuario + '&pais=' + pais + '&nombre=' + nombre + '&apellidos=' + apellidos + '&estado' + estado, true);
+
+        xhttp.send();
+
+        xhttp.onreadystatechange = function () {
+
+            if (this.readyState == 4 && this.status == 200) {
+
+
+            }
+
+        }
+    }
+
+    const setCountryValue = (setCountry) => {
+        switch(setCountry){
+            case "GUA":
+            document.getElementById("Guatemala").selected = "true";
+            document.getElementById("Guatemala").value = "GUA";
+            break;
+        case "CRI":
+            document.getElementById("Costa Rica").selected = "true";
+            document.getElementById("Costa Rica").value = "CRI";
+            break;
+        case "ESA":
+            document.getElementById("Salvador").selected = "true";
+            document.getElementById("Salvador").value = "ESA";
+            break;
+        case "HON":
+            document.getElementById("Honduras").selected = "true";
+            document.getElementById("Honduras").value = "HON";
+            break;
+        case "PAN":
+            document.getElementById("Panama").selected = "true";
+            document.getElementById("Panama").value = "PAN";
+        case "NIC":
+            document.getElementById("Nicaragua").selected = "true";
+            document.getElementById("Nicaragua").value = "NIC";
+            break;
+        case "REG":
+            document.getElementById("Regional").selected = "true";
+            document.getElementById("Regional").value = "REG";
+            break;
+        }
+    }
+
+    const buscarUsuario = (user) => {
+        var capa_datos_insertaruser = "https://bac-id-new.azurewebsites.net/consultas_usuario/";
+        var usuario_ingresado = user; //aquí se manda el campo que corresponde al usuario de red o al correo 
+        var showCountry = "";
+        const xhttp = new XMLHttpRequest();
+    
+        xhttp.open('GET',capa_datos_insertaruser+'buscar_usuario.php?usuario_ingresado='+usuario_ingresado,true);
+    
+        xhttp.send();
+        
+        xhttp.onreadystatechange = function(){
+    
+                if(this.readyState == 4 && this.status == 200){
+    
+                    let datos = JSON.parse(this.responseText);
+                    
+                    for(let item of datos){
+                        document.getElementById("txtUserId").value = item.id;
+                        document.getElementById("txtNombre").value = item.nombre_usuario;
+                        document.getElementById("txtApellido").value = item.apellidos_usuario;
+                        document.getElementById("txtUsuarioRed").value = item.usuario_red;
+                        document.getElementById("txtEmail").value = item.correo;
+                        document.getElementById("txtPassword").value = item.contrasena;
+                        setCountryValue(item.pais);
+
+                        switch(item.tipo_usuario){
+                            case "1":
+                            document.getElementById("admin").selected = "true";
+                            break;
+                            default:
+                            document.getElementById("edit").selected = "true";
+                            break;
+                        }
+
+                        switch(item.estado){
+                            case "1":
+                            document.getElementById('dllActive').selected = "true";
+                            break;
+                            default:
+                            document.getElementById('dllInactive').selected = "true";
+                            break;
+                        }
+                   }   
+                }
+                
+        }
+    }
+
+    const actualizarUsuario = (idUser,netUserName, pass, email, userType, country, name, firstName, userState) => {
+        var capa_datos_insertaruser = "https://bac-id-new.azurewebsites.net/consultas_usuario/";
+        var id_usuario = idUser; //Este id sería ideal que lo guarde en un local storage luego de llamar la función buscar_usuario
+        
+        var usuario_red = netUserName;
+        var contrasena = pass;
+        var correo = email;
+        var tipo_usuario = userType; //1 si es administrador 2 si es usuario normal
+        var pais = country;// CRI, GUA, NIC, etc
+        var nombre = name;
+        var apellidos = firstName;
+        var estado = userState;// 1 si está activo ; 0 si no está activo
+    
+        const xhttp = new XMLHttpRequest();
+    
+        xhttp.open('GET',capa_datos_insertaruser+'actualizar_usuario.php?id_usuario='+id_usuario+'&usuario_red='+usuario_red+'&contrasena='+contrasena
+        +'&correo='+correo+'&tipo_usuario='+tipo_usuario+'&pais='+pais+'&nombre='+nombre+'&apellidos='+apellidos+'&estado='+estado,true);
+    
+        xhttp.send();
+        
+        xhttp.onreadystatechange = function(){
+    
+                if(this.readyState == 4 && this.status == 200){
+    
+                        
+                }
+                
+        }
+    }
+
+    const showUserAdminBtn = () => {
+        let userRol = localStorage.getItem('country');
+        let userData = JSON.parse(userRol);
+        let countryCode = userData[0];
+        if(countryCode !== "REG"){
+           
+        }else{
+            document.getElementById("btnUserAdmin").classList.remove("d-none");
+        }
     }
 
     return {
@@ -754,6 +924,12 @@ const procedurs = (() => {
         filters,
         consularBACIDcreado,
         editBACIDcreado,
+        getCountries,
+        insertarUsuario,
+        buscarUsuario,
+        setCountryValue,
+        actualizarUsuario,
+        showUserAdminBtn,
         name: "procedurs"
     }
 })();

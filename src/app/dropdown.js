@@ -15,7 +15,7 @@ export class dropDown {
                     countries.push(item.nombre);
                 }
                 for (let i in countries) {
-                    document.getElementById("dllCountries").innerHTML += "<option value='" + countries[i] + "'>" + countries[i] + "</option>";
+                    document.getElementById("dllCountries").innerHTML += "<option id='" + countries[i] + "' value='" + countries[i] + "'>" + countries[i] + "</option>";
                 }
             }
         }

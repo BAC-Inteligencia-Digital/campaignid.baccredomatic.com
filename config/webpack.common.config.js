@@ -11,7 +11,8 @@ module.exports = {
         home: './src/home',
         consulta: './src/consulta',
         codigo: './src/codigo',
-        editar: './src/editar'
+        editar: './src/editar',
+        crearUsuario: './src/crear-usuario'
      },
     output: {
         path: path.resolve(__dirname, '../dist'),
@@ -119,6 +120,17 @@ module.exports = {
             inject: true,
             chunks: ['editar'],
             filename: 'editar.html',
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true
+            }
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Campaignid | BAC Credomatic | Crear usuario',
+            template: './src/crear-usuario.html',
+            inject: true,
+            chunks: ['crearUsuario'],
+            filename: 'crear-usuario.html',
             minify: {
                 removeComments: true,
                 collapseWhitespace: true

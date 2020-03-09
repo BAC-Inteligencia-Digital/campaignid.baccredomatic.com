@@ -11,6 +11,17 @@ body {
     font-size: .8em;
 }
 
+.showModal{
+    display: block;
+    background:rgba(0, 0, 0, 0.75);
+    z-index: 999999;
+    align-items: center !important;
+    justify-content: center !important;
+    p{
+        font-size: 1.2em;
+    }
+}
+
 .loginBody {
     display: -ms-flexbox;
     display: -webkit-box;

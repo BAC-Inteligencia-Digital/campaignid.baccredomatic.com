@@ -16,6 +16,7 @@ const initConsulta = (() => {
     procedurs.getUser();
     localStorage.removeItem('items');
     getUserCountry();
+    procedurs.showUserAdminBtn();
 })();
 
 const btnlogOut = document.getElementById("brnLogOut");

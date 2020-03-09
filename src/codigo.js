@@ -14,6 +14,7 @@ const initSearch = (() => {
   getGetting.innerHTML = header.timeOfDay();
   procedurs.getUser();
   procedurs.consularBACIDcreado(bacId);
+  procedurs.showUserAdminBtn();
 })();
 
 let bacId = "";
