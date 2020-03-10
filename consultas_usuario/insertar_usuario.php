@@ -18,7 +18,7 @@
 
     $conn = new mysqli( $servidor, $usuario, $password , $basededatos);
 
-    $consulta_validar = "SELECT id FROM usuarios where usuario_red = '$usuario_ingresado' or correo = '$correo'";
+    $consulta_validar = "SELECT * FROM usuarios where usuario_red = '$usuario_ingresado' or correo = '$correo'";
     $resultado_validar = mysqli_query( $conn, $consulta_validar) or die ( "Algo ha ido mal en la consulta a la base de datos");
     
     if ($conn)
