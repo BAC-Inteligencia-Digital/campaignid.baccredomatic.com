@@ -20,7 +20,7 @@ function insertarUsuario(){
     const xhttp = new XMLHttpRequest();
 
     xhttp.open('GET',capa_datos_insertaruser+'insertar_usuario.php?usuario_red='+usuario_red+'&contrasena='+contrasena
-    +'&correo='+correo+'&tipo_usuario='+tipo_usuario+'&pais='+pais+'&nombre='+nombre+'&apellidos='+apellidos,true);
+    +'&correo='+correo+'&tipo_usuario='+tipo_usuario+'&pais='+pais+'&nombre='+nombre+'&apellidos='+apellidos+'&estado='+estado,true);
 
     xhttp.send();
     
@@ -28,7 +28,7 @@ function insertarUsuario(){
 
             if(this.readyState == 4 && this.status == 200){
 
-                
+                    
             }
             
     }
