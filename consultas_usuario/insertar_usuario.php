@@ -25,7 +25,7 @@
     {
         while($row1 = mysqli_fetch_array($resultado_validar)){
               $validar = $row1['id'];
-              $row_array['validar'] = $row1['id'];
+              $row_array['validar'] = "nano";
               array_push($return_arr,$row_array);
         }  
     }
