@@ -11,24 +11,18 @@
     $apellidos = $_GET['apellidos'];
     $estado = $_GET['estado'];
     
-     
     $conn = new mysqli( $servidor, $usuario, $password , $basededatos);
-
-    // Check connection for insert usuario
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        $sql = "INSERT INTO usuarios (usuario_red,contraseña,correo,tipo_usuario,pais,nombre,apellidos,estado)
-        VALUES ('$usuario_red', '$contrasena','$correo','$tipo_usuario','$pais','$nombre','$apellidos','$estado')";
-        if ($conn->query($sql) === TRUE) {
-            echo "New record created successfully";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
-
-   
+    $sql = "INSERT INTO usuarios (usuario_red,contraseña,correo,tipo_usuario,pais,nombre,apellidos,estado)
+    VALUES ('$usuario_red', '$contrasena','$correo','$tipo_usuario','$pais','$nombre','$apellidos','$estado')";
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
     $conn->close();
-
 
 ?>
