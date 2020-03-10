@@ -24,7 +24,7 @@
     if ($conn)
     {
         while($row1 = mysqli_fetch_array($resultado_validar)){
-              $validar = $row1['id'];
+              $validar = $row1['usuario_red'];
         }  
     }
 

@@ -31,8 +31,8 @@ function insertarUsuario(){
                 let datos = JSON.parse(this.responseText);
                 
                 for(let item of datos){
-                     console.log(item.console.error);
-                                        
+                     alert(item.error); //Alerta de usuario ya creado o que si es un nuevo usuario
+                                     
                }   
             }
             
