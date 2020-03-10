@@ -37,6 +37,7 @@
         VALUES ('$usuario_red', '$contrasena','$correo','$tipo_usuario','$pais','$nombre','$apellidos','$estado')";
         if ($conn->query($sql) === TRUE) {
             $row_array['error'] = "El usuario ha sido registrado con éxito!";
+            array_push($return_arr,$row_array);
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
@@ -44,7 +45,7 @@
 
     else{
         $row_array['error'] = "El usuario o correo electrónico ya se encuentran registrados!";
-        
+        array_push($return_arr,$row_array);
     }
     $conn->close();
 
