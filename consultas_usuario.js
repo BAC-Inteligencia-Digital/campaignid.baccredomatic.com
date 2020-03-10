@@ -28,12 +28,7 @@ function insertarUsuario(){
 
             if(this.readyState == 4 && this.status == 200){
 
-                let datos = JSON.parse(this.responseText);
                 
-                for(let item of datos){
-                     alert(item.error); //Alerta de usuario ya creado o que si es un nuevo usuario
-                     alert(item.validar);        
-               }   
             }
             
     }
