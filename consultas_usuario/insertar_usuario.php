@@ -24,11 +24,11 @@
     if ($conn)
     {
         while($row1 = mysqli_fetch_array($resultado_validar)){
-              $validar = $row1['usuario_red'];
+              $validar = $row1['id'];
         }  
     }
 
-    if (empty($validar)  || is_null($validar)){
+    if ($validar<1){
         // Check connection for insert user
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
