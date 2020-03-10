@@ -32,7 +32,7 @@ function insertarUsuario(){
                 
                 for(let item of datos){
                      alert(item.error); //Alerta de usuario ya creado o que si es un nuevo usuario
-                                     
+                     alert(item.validar);        
                }   
             }
             
