@@ -24,10 +24,10 @@
     ) LIMIT 1;";
 
     if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
+        echo "El usuario ha sido registrado en la plataforma";
         
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "El usuario de red o correo electrónico ya se encuentran registrados en la plataforma";
        
     }
     $conn->close();
