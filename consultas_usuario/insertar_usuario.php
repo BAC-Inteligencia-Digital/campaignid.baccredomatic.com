@@ -25,11 +25,11 @@
     ) LIMIT 1;";
 
     if ($conn->query($sql) === TRUE) {
-        //echo "New record created successfully";
+        echo "New record created successfully";
         $row_array['mensaje'] = "New record created successfully" ;
         array_push($return_arr,$row_array);
     } else {
-        //echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $sql . "<br>" . $conn->error;
         $row_array['mensaje'] = "Error: " . $sql . "<br>" . $conn->error;;
         array_push($return_arr,$row_array);
     }
