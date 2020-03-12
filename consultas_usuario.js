@@ -28,13 +28,13 @@ function insertarUsuario(){
 
             if(this.readyState == 4 && this.status == 200){
 
-                var validacion_existencia = this.responseText;
+                var validacion_existencia = this.responseText; // variabla trae el valor de php donde 0 ya está creado y 1 que se puede crear como nuevo registro
                 
                 if (validacion_existencia == 0){
-                    alert("El usuario de red o correo electrónico ya se encuentran registrados en la plataforma");
+                    alert("El usuario de red o correo electrónico ya se encuentran registrados en la plataforma"); //Mensaje de que el usuario ya está creado
                 }
                 else{
-                    alert("El usuario ha sido registrado en la plataforma");
+                    alert("El usuario ha sido registrado en la plataforma"); //Mensaje de que el usuario se puede insertar
                 }
                 
             }
