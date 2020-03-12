@@ -25,13 +25,7 @@
 
     if ($conn->query($sql) === TRUE) {
        
-       if(mysqli_affected_rows($conn)==0){
-            echo "El usuario o correo electrónico ya se encuentran registrados en la plataforma";
-       }
-       else{
-            echo "El usuario ha sido registrado en la plataforma";
-       }
-        
+        echo mysqli_affected_rows($conn);
         
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
