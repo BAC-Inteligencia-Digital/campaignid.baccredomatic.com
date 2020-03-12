@@ -24,7 +24,7 @@
     ) LIMIT 1;";
 
     if ($conn->query($sql) === TRUE) {
-        echo "El usuario ha sido registrado en la plataforma";
+        "Affected rows: " . $mysqli -> affected_rows;
         
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
