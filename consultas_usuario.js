@@ -28,7 +28,7 @@ function insertarUsuario(){
 
             if(this.readyState == 4 && this.status == 200){
 
-                alert(this.responseText);
+                alert(this.responseText); // Este mensaje es el que se debe mostrar luego de intentar registrar un nuevo usuario
             }
             
     }

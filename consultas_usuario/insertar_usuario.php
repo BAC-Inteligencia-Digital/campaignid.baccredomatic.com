@@ -24,7 +24,14 @@
     ) LIMIT 1;";
 
     if ($conn->query($sql) === TRUE) {
-       echo  "Affected rows: " . mysqli_affected_rows($conn);
+       
+       if(mysqli_affected_rows($conn)==0){
+            echo "El usuario o correo electrónico ya se encuentran registrados en la plataforma";
+       }
+       else{
+            echo "El usuario ha sido registrado en la plataforma";
+       }
+        
         
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
