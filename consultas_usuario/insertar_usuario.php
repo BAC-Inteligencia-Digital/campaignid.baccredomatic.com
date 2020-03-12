@@ -3,7 +3,6 @@
     include '../archivo_conexion_db/conexion_base_datos.php';
 
 
-
     $usuario_red = $_GET['usuario_red'];
     $contrasena = $_GET['contrasena'];
     $correo = $_GET['correo'];
@@ -19,7 +18,7 @@
         die("Connection failed: " . $conn->connect_error);
     }
     $sql = "INSERT INTO usuarios (usuario_red, contraseña, correo,tipo_usuario,pais,nombre,apellidos,estado)
-    SELECT * FROM (SELECT '$usuario_red', '$contrasena', '$correo','$tipo_usuario','$pais','$nombre','$apellidos','$estado') AS tmp
+    SELECT * FROM (SELECT '$usuario_red' as usuario, '$contrasena' as contrasena, '$correo' as correo,'$tipo_usuario' as tipo,'$pais' as pais,'$nombre' as nombre,'$apellidos' as apellido,'$estado' as estado) AS tmp
     WHERE NOT EXISTS (
         SELECT usuario_red,correo FROM usuarios WHERE usuario_red = '$usuario_red' or correo = '$correo'
     ) LIMIT 1;";
