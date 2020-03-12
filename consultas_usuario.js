@@ -30,8 +30,13 @@ function insertarUsuario(){
 
                 var validacion_existencia = this.responseText;
                 
-                alert(validacion_existencia);
-
+                if (validacion_existencia == '0'){
+                    alert("El usuario de red o correo electrónico ya se encuentran registrados en la plataforma");
+                }
+                else{
+                    alert("El usuario ha sido registrado en la plataforma");
+                }
+                
             }
             
     }
