@@ -27,7 +27,7 @@
         echo "El usuario ha sido registrado en la plataforma";
         
     } else {
-        echo "El usuario de red o correo electrónico ya se encuentran registrados en la plataforma";
+        echo "Error: " . $sql . "<br>" . $conn->error;
        
     }
     $conn->close();
