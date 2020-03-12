@@ -24,7 +24,7 @@
     ) LIMIT 1;";
 
     if ($conn->query($sql) === TRUE) {
-        "Affected rows: " . $conn->affected_rows;
+        "Affected rows: " . mysqli_affected_rows($conn);;
         
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
