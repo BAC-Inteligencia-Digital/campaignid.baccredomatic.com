@@ -109,7 +109,7 @@ function consultaHistoricoBACID(){
 function consultaDetalleBACID(){
 
     var bac_id = 'CRIC-CORE-TJC-123456-GL-AW-PR-GG'; //aquí se pasa el valor del bac id seleccionado
-    var indice =  19;
+    var indice =  560;
 
     const xhttp = new XMLHttpRequest();
 
@@ -226,7 +226,7 @@ function consultarSUBACIDUnicos(lista_sub_bacids){
     const xhttp = new XMLHttpRequest();
 
     xhttp.open('GET',capa_datos5+'consulta_sub_bacids_postinsercion.php?nombre_grupo='+lista_sub_bacids[i].split("-")[0]+'&codigo_anuncio='+lista_sub_bacids[i].split("-")[1]
-    +'&nombre_anuncio='+lista_sub_bacids[i].split("-")[2]+'&sub_codigo='+lista_sub_bacids[i],true);
+    +'&nombre_anuncio='+split("/",2)[0].substring(6)+'&sub_codigo='+lista_sub_bacids[i],true);
 
     xhttp.send();
     

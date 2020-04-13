@@ -16,8 +16,8 @@
    {
        while($row = mysqli_fetch_array($resultado)){
           $row_array['indice'] = $row['indice'];
-	  $row_array['codigo'] = $row['codigo'];
-	  $row_array['nombre'] = $row['nombre_canal_digital'];
+	      $row_array['codigo'] = $row['codigo'];
+	      $row_array['nombre'] = $row['nombre_canal_digital'];
           array_push($return_arr,$row_array);
        }  
    }

@@ -148,7 +148,7 @@ function consultarSUBACIDCreados(lista_sub_bacids){
         const xhttp = new XMLHttpRequest();
 
         xhttp.open('GET',capa_datos3+'consulta_sub_bacids_postinsercion.php?nombre_grupo='+lista_sub_bacids[i].split("-")[0]+'&codigo_anuncio='+lista_sub_bacids[i].split("-")[1]
-        +'&nombre_anuncio='+lista_sub_bacids[i].split("-")[2]+'&sub_codigo='+lista_sub_bacids[i],true);
+        +'&nombre_anuncio='+lista_sub_bacids[i].split("/",2)[0].substring(6)+'&sub_codigo='+lista_sub_bacids[i],true);
 
         xhttp.send();
         
