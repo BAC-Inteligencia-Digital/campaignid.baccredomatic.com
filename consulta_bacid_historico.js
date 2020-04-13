@@ -1,4 +1,4 @@
-document.querySelector('#botonProbarBACID').addEventListener('click', consultaHistoricoBACID);
+document.querySelector('#botonProbarBACID').addEventListener('click', consultaHistoricoBACIDFiltros);
 
 document.querySelector('#botonDetalleBACID').addEventListener('click', consultaDetalleBACID);
 
@@ -59,6 +59,8 @@ function consultaHistoricoBACIDFiltros(){
         
 
 }
+
+/**
 function consultaHistoricoBACID(){
 
         const xhttp = new XMLHttpRequest();
@@ -104,7 +106,7 @@ function consultaHistoricoBACID(){
        
      }
 
-}
+}*/
 
 function consultaDetalleBACID(){
 
