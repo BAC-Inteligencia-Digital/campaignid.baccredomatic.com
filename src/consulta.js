@@ -12,7 +12,7 @@ const initConsulta = (() => {
     let date = new Date();
     header.currentDate(date);
     getGetting.innerHTML = header.timeOfDay();
-    procedurs.consultaHistoricoBACID();
+    procedurs.consultaHistoricoBACID('consultar');
     procedurs.getUser();
     localStorage.removeItem('items');
     getUserCountry();
@@ -133,7 +133,7 @@ btnIdFilter.onclick = () => {
         let nombre_pais = countrySelected;
         let fecha_inicial = getStartPicker.value;
         let fecha_final = getEndPicker.value;
-        procedurs.filters(nombre_campana, nombre_pais, fecha_inicial, fecha_final);
+        procedurs.filters(nombre_campana, nombre_pais, fecha_inicial, fecha_final, 'consultar');
     }
 };
 
@@ -142,7 +142,7 @@ btnReload.onclick = () => {
     let date = new Date();
     header.currentDate(date);
     getGetting.innerHTML = header.timeOfDay();
-    procedurs.consultaHistoricoBACID();
+    procedurs.consultaHistoricoBACID('consultar');
     procedurs.getUser();
     localStorage.removeItem('items');
 }

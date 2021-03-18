@@ -12,6 +12,7 @@ module.exports = {
         consulta: './src/consulta',
         codigo: './src/codigo',
         editar: './src/editar',
+        eliminar: './src/eliminar',
         crearUsuario: './src/crear-usuario'
      },
     output: {
@@ -131,6 +132,17 @@ module.exports = {
             inject: true,
             chunks: ['crearUsuario'],
             filename: 'crear-usuario.html',
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true
+            }
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Campaignid | BAC Credomatic | Eliminar Código de Campaña',
+            template: './src/eliminar.html',
+            inject: true,
+            chunks: ['eliminar'],
+            filename: 'eliminar.html',
             minify: {
                 removeComments: true,
                 collapseWhitespace: true

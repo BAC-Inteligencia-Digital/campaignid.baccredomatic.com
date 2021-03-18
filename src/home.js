@@ -1,6 +1,6 @@
 import '@scss/main.scss'
 import { header } from '@/app/header';
-import { dropDown } from '@/app/dropDown';
+import { dropDown } from '@/app/dropdown';
 import { effects } from '@/app/effects';
 import { procedurs } from '@/app/procedurs';
 import { func } from 'prop-types';

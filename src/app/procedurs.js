@@ -12,7 +12,7 @@ const procedurs = (() => {
         getUserNameInput.innerText = userName + " " + setFirstName;
     }
 
-    const consultaHistoricoBACID = () => {
+    const consultaHistoricoBACID = (funcionalidad) => {
         let userInfo = localStorage.getItem('name');
         let userData = JSON.parse(userInfo);
         let countryCode = userData[3];
@@ -49,7 +49,15 @@ const procedurs = (() => {
                         //cell7.classList.add('text-center');
                         //cell7.innerHTML = "<button onclick='editConfirmation(this);' class='btn btn-outline-primary' value='ver' type='button' id='" + item.nombre_bac_id + "' name='" + item.nombre_bac_id + "'/><i class='far fa-edit'></i></button>";
                         cell7.classList.add('text-center');
-                        cell7.innerHTML = "<button onclick='getConfirmation(this);' class='btn btn-outline-primary' value='ver' type='button' id='" + item.nombre_bac_id + "' name='" + item.nombre_bac_id + "'/><i class='fas fa-eye'></i></button>";
+                        
+                        if(funcionalidad == 'consultar'){
+                            cell7.innerHTML = "<button onclick='getConfirmation(this);' class='btn btn-outline-primary' value='ver' type='button' id='" + item.nombre_bac_id + "' name='" + item.nombre_bac_id + "'/><i class='fas fa-eye'></i></button>";
+                        }
+                        
+                        if(funcionalidad == 'eliminar'){
+                            cell7.innerHTML = "<button onclick='deleteConfirmation(this);' class='btn btn-outline-primary' value='ver' type='button' id='" + item.nombre_bac_id + "' name='" + item.nombre_bac_id + "'/><i class='fas fa-trash'></i></button>";
+                        }
+                        
                     }
                 }
 
@@ -103,7 +111,11 @@ const procedurs = (() => {
         }
     }
 
-    const filters = (nombre_campana, nombre_pais, fecha_inicial, fecha_final) => {
+    const deleteCode = (ele) => {
+        alert('vamos a eliminar');
+    }
+
+    const filters = (nombre_campana, nombre_pais, fecha_inicial, fecha_final,funcionalidad) => {
         let table = document.getElementById("t03");
         let nameC = nombre_campana;
         let nameCountry = nombre_pais;
@@ -141,7 +153,14 @@ const procedurs = (() => {
                         cell5.innerHTML = item.nombre_categoria;
                         cell6.innerHTML = item.nombre_producto;
                         cell7.classList.add('text-center');
-                        cell7.innerHTML = "<button onclick='getConfirmation(this);'  class='btn btn-outline-primary' value='ver' type='button' id='" + item.nombre_bac_id + "' name='" + item.nombre_bac_id + "'/><i class='fas fa-eye'></i></button>";
+                        
+                        if(funcionalidad == 'consultar'){
+                            cell7.innerHTML = "<button onclick='getConfirmation(this);' class='btn btn-outline-primary' value='ver' type='button' id='" + item.nombre_bac_id + "' name='" + item.nombre_bac_id + "'/><i class='fas fa-eye'></i></button>";
+                        }
+                        
+                        if(funcionalidad == 'eliminar'){
+                            cell7.innerHTML = "<button onclick='deleteConfirmation(this);' class='btn btn-outline-primary' value='ver' type='button' id='" + item.nombre_bac_id + "' name='" + item.nombre_bac_id + "'/><i class='fas fa-trash'></i></button>";
+                        }
                     }
                 }
 
@@ -920,6 +939,7 @@ const procedurs = (() => {
     return {
         getUser,
         seeCode,
+        deleteCode,
         consultaHistoricoBACID,
         filters,
         consularBACIDcreado,
