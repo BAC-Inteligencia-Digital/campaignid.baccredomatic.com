@@ -112,7 +112,20 @@ const procedurs = (() => {
     }
 
     const deleteCode = (ele) => {
-        alert('vamos a eliminar');
+        let retVal = prompt("Está seguro que desea eliminar este Código? ", "Contraseña...");
+        let userData = localStorage.getItem('name');
+        let userId = JSON.parse(userData).toString().split(",")[0]; /// Obtenemos el ID del usuario
+
+        if (retVal == true) {
+            let row = ele.closest('tr');
+            let getBacId = row.cells[0].textContent;
+            let getInput = row.cells[0].childNodes;
+            let getValue = getInput[1].value.toString();
+            alert(getValue);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     const filters = (nombre_campana, nombre_pais, fecha_inicial, fecha_final,funcionalidad) => {
