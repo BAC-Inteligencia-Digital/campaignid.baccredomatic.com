@@ -19,7 +19,7 @@
 
     // EXTRAER PRIMERO LOS DATOS DEL BAC ID A ELIMINAR
 	$consulta = "SELECT nombre_bac_id,nombre_campana from bac_id_generados where id = '$cod_bacid'";
-	$resultado = mysqli_query( $conexion, $consulta ) or die ( "Algo ha ido mal en la consulta a la base de datos");
+	$resultado = mysqli_query( $conn, $consulta ) or die ( "Algo ha ido mal en la consulta a la base de datos");
 
    if ($conn)
    {
