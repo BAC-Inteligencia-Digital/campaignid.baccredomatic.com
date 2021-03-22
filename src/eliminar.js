@@ -14,6 +14,7 @@ const initConsulta = (() => {
     getGetting.innerHTML = header.timeOfDay();
     procedurs.consultaHistoricoBACID('eliminar');
     procedurs.getUser();
+    procedurs.validatePassUser();
     localStorage.removeItem('items');
     getUserCountry();
     procedurs.showUserAdminBtn();
@@ -34,6 +35,7 @@ let keySearch = "";
 btnlogOut.onclick = () => header.logOut();   
 sidebarCollapse.onclick = () => effects.hideSideBar();
 window.deleteConfirmation = (ele) => procedurs.deleteCode(ele); 
+
 
 const start = datepicker(getStartPicker, {
     id: 1,

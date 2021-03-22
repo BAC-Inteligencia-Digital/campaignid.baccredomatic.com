@@ -1,4 +1,5 @@
 
+var cont = [];
 
 const procedurs = (() => {
 
@@ -114,16 +115,19 @@ const procedurs = (() => {
     const deleteCode = (ele) => {
         let retVal = prompt("Está seguro que desea eliminar este Código? ", "Contraseña...");
         let userData = localStorage.getItem('name');
-        let userId = JSON.parse(userData).toString().split(",")[0]; /// Obtenemos el ID del usuario
+        let userId = JSON.parse(userData).toString().split(",")[0];
 
-        if (retVal == true) {
+        if (retVal == cont) {
+
             let row = ele.closest('tr');
-            let getBacId = row.cells[0].textContent;
             let getInput = row.cells[0].childNodes;
             let getValue = getInput[1].value.toString();
-            alert(getValue);
+
+            eliminarBACID(userId,getValue);/// llamamos la función de eliminar bac id
+            
             return true;
         } else {
+            
             return false;
         }
     }
@@ -180,6 +184,31 @@ const procedurs = (() => {
             }
 
         }
+    }
+
+    const validatePassUser = () => { 
+
+        let userData = localStorage.getItem('name');
+        let userId = JSON.parse(userData).toString().split(",")[0];
+        const xhttp = new XMLHttpRequest();
+        xhttp.open('GET','https://bac-id-new.azurewebsites.net/consultas_usuario/validar_contrasena.php?id_usuario='+userId, true);
+        xhttp.send();
+        xhttp.onreadystatechange = function () {
+
+            if (this.readyState == 4 && this.status == 200) {
+                
+                let datos = JSON.parse(this.responseText);
+
+                for (let item of datos) {
+                                        
+                    cont.push(item.contrasena);
+                    
+                }
+                
+            }
+                       
+        }
+
     }
 
     const consularBACIDcreado = (bacId) => {
@@ -666,6 +695,7 @@ const procedurs = (() => {
     
                 }
             }
+            
 
             function getProduct(){
                 let prod = document.getElementById("dllProducts");
@@ -938,6 +968,26 @@ const procedurs = (() => {
         }
     }
 
+    const eliminarBACID = (id_usuario, cod_bacid) => {
+                
+        const xhttp = new XMLHttpRequest();
+    
+        xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/eliminar_bac_id/eliminar_bacid.php?cod_bacid=' + cod_bacid + '&id_usuario=' + id_usuario, true);
+    
+        xhttp.send();
+    
+        xhttp.onreadystatechange = function () {
+    
+            if (this.readyState == 4 && this.status == 200) {
+    
+    
+            }
+    
+        }
+    
+    
+    }
+
     const showUserAdminBtn = () => {
         let userRol = localStorage.getItem('country');
         let userData = JSON.parse(userRol);
@@ -955,6 +1005,7 @@ const procedurs = (() => {
         deleteCode,
         consultaHistoricoBACID,
         filters,
+        validatePassUser,
         consularBACIDcreado,
         editBACIDcreado,
         getCountries,
