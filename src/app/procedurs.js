@@ -124,6 +124,8 @@ const procedurs = (() => {
             let getValue = getInput[1].value.toString();
 
             eliminarBACID(userId,getValue);/// llamamos la función de eliminar bac id
+
+            alert("El código de campaña fue eliminado con éxito!!");
             
             return true;
         } else {
