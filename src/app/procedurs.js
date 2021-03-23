@@ -121,15 +121,19 @@ const procedurs = (() => {
 
             let row = ele.closest('tr');
             let getInput = row.cells[0].childNodes;
-            let getValue = getInput[1].value.toString();
+            let getValue = getInput[1].value.toString();        
 
             eliminarBACID(userId,getValue);/// llamamos la función de eliminar bac id
+
+            // Quitamos el elemento de la tabla
+            var i = ele.parentNode.parentNode.rowIndex;
+            document.getElementById("tableDeleteBACID").deleteRow(i);
 
             alert("El código de campaña fue eliminado con éxito!!");
             
             return true;
         } else {
-            
+            alert("Error!. Ingrese de manera correcta su contraseña!");
             return false;
         }
     }
