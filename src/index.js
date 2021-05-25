@@ -5,6 +5,8 @@ let dllPassword = document.getElementById("inputPassword");
 let btnLogin = document.getElementById("btnLogin");
 let getCloseBtn = document.querySelector(".dangerClose");
 
+//const cnxn = 'https://bac-id-new.azurewebsites.net'; // CONEXION A BD DE PRODUCCION
+const cnxn = 'https://bac-id-new-test.azurewebsites.net'; // CONEXION A BD DE TEST
 
 btnLogin.onclick = () => {
     localStorage.clear();
@@ -30,7 +32,7 @@ btnLogin.onclick = () => {
 
         const xhttp = new XMLHttpRequest();
 
-        xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/consulta_login/autenticar_usuario.php?usuario_ingresado=' + usuario + '&contrasena_ingresada=' + contrasena, true);
+        xhttp.open('GET', cnxn + '/consulta_login/autenticar_usuario.php?usuario_ingresado=' + usuario + '&contrasena_ingresada=' + contrasena, true);
         xhttp.send();
         xhttp.onreadystatechange = function () {
 

@@ -1,3 +1,5 @@
+//const cnxn = 'https://bac-id-new.azurewebsites.net'; // CONEXION A BD DE PRODUCCION
+const cnxn = 'https://bac-id-new-test.azurewebsites.net'; // CONEXION A BD DE TEST
 
 var cont = [];
 
@@ -19,7 +21,7 @@ const procedurs = (() => {
         let countryCode = userData[3];
         let table = document.getElementById("t03");
         const xhttp = new XMLHttpRequest();
-        xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/consulta_bacid_historicos/consulta_historico_bacids.php?nombre_pais=' + countryCode, true);
+        xhttp.open('GET', cnxn + '/consulta_bacid_historicos/consulta_historico_bacids.php?nombre_pais=' + countryCode, true);
         xhttp.send();
         xhttp.onreadystatechange = function () {
 
@@ -146,7 +148,7 @@ const procedurs = (() => {
         let endD = fecha_final //el formato de la fecha ay que acomodarlo así ejemplo dia/mes/año
 
         const xhttp = new XMLHttpRequest();
-        xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/consulta_bacid_historicos/consulta_bac_id_filtros.php?nombre_campana=' + nameC +
+        xhttp.open('GET', cnxn + '/consulta_bacid_historicos/consulta_bac_id_filtros.php?nombre_campana=' + nameC +
             "&nombre_pais=" + nameCountry + "&fecha_desde=" + startD + "&fecha_hasta=" + endD, true);
         xhttp.send();
         xhttp.onreadystatechange = function () {
@@ -197,7 +199,7 @@ const procedurs = (() => {
         let userData = localStorage.getItem('name');
         let userId = JSON.parse(userData).toString().split(",")[0];
         const xhttp = new XMLHttpRequest();
-        xhttp.open('GET','https://bac-id-new.azurewebsites.net/consultas_usuario/validar_contrasena.php?id_usuario='+userId, true);
+        xhttp.open('GET', cnxn + '/consultas_usuario/validar_contrasena.php?id_usuario='+userId, true);
         xhttp.send();
         xhttp.onreadystatechange = function () {
 
@@ -231,7 +233,7 @@ const procedurs = (() => {
 
         const xhttp = new XMLHttpRequest();
 
-        xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/consulta_bacid_historicos/consulta_detalle_bacid.php?id=' + indice, true);
+        xhttp.open('GET', cnxn + '/consulta_bacid_historicos/consulta_detalle_bacid.php?id=' + indice, true);
 
         xhttp.send();
 
@@ -268,7 +270,7 @@ const procedurs = (() => {
 
             const xhttp = new XMLHttpRequest();
 
-            xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/insertar_bac_id/consulta_canales_insertados.php?canal1_seleccionado=' + codigo_canales.substring(0, 1) +
+            xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_canales_insertados.php?canal1_seleccionado=' + codigo_canales.substring(0, 1) +
                 '&canal2_seleccionado=' + codigo_canales.substring(1, 2) + '&canal3_seleccionado=' + codigo_canales.substring(2, 3) +
                 '&canal4_seleccionado=' + codigo_canales.substring(3, 4) + '&canal5_seleccionado=' + codigo_canales.substring(4, 5) +
                 '&canal6_seleccionado=' + codigo_canales.substring(5, 6), true);
@@ -313,7 +315,7 @@ const procedurs = (() => {
 
             const xhttp = new XMLHttpRequest();
 
-            xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/consulta_bacid_historicos/consulta_detalle_subacid.php?id=' + id_padre, true);
+            xhttp.open('GET', cnxn + '/consulta_bacid_historicos/consulta_detalle_subacid.php?id=' + id_padre, true);
 
             xhttp.send();
 
@@ -340,7 +342,7 @@ const procedurs = (() => {
             for (var i = 0; i < lista_sub_bacids.length; i++) {
 
                 const xhttp = new XMLHttpRequest();
-                xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/insertar_bac_id/consulta_sub_bacids_postinsercion.php?nombre_grupo=' + lista_sub_bacids[i].split("-")[0] + '&codigo_anuncio=' + lista_sub_bacids[i].split("-")[1]
+                xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_sub_bacids_postinsercion.php?nombre_grupo=' + lista_sub_bacids[i].split("-")[0] + '&codigo_anuncio=' + lista_sub_bacids[i].split("-")[1]
                     + '&nombre_anuncio=' + lista_sub_bacids[i].split("-")[2] + '&sub_codigo=' + lista_sub_bacids[i], true);
 
                 xhttp.send();
@@ -404,7 +406,7 @@ const procedurs = (() => {
         console.log(indice);
         setTimeout(function(){
             const xhttp = new XMLHttpRequest();
-            xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/consulta_bacid_historicos/consulta_detalle_bacid.php?id=' + indice, true);
+            xhttp.open('GET', cnxn + '/consulta_bacid_historicos/consulta_detalle_bacid.php?id=' + indice, true);
             xhttp.send();
             xhttp.onreadystatechange = function () {
 
@@ -505,7 +507,7 @@ const procedurs = (() => {
     
                 const xhttp = new XMLHttpRequest();
     
-                xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/insertar_bac_id/consulta_canales_insertados.php?canal1_seleccionado=' + codigo_canales.substring(0, 1) +
+                xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_canales_insertados.php?canal1_seleccionado=' + codigo_canales.substring(0, 1) +
                     '&canal2_seleccionado=' + codigo_canales.substring(1, 2) + '&canal3_seleccionado=' + codigo_canales.substring(2, 3) +
                     '&canal4_seleccionado=' + codigo_canales.substring(3, 4) + '&canal5_seleccionado=' + codigo_canales.substring(4, 5) +
                     '&canal6_seleccionado=' + codigo_canales.substring(5, 6), true);
@@ -612,7 +614,7 @@ const procedurs = (() => {
                 
                 const xhttp = new XMLHttpRequest();
     
-                xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/consulta_bacid_historicos/consulta_detalle_subacid.php?id=' + id_padre, true);
+                xhttp.open('GET', cnxn + '/consulta_bacid_historicos/consulta_detalle_subacid.php?id=' + id_padre, true);
     
                 xhttp.send();
     
@@ -665,7 +667,7 @@ const procedurs = (() => {
                 for (var i = 0; i < lista_sub_bacids.length; i++) {
     
                     const xhttp = new XMLHttpRequest();
-                    xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/insertar_bac_id/consulta_sub_bacids_postinsercion.php?nombre_grupo=' + lista_sub_bacids[i].split("-")[0] + '&codigo_anuncio=' + lista_sub_bacids[i].split("-")[1]
+                    xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_sub_bacids_postinsercion.php?nombre_grupo=' + lista_sub_bacids[i].split("-")[0] + '&codigo_anuncio=' + lista_sub_bacids[i].split("-")[1]
                         + '&nombre_anuncio=' + lista_sub_bacids[i].split("-")[2] + '&sub_codigo=' + lista_sub_bacids[i], true);
     
                     xhttp.send();
@@ -728,7 +730,7 @@ const procedurs = (() => {
                 let getIt = document.getElementsByClassName('test');
                
                 const xhttp = new XMLHttpRequest();
-                xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/obtener_grupos_anuncios.php?canal_digital=' + chanelSelected, true);
+                xhttp.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_grupos_anuncios.php?canal_digital=' + chanelSelected, true);
                 xhttp.send();
                 xhttp.onreadystatechange = function () {
             
@@ -759,7 +761,7 @@ const procedurs = (() => {
             const getAd = (chanelSelected) => {
                 let index = "";
                 let gedCont = document.getElementsByClassName("dllAd");
-                xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/obtener_tipo_anuncio.php?canal_digital=' + chanelSelected, true);
+                xhttp.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_tipo_anuncio.php?canal_digital=' + chanelSelected, true);
                 xhttp.send();
 
                 xhttp.onreadystatechange = function () {
@@ -786,7 +788,7 @@ const procedurs = (() => {
             };
 
             function getProducts(selectedCate){
-                xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/obtener_producto.php?categoria=' + selectedCate, true);
+                xhttp.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_producto.php?categoria=' + selectedCate, true);
                 xhttp.send();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
@@ -816,10 +818,10 @@ const procedurs = (() => {
     }
 
     const getCountries = () => {
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let conexion = cnxn + '/consultas_para_dropdownlist/';
         const xhttp = new XMLHttpRequest();
         let countries = [];
-        xhttp.open('GET', cnxn + 'obtener_paises.php', true);
+        xhttp.open('GET', conexion + 'obtener_paises.php', true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {    
@@ -837,7 +839,7 @@ const procedurs = (() => {
     };
 
     const insertarUsuario = (netUserName, pass, email, userType, country, name, firstName, userState) => {
-        var capa_datos_insertaruser = "https://bac-id-new.azurewebsites.net/consultas_usuario/";
+        var capa_datos_insertaruser = cnxn + "/consultas_usuario/";
         var usuario_red = netUserName;
         var contrasena = pass;
         var correo = email;
@@ -897,7 +899,7 @@ const procedurs = (() => {
     }
 
     const buscarUsuario = (user) => {
-        var capa_datos_insertaruser = "https://bac-id-new.azurewebsites.net/consultas_usuario/";
+        var capa_datos_insertaruser = cnxn + "/consultas_usuario/";
         var usuario_ingresado = user; //aquí se manda el campo que corresponde al usuario de red o al correo 
         var showCountry = "";
         const xhttp = new XMLHttpRequest();
@@ -945,7 +947,7 @@ const procedurs = (() => {
     }
 
     const actualizarUsuario = (idUser,netUserName, pass, email, userType, country, name, firstName, userState) => {
-        var capa_datos_insertaruser = "https://bac-id-new.azurewebsites.net/consultas_usuario/";
+        var capa_datos_insertaruser = cnxn + "/consultas_usuario/";
         var id_usuario = idUser; //Este id sería ideal que lo guarde en un local storage luego de llamar la función buscar_usuario
         
         var usuario_red = netUserName;
@@ -978,7 +980,7 @@ const procedurs = (() => {
                 
         const xhttp = new XMLHttpRequest();
     
-        xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/eliminar_bac_id/eliminar_bacid.php?cod_bacid=' + cod_bacid + '&id_usuario=' + id_usuario, true);
+        xhttp.open('GET', cnxn + '/eliminar_bac_id/eliminar_bacid.php?cod_bacid=' + cod_bacid + '&id_usuario=' + id_usuario, true);
     
         xhttp.send();
     

@@ -90,8 +90,9 @@ let getAdname = "";
 const txtCampaignCode = document.getElementById("txtCampaignCode");
 //settings
 const xhttp = new XMLHttpRequest();
-const cnxn = 'https://bac-id-new.azurewebsites.net';
-var capa_datos3 = "https://bac-id-new.azurewebsites.net/insertar_bac_id/";
+//const cnxn = 'https://bac-id-new.azurewebsites.net'; // CONEXION A BD DE PRODUCCION
+const cnxn = 'https://bac-id-new-test.azurewebsites.net'; // CONEXION A BD DE TEST
+
 let drops = new dropDown();
 let current;
 let countryCode = "";
@@ -776,7 +777,7 @@ function obtenerMultiProductosSeleccionados(productsSelected) {
 
     const xhttp = new XMLHttpRequest();
 
-    xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/consultas_generar_bac_id/obtener_multiproductos_seleccionados.php?producto1_seleccionado=' + multiproductos[0] +
+    xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_multiproductos_seleccionados.php?producto1_seleccionado=' + multiproductos[0] +
         "&producto2_seleccionado=" + multiproductos[1] + "&producto3_seleccionado=" + multiproductos[2], true);
 
     xhttp.send();
@@ -1357,7 +1358,7 @@ function validate(e) {
     var lista_sub_bacids = subBacId;
 
     const xhttp = new XMLHttpRequest();
-    xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/insertar_bac_id/insertar_bac_id.php?bac_id=' + bac_id + '&id_usuario=' + id_usuario
+    xhttp.open('GET', cnxn + '/insertar_bac_id/insertar_bac_id.php?bac_id=' + bac_id + '&id_usuario=' + id_usuario
         + '&nombre_campana=' + nombre_campana + '&fecha_creacion=' + fecha_creacion, true);
     xhttp.send();
 
@@ -1395,7 +1396,7 @@ function firstValidation(){
     var fecha_creacion = getCurrentDay; //se ingresa la fecha de creación
 
     const xhttp = new XMLHttpRequest();
-    xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/insertar_bac_id/insertar_bac_id.php?bac_id=' + bac_id + '&id_usuario=' + id_usuario
+    xhttp.open('GET', cnxn + '/insertar_bac_id/insertar_bac_id.php?bac_id=' + bac_id + '&id_usuario=' + id_usuario
         + '&nombre_campana=' + nombre_campana + '&fecha_creacion=' + fecha_creacion, true);
     xhttp.send();
 
@@ -1414,7 +1415,7 @@ function insertarSUBBACID(bac_id_padre, sub_bacid) {
     debugger;
     const xhttp = new XMLHttpRequest();
 
-    xhttp.open('GET', 'https://bac-id-new.azurewebsites.net/insertar_bac_id/insertar_sub_bacid.php?bac_id_padre=' + bac_id_padre + '&sub_bac_id=' + sub_bacid, true);
+    xhttp.open('GET', cnxn + '/insertar_bac_id/insertar_sub_bacid.php?bac_id_padre=' + bac_id_padre + '&sub_bac_id=' + sub_bacid, true);
 
     xhttp.send();
 
@@ -1457,7 +1458,7 @@ function consultarBACIDCreado2(bac_id_registrado, nombre_campana, fecha_creacion
 
     const xhttp = new XMLHttpRequest();
 
-    xhttp.open('GET', capa_datos3 + 'consulta_bac_id_postinsercion.php?pais_bacid=' + bac_id_registrado.substring(0, 3) +
+    xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_bac_id_postinsercion.php?pais_bacid=' + bac_id_registrado.substring(0, 3) +
         '&origen_bacid=' + bac_id_registrado.substring(3, 4) + '&categoria_bacid=' + bac_id_registrado.substring(5, 9) +
         '&producto_bacid=' + bac_id_registrado.substring(10, 13) + '&portafolio_bacid=' + bac_id_registrado.substring(21, 23) + '&tipo_campana_bacid=' + bac_id_registrado.substring(24, 26) +
         '&objetivo_bacid=' + bac_id_registrado.substring(27, 29) + '&canal_digital_bacid=' + bac_id_registrado.substring(30, 32), true);
@@ -1493,7 +1494,7 @@ function consultarBACIDCreado(bac_id_registrado, nombre_campana, fecha_creacion)
 
     const xhttp = new XMLHttpRequest();
 
-    xhttp.open('GET', capa_datos3 + 'consulta_bac_id_postinsercion.php?pais_bacid=' + bac_id_registrado.substring(0, 3) +
+    xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_bac_id_postinsercion.php?pais_bacid=' + bac_id_registrado.substring(0, 3) +
         '&origen_bacid=' + bac_id_registrado.substring(3, 4) + '&categoria_bacid=' + bac_id_registrado.substring(5, 9) +
         '&producto_bacid=' + bac_id_registrado.substring(10, 13) + '&portafolio_bacid=' + bac_id_registrado.substring(21, 23) + '&tipo_campana_bacid=' + bac_id_registrado.substring(24, 26) +
         '&objetivo_bacid=' + bac_id_registrado.substring(27, 29) + '&canal_digital_bacid=' + bac_id_registrado.substring(30, 32), true);
@@ -1532,7 +1533,7 @@ function obtenerCanalesInsertados(codigo_canales) { //esta función es para obte
 
     const xhttp = new XMLHttpRequest();
 
-    xhttp.open('GET', capa_datos3 + 'consulta_canales_insertados.php?canal1_seleccionado=' + codigo_canales.substring(0, 1) +
+    xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_canales_insertados.php?canal1_seleccionado=' + codigo_canales.substring(0, 1) +
         '&canal2_seleccionado=' + codigo_canales.substring(1, 2) + '&canal3_seleccionado=' + codigo_canales.substring(2, 3) +
         '&canal4_seleccionado=' + codigo_canales.substring(3, 4) + '&canal5_seleccionado=' + codigo_canales.substring(4, 5) +
         '&canal6_seleccionado=' + codigo_canales.substring(5, 6), true);
@@ -1577,7 +1578,7 @@ function consultarSUBACIDCreados(lista_sub_bacids) {
 
         const xhttp = new XMLHttpRequest();
 
-        xhttp.open('GET', capa_datos3 + 'consulta_sub_bacids_postinsercion.php?nombre_grupo=' + lista_sub_bacids[i].split("-")[0] + '&codigo_anuncio=' + lista_sub_bacids[i].split("-")[1]
+        xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_sub_bacids_postinsercion.php?nombre_grupo=' + lista_sub_bacids[i].split("-")[0] + '&codigo_anuncio=' + lista_sub_bacids[i].split("-")[1]
             + '&nombre_anuncio=' + lista_sub_bacids[i].split("-")[2] + '&sub_codigo=' + lista_sub_bacids[i], true);
 
         xhttp.send();
