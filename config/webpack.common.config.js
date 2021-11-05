@@ -13,7 +13,8 @@ module.exports = {
         codigo: './src/codigo',
         editar: './src/editar',
         eliminar: './src/eliminar',
-        crearUsuario: './src/crear-usuario'
+        crearUsuario: './src/crear-usuario',
+        crearLink: './src/crear-links'
      },
     output: {
         path: path.resolve(__dirname, '../dist'),
@@ -143,6 +144,17 @@ module.exports = {
             inject: true,
             chunks: ['eliminar'],
             filename: 'eliminar.html',
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true
+            }
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Campaignid | BAC Credomatic | Crear URLs Código de Campaña',
+            template: './src/crear-links.html',
+            inject: true,
+            chunks: ['crearLink'],
+            filename: 'crear-links.html',
             minify: {
                 removeComments: true,
                 collapseWhitespace: true
