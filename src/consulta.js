@@ -103,7 +103,6 @@ dllCountry.onchange = () => {
 }
 
 function getUserCountry(){
-    debugger;
     const dllCountry = document.getElementById("dllCountry");
     console.log(dllCountry);
     let userInfo = localStorage.getItem('name');

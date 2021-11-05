@@ -1,10 +1,10 @@
 const copyBtns = (() => {
 
     const copyCodeBtn = (ele) => {
-        debugger;
+       // debugger;
         var row = ele.closest('tr');
         var getBacId = row.cells[4].textContent;
-        var getValue = row.cells[5].value = "?=" + getBacId;
+        var getValue = row.cells[5].value = "?bacid=" + getBacId;
         var aux = document.createElement("input");
       
         aux.setAttribute("value", ele.value = getValue);
@@ -37,9 +37,9 @@ const copyBtns = (() => {
       }
 
       const copyPrincipalCode = (elem) => {
-        debugger;
+       // debugger;
         var getEle = elem.closest('label');
-        var getBacId = "?=" + getEle.innerText;
+        var getBacId = "?bacid=" + getEle.innerText;
         var aux = document.createElement("input");
       
         aux.setAttribute("value", elem.value = getBacId);

@@ -163,7 +163,7 @@ getdllClients.onchange = () => {
  * Trigger que se ejecuta al cambiar el select de Categoria
  */
 getCategoryBtn.onchange = () => {
-    debugger;
+//    debugger;
     current = getCategoryBtn.options[getCategoryBtn.selectedIndex].value;
     if (current !== "Seleccione categoría") {
         getdllProducts.disabled = false;
@@ -1412,7 +1412,7 @@ function firstValidation(){
 }
 
 function insertarSUBBACID(bac_id_padre, sub_bacid) {
-    debugger;
+    //debugger;
     const xhttp = new XMLHttpRequest();
 
     xhttp.open('GET', cnxn + '/insertar_bac_id/insertar_sub_bacid.php?bac_id_padre=' + bac_id_padre + '&sub_bac_id=' + sub_bacid, true);
@@ -1572,7 +1572,7 @@ function obtenerCanalesInsertados(codigo_canales) { //esta función es para obte
 }
 
 function consultarSUBACIDCreados(lista_sub_bacids) {
-    debugger;
+   // debugger;
 
     for (var i = 0; i < lista_sub_bacids.length; i++) {
 
@@ -1617,10 +1617,10 @@ function consultarSUBACIDCreados(lista_sub_bacids) {
 }
 
 window.getCopy = function (ele) {
-    debugger;
+   // debugger;
     var row = ele.closest('tr');
     var getBacId = row.cells[4].textContent;
-    var getValue = row.cells[5].value = "?=" + getBacId;
+    var getValue = row.cells[5].value = "?bacid=" + getBacId;
     var aux = document.createElement("input");
 
     aux.setAttribute("value", ele.value = getValue);
@@ -1643,9 +1643,9 @@ window.getCopy = function (ele) {
 }
 
 window.getCopyCode = function (elem) {
-    debugger;
+  //  debugger;
     var getEle = elem.closest('label');
-    var getBacId = "?=" + getEle.innerText;
+    var getBacId = "?bacid=" + getEle.innerText;
     var aux = document.createElement("input");
   
     aux.setAttribute("value", elem.value = getBacId);
