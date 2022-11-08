@@ -515,6 +515,7 @@ const loadProductsByCategory = () => {
 
 
 const getAd = (channelSelected) => {
+    //debugger
     let index = "";
     let gedCont = document.getElementsByClassName("dllAd");
     const xhr = new XMLHttpRequest();
@@ -526,6 +527,7 @@ const getAd = (channelSelected) => {
 
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+            //debugger
             let data = JSON.parse(xhr.responseText);
             for (let item of data) {
                 for (let i = 0; i < gedCont.length; i++) {
@@ -533,7 +535,15 @@ const getAd = (channelSelected) => {
                     let codeAd = item.codigo;
                     let ads = item.nombre;
                     let ids = ads.split(" ").join("");
-                    document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='' maxlength='5' name='nombre-anuncio' />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
+                    
+                    if(channelSelected !== "google" && 
+                    channelSelected !== "Linkedin" && 
+                    channelSelected !== "spotify" && 
+                    channelSelected !== "prensa digital" && 
+                    channelSelected !== "waze") {
+                        document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='' maxlength='5' name='nombre-anuncio' />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
+                    }
+                    document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for='' style='display: none;' >Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='' maxlength='5' name='nombre-anuncio' style='display: none; />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
                 }
             }
         }
@@ -568,6 +578,7 @@ const getAd = (channelSelected) => {
 };
 
 function getGroups(channelSelected) {
+    //debugger
     var grupos = [];
     const xhr = new XMLHttpRequest();
 
@@ -581,6 +592,7 @@ function getGroups(channelSelected) {
         if (this.readyState == 4 && this.status == 200) {
             let datos = JSON.parse(xhr.responseText);
             for (let item of datos) {
+                //debugger
                 let groupCode = item.codigo_grupo;
                 let groups = item.nombre_categoria;
                 // grupos.push(item.nombre_categoria);
@@ -1925,7 +1937,7 @@ window.getCopy = function (ele) {
    // debugger;
     var row = ele.closest('tr');
     var getBacId = row.cells[4].textContent;
-    var getValue = row.cells[5].value = "?bacid=" + getBacId;
+    var getValue = row.cells[5].value = /*"?bacid=" + */getBacId;
     var aux = document.createElement("input");
 
     aux.setAttribute("value", ele.value = getValue);
@@ -1948,9 +1960,10 @@ window.getCopy = function (ele) {
 }
 
 window.getCopyCode = function (elem) {
-  //  debugger;
+//    debugger;
+
     var getEle = elem.closest('label');
-    var getBacId = "?bacid=" + getEle.innerText;
+    var getBacId = /*"?bacid=" + */getEle.innerText;
     var aux = document.createElement("input");
   
     aux.setAttribute("value", elem.value = getBacId);
