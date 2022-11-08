@@ -23,4 +23,11 @@ let bacId = "";
 const btnlogOut = document.getElementById("brnLogOut");
 btnlogOut.onclick = () => header.logOut();
 
+function checkLogin() {
+    let data = localStorage.getItem('name');
+    if(data === null) {
+        window.top.location.href = 'index.html';
+    }
+
+}
 

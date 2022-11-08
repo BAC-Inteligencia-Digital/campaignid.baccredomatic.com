@@ -16,6 +16,7 @@ const initController = (() => {
      * Funciona como un init pero fake init
      */
     currentBody.onload = () => {
+        checkLogin()
         let date = new Date();
         header.currentDate(date);
         let getGetting = document.getElementById("getting");
@@ -127,6 +128,14 @@ let setIndice = "";
 
 btnlogOut.onclick = () => header.logOut();
 sidebarCollapse.onclick = () => effects.hideSideBar();
+
+function checkLogin() {
+    let data = localStorage.getItem('name');
+    if(data === null) {
+        window.top.location.href = 'index.html';
+    }
+
+}
 
 getdllCountries.onchange = () => {
     countrySelected = getdllCountries.options[getdllCountries.selectedIndex].value;

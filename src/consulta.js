@@ -8,15 +8,21 @@ import DataTable from 'datatables';
 window.addEventListener("load", initConsulta, false);
 
 const initConsulta = (() => {
-    let getGetting = document.getElementById("getting");
-    let date = new Date();
-    header.currentDate(date);
-    getGetting.innerHTML = header.timeOfDay();
-    procedurs.consultaHistoricoBACID('consultar');
-    procedurs.getUser();
-    localStorage.removeItem('items');
-    getUserCountry();
-    procedurs.showUserAdminBtn();
+
+    const currentBody = document.getElementById("consultaId");
+
+    currentBody.onload = () => {  
+        checkLogin()
+        let getGetting = document.getElementById("getting");
+        let date = new Date();
+        header.currentDate(date);
+        getGetting.innerHTML = header.timeOfDay();
+        procedurs.consultaHistoricoBACID('consultar');
+        procedurs.getUser();
+        localStorage.removeItem('items');
+        getUserCountry();
+        procedurs.showUserAdminBtn();
+    };
 })();
 
 const btnlogOut = document.getElementById("brnLogOut");
@@ -146,5 +152,11 @@ btnReload.onclick = () => {
     localStorage.removeItem('items');
 }
 
+function checkLogin() {
+    let data = localStorage.getItem('name');
+    if(data === null) {
+        window.top.location.href = 'index.html';
+    }
 
+}
 

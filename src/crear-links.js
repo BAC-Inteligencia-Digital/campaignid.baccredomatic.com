@@ -5,12 +5,18 @@ import { procedurs } from '@/app/procedurs';
 window.addEventListener("load", initLinkCreation, false);
 
 const initLinkCreation = (() => {
-    const date = new Date();
-    header.currentDate(date);
-    procedurs.showUserAdminBtn();
-    procedurs.getUser();
-    let getGetting = document.getElementById("getting");
-    getGetting.innerHTML = header.timeOfDay();
+    
+    const currentBody = document.getElementById("linkCreator");
+
+    currentBody.onload = () => { 
+        checkLogin()
+        const date = new Date();
+        header.currentDate(date);
+        procedurs.showUserAdminBtn();
+        procedurs.getUser();
+        let getGetting = document.getElementById("getting");
+        getGetting.innerHTML = header.timeOfDay();
+    };
 })();
 $(document).off('.alert.data-api')
 
@@ -140,3 +146,11 @@ function validURL(string) {
         return false;  
     }
  }
+
+ function checkLogin() {
+    let data = localStorage.getItem('name');
+    if(data === null) {
+        window.top.location.href = 'index.html';
+    }
+
+}

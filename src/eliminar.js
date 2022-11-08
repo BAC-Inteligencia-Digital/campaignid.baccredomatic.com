@@ -8,16 +8,23 @@ import DataTable from 'datatables';
 window.addEventListener("load", initConsulta, false);
 
 const initConsulta = (() => {
-    let getGetting = document.getElementById("getting");
-    let date = new Date();
-    header.currentDate(date);
-    getGetting.innerHTML = header.timeOfDay();
-    procedurs.consultaHistoricoBACID('eliminar');
-    procedurs.getUser();
-    procedurs.validatePassUser();
-    localStorage.removeItem('items');
-    getUserCountry();
-    procedurs.showUserAdminBtn();
+
+    const currentBody = document.getElementById("deleteBACID");
+
+    currentBody.onload = () => { 
+        checkLogin()
+        let getGetting = document.getElementById("getting");
+        let date = new Date();
+        header.currentDate(date);
+        getGetting.innerHTML = header.timeOfDay();
+        procedurs.consultaHistoricoBACID('eliminar');
+        procedurs.getUser();
+        procedurs.validatePassUser();
+        localStorage.removeItem('items');
+        getUserCountry();
+        procedurs.showUserAdminBtn();
+     }
+    
 })();
 
 const btnlogOut = document.getElementById("brnLogOut");
@@ -36,6 +43,14 @@ btnlogOut.onclick = () => header.logOut();
 sidebarCollapse.onclick = () => effects.hideSideBar();
 window.deleteConfirmation = (ele) => procedurs.deleteCode(ele); 
 
+function checkLogin() {
+    let data = localStorage.getItem('name');
+    if(data === null) {
+
+        window.top.location.href = 'index.html';
+    }
+
+}
 
 const start = datepicker(getStartPicker, {
     id: 1,
@@ -104,7 +119,7 @@ dllCountry.onchange = () => {
 }
 
 function getUserCountry(){
-    debugger;
+    //debugger;
     const dllCountry = document.getElementById("dllCountry");
     console.log(dllCountry);
     let userInfo = localStorage.getItem('name');

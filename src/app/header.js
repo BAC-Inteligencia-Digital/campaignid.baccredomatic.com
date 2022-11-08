@@ -18,6 +18,7 @@ const header = (() => {
     };
 
     const logOut = () => {
+        localStorage.clear();
         window.top.location.href = 'index.html';
     }
     

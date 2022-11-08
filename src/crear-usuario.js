@@ -5,13 +5,20 @@ import { dropDowns } from '@/app/editDrop';
 window.addEventListener("load", initEdit, false);
 
 const initEdit =(() => {
-    let date = new Date();
-    header.currentDate(date);
-    let getGetting = document.getElementById("getting");
-    getGetting.innerHTML = header.timeOfDay();
-    procedurs.getUser();
-    dropDowns.getCountries();
-    procedurs.showUserAdminBtn();
+
+    const currentBody = document.getElementById("createUser");
+
+    currentBody.onload = () => { 
+        checkLogin()
+        let date = new Date();
+        header.currentDate(date);
+        let getGetting = document.getElementById("getting");
+        getGetting.innerHTML = header.timeOfDay();
+        procedurs.getUser();
+        dropDowns.getCountries();
+        procedurs.showUserAdminBtn();
+    };
+    
 })();
 
 const btnlogOut = document.getElementById("brnLogOut");
@@ -275,3 +282,11 @@ btnEditUser.onclick = () => {
 }
 
 btnlogOut.onclick = () => header.logOut();
+
+function checkLogin() {
+    let data = localStorage.getItem('name');
+    if(data === null) {
+        window.top.location.href = 'index.html';
+    }
+
+}
