@@ -30,6 +30,7 @@ const initController = (() => {
         procedurs.getUser();
         datePicker();
         procedurs.showUserAdminBtn();
+        
     };
 
 })();
@@ -109,7 +110,7 @@ let countrySelected = "";
 let clientsSelected = "";
 let categorySelected = "";
 let productsSelected = "";
-let chanelSelected = "";
+let channelSelected = "";
 let portfolioSelected = "";
 let campaignTypeSelected = "";
 let objectiveSelectedType = "";
@@ -610,7 +611,7 @@ function getGroups(channelSelected) {
     /*
     var grupos = [];
     const xhttp = new XMLHttpRequest();
-    xhttp.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_grupos_anuncios.php?canal_digital=' + chanelSelected, true);
+    xhttp.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_grupos_anuncios.php?canal_digital=' + channelSelected, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
 
@@ -766,9 +767,9 @@ const getSelectedCategory = (current) => {
             }
             categorySelected = categoryCode;
             if(current !== "Multiproducto"){
-                txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+                txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
             }else{
-                txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + multi + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+                txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + multi + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
             }
            
         }
@@ -815,7 +816,7 @@ const getSelectedProducts = (current) => {
                 productsCode = item.codigo;
             }
             productsSelected = "-" + productsCode;
-            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
             getdllportfolio.disabled = false;
         }
 
@@ -854,7 +855,7 @@ const getPortfolioSelected = (current) => {
                 portfolioCode = item.codigo;
             }
             portfolioSelected = "-" + portfolioCode;
-            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
             firstBtnNext.disabled = false;
         }
     };
@@ -934,7 +935,7 @@ const getObjectiveSelected = (current) => {
                 objectiveCode = "-" + item.codigo;
             }
             objectiveSelectedType = objectiveCode;
-            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
             if(check_canaldig.checked == false ){
                 nextBtnThird.disabled = false;
             }
@@ -984,7 +985,7 @@ const getDigitalChannelSelected = (current) => {
                 }
                 digitalChannelSelected = digitalChannelCode;
                 console.log(digitalChannelSelected);
-                txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+                txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
                 nextBtnThird.disabled = false;
             } 
         } 
@@ -1027,7 +1028,7 @@ const getAdSelected = (current) => {
                 adCode = item.codigo;
             }
             adSelected = "-" + adCode;
-            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected;
+            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected;
         }
 
     };
@@ -1310,7 +1311,7 @@ check_email.onchange = function () {
     let getValor = check_email.value;
     validarCheckbox(getValor);
     determinarCodigoCanales();
-    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected;
+    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected;
   
 };
 
@@ -1318,7 +1319,7 @@ check_call.onchange = function () {
     let getValor = check_call.value;
     validarCheckbox(getValor);
     determinarCodigoCanales();
-    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected;
+    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected;
 
 };
 
@@ -1326,7 +1327,7 @@ check_pagweb.onchange = function () {
     let getValor = check_call.value;
     validarCheckbox(getValor);
     determinarCodigoCanales();
-    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected;
+    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected;
 
 };
 
@@ -1334,7 +1335,7 @@ check_atm.onchange = function () {
     let getValor = check_call.value;
     validarCheckbox(getValor);
     determinarCodigoCanales();
-    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected;
+    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected;
     nextBtnThird.classList.add("d-none");
 
 };
@@ -1342,34 +1343,34 @@ check_bel.onchange = function () {
     let getValor = check_call.value;
     validarCheckbox(getValor);
     determinarCodigoCanales();
-    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected;
+    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected;
 
 };
 check_sms.onchange = function () {
     let getValor = check_call.value;
     validarCheckbox(getValor);
     determinarCodigoCanales();
-    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected;
+    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected;
 
 };
 check_canaldig.onchange = function () {
     let getValor = check_call.value;
     validarCheckbox(getValor);
     determinarCodigoCanales();
-    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected;
+    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected;
 };
 check_notpush.onchange = function () {
     let getValor = check_call.value;
     validarCheckbox(getValor);
     determinarCodigoCanales();
-    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected;
+    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected;
 
 };
 check_otro.onchange = function () {
     let getValor = check_call.value;
     validarCheckbox(getValor);
     determinarCodigoCanales();
-    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected;
+    txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected;
 
 };
 
@@ -1445,6 +1446,7 @@ function determinarCodigoCanales() { // esta función determina el consecutivo E
         contador2--;
     }
     //txtCampaignCode.value += "-" + codigo_creado;
+    codigo_creado = '-' + codigo_creado;
     return codigo_creado;
 
 }
