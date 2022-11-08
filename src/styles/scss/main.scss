@@ -2,8 +2,8 @@
 @import '../../../node_modules/bootstrap-multiselect/dist/scss/bootstrap-multiselect.scss';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import '~js-datepicker/src/datepicker';
-
 @import '../scss/vars';
+@use 'sass:math' as math;
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -585,4 +585,15 @@ header{
 
 .new--link--container{
     margin-left: 7rem;
+}
+
+#bacidHeader{
+    top: 15px;
+    
+}
+
+#lblCodigo{
+    
+    font-size: 14px;
+    color:$white;
 }

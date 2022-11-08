@@ -130,13 +130,7 @@ sidebarCollapse.onclick = () => effects.hideSideBar();
 getdllCountries.onchange = () => {
     countrySelected = getdllCountries.options[getdllCountries.selectedIndex].value;
     if (countrySelected !== "Seleccione país") {
-        getdllClients.disabled = false;
-        if (countrySelected !== "" || categorySelected !== "") {
-            getSelectedCountry(countrySelected);
-        } else {
-            getSelectedClients(clientsSelected);
-            getSelectedCategory(categorySelected);
-        }
+        getSelectedCountry(countrySelected);    
 
     } else {
         getdllClients.disabled = true;
@@ -145,20 +139,21 @@ getdllCountries.onchange = () => {
 
 };
 
-dllselectMultiProductos.onchange = () => {
-    multiProduct = dllselectMultiProductos.options[dllselectMultiProductos.selectedIndex].value;
-    getdllportfolio.disabled = false;
-};
-
 getdllClients.onchange = () => {
     current = getdllClients.options[getdllClients.selectedIndex].value;
     if (current !== "Seleccione cliente") {
-        getCategoryBtn.disabled = false;
         getSelectedClients(current);
     } else {
         getCategoryBtn.disabled = true;
     }
 };
+
+dllselectMultiProductos.onchange = () => {
+    multiProduct = dllselectMultiProductos.options[dllselectMultiProductos.selectedIndex].value;
+    getdllportfolio.disabled = false;
+};
+
+
 /**
  * Trigger que se ejecuta al cambiar el select de Categoria
  */
@@ -166,21 +161,17 @@ getCategoryBtn.onchange = () => {
 //    debugger;
     current = getCategoryBtn.options[getCategoryBtn.selectedIndex].value;
     if (current !== "Seleccione categoría") {
-        getdllProducts.disabled = false;
+        getSelectedCategory(current);
         loadProductsByCategory();
     } else {
         getdllProducts.disabled = true;
     }
-    setTimeout(function () {
-        getSelectedCategory(current);
-    }, 350);
-
+    
 };
 
 getdllProducts.onchange = () => {
     current = getdllProducts.options[getdllProducts.selectedIndex].value;
-    if (current !== "Seleccione categoría") {
-        getdllportfolio.disabled = false;
+    if (current !== "Seleccione un producto") {
         setTimeout(function () {
             getSelectedProducts(current);
         }, 300);
@@ -194,7 +185,6 @@ getdllportfolio.onchange = () => {
     current = getdllportfolio.options[getdllportfolio.selectedIndex].innerText;
     console.log(current);
     if (current !== "Seleccione objetivo") {
-        firstBtnNext.disabled = false;
         getPortfolioSelected(current);
     } else {
         firstBtnNext.disabled = true;
@@ -205,7 +195,6 @@ getdllportfolio.onchange = () => {
 dllgetCampaignType.onchange = () => {
     current = dllgetCampaignType.options[dllgetCampaignType.selectedIndex].value;
     if (current !== "Seleccione tipo") {
-        dllObjective.disabled = false;
         getCampaignType(current);
     } else {
         dllObjective.disabled = true;
@@ -215,10 +204,8 @@ dllgetCampaignType.onchange = () => {
 dllObjective.onchange = () => {
     current = dllObjective.options[dllObjective.selectedIndex].value;
     if (current !== "Seleccione objetivo") {
-        dllObjective.disabled = false;
-        nextBtnThird.disabled = false;
-        getBtnChannel.disabled = false;
-        getObjectiveSelected(current);
+        getObjectiveSelected(current); //se activa los botones dentro del método
+        
     } else {
         dllObjective.disabled = true;
         nextBtnThird.disabled = true;
@@ -245,7 +232,12 @@ dllObjective.onchange = () => {
 */
 getBtnChannel.onchange = () => {
     current = getBtnChannel.options[getBtnChannel.selectedIndex].value;
-    if (current === "google" || current === "prensa digital" || current === "banca en línea" || current === "youtube" || current === "Banca Móvil") {
+    if (current !== "Seleccione tipo") {
+        getDigitalChannelSelected(current);
+    } else {
+        nextBtnThird.disabled = true;
+    }
+    /*if (current === "google" || current === "prensa digital" || current === "banca en línea" || current === "youtube" || current === "Banca Móvil") {
         //document.getElementById("txtAdsGroup").disabled = false;
         loadAdsByChannel();
         loadsAdsGroupsByChannel();
@@ -254,9 +246,7 @@ getBtnChannel.onchange = () => {
         loadAdsByChannel();
         loadsAdsGroupsByChannel();
     }
-    setTimeout(function () {
-        getDigitalChannelSelected(current);
-    }, 350);
+    */
 };
 
 getComboGroup.onchange = () => {
@@ -383,6 +373,8 @@ nextBtnThird.onclick = (e) => {
     secondFormBtnWrapper.classList.add("d-none");
     secondFormBtnWrapper.classList.remove("d-block")
     lastFormBtnWrapper.classList.add("d-block");
+    loadAdsByChannel();
+    loadsAdsGroupsByChannel();
     e.preventDefault();
 }
 
@@ -478,20 +470,28 @@ const getProducts = (categorySelected) => {
         dllselectMultiProductos.classList.add("d-none");
         getdllProducts.classList.remove("d-none");
         getdllProducts.classList.add("d-block");
-        getdllProducts.disabled = false;
-        xhttp.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_producto.php?categoria=' + categorySelected, true);
-        xhttp.send();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                let data = JSON.parse(this.responseText);
-                for (let item of data) {
-                    let products = item.nombre_producto;
-                    document.getElementById("dllProducts").innerHTML += "<option value='" + products + "'>" + products + "</option>";
-                }
-
+        
+        
+        const xhr = new XMLHttpRequest();
+        xhr.ontimeout = () => {
+            console.error('The request for /consultas_para_dropdownlist/obtener_producto.php timed out. Retrying...');
+            getProducts(categorySelected);
+        };
+        xhr.onreadystatechange = () => {
+            if ( xhr.readyState == 4){
+                if( xhr.status == 200){
+                    let data = JSON.parse(xhr.responseText);
+                    for (let item of data) {
+                        let products = item.nombre_producto;
+                        document.getElementById("dllProducts").innerHTML += "<option value='" + products + "'>" + products + "</option>";
+                    }
+                    getdllProducts.disabled = false;
+                } 
             }
-
-        }
+        };
+        xhr.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_producto.php?categoria=' + encodeURIComponent(categorySelected), true);
+        xhr.timeout = 2000;
+        xhr.send();
     }
 
 };
@@ -514,10 +514,37 @@ const loadProductsByCategory = () => {
  */
 
 
-const getAd = (chanelSelected) => {
+const getAd = (channelSelected) => {
     let index = "";
     let gedCont = document.getElementsByClassName("dllAd");
-    xhttp.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_tipo_anuncio.php?canal_digital=' + chanelSelected, true);
+    const xhr = new XMLHttpRequest();
+
+    xhr.ontimeout = () => {
+        console.error('The request for /consultas_para_dropdownlist/obtener_tipo_anuncio.php. Retrying...');
+        getAd(channelSelected);
+    };
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(xhr.responseText);
+            for (let item of data) {
+                for (let i = 0; i < gedCont.length; i++) {
+                    index = i;
+                    let codeAd = item.codigo;
+                    let ads = item.nombre;
+                    let ids = ads.split(" ").join("");
+                    document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='' maxlength='5' name='nombre-anuncio' />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
+                }
+            }
+        }
+    };
+    xhr.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_tipo_anuncio.php?canal_digital=' + channelSelected, true);
+    xhr.timeout = 2000;
+    xhr.send();
+    /*
+    let index = "";
+    let gedCont = document.getElementsByClassName("dllAd");
+    xhttp.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_tipo_anuncio.php?canal_digital=' + channelSelected, true);
     xhttp.send();
 
     xhttp.onreadystatechange = function () {
@@ -535,15 +562,38 @@ const getAd = (chanelSelected) => {
 
             }
         }
-        /*for (let i in ad) {
-            document.getElementById("dllAd").innerHTML += "<option value='" + ad[i] + "'>" + ad[i] + "</option>";
+     
 
-        }*/
-
-    }
+    }*/
 };
 
-function getGroups(chanelSelected) {
+function getGroups(channelSelected) {
+    var grupos = [];
+    const xhr = new XMLHttpRequest();
+
+    xhr.ontimeout = () => {
+        console.error('The request for /consultas_para_dropdownlist/obtener_grupos_anuncios.php timed out. Retrying...');
+        getGroups(channelSelected);
+    };
+
+    xhr.onreadystatechange = function () {
+
+        if (this.readyState == 4 && this.status == 200) {
+            let datos = JSON.parse(xhr.responseText);
+            for (let item of datos) {
+                let groupCode = item.codigo_grupo;
+                let groups = item.nombre_categoria;
+                // grupos.push(item.nombre_categoria);
+                document.querySelector(".dllAdsGroup").innerHTML += "<option value='" + groupCode + "'>" + groups + "</option>";
+            }
+
+        }
+    }
+
+    xhr.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_grupos_anuncios.php?canal_digital=' + channelSelected, true);
+    xhr.timeout = 2000;
+    xhr.send();
+    /*
     var grupos = [];
     const xhttp = new XMLHttpRequest();
     xhttp.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_grupos_anuncios.php?canal_digital=' + chanelSelected, true);
@@ -561,7 +611,7 @@ function getGroups(chanelSelected) {
 
         }
 
-    }
+    }*/
 }
 /**
  * Función que se ejecuta para cargar los anuncios mediante el canal seleccionado
@@ -604,6 +654,29 @@ const loadsAdsGroupsByChannel = () => {
 }
 
 const getSelectedCountry = (current) => {
+    const xhr = new XMLHttpRequest();
+    xhr.ontimeout = () => {
+        console.error('The request for /consultas_generar_bac_id/obtener_pais_seleccionado.php timed out. Retrying...');
+        getSelectedCountry(current);
+    };
+    xhr.onreadystatechange = function () {
+
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(xhr.responseText);
+            for (let item of data) {
+                countryCode = item.abreviatura;
+            }
+            countrySelected = countryCode;
+            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+            getdllClients.disabled = false; //activa el siguiente paso
+        }
+
+    }
+    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_pais_seleccionado.php?pais_seleccionado=' + current, true);
+    xhr.timeout = 2000;
+    xhr.send();
+    
+    /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_pais_seleccionado.php?pais_seleccionado=' + current, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
@@ -618,10 +691,36 @@ const getSelectedCountry = (current) => {
         }
 
     }
-
+*/
 };
 
 const getSelectedClients = (current) => {
+    const xhr = new XMLHttpRequest();
+   
+    xhr.ontimeout = () => {
+        console.error('The request for /consultas_generar_bac_id/obtener_origen_clientes_seleccionado.php timed out. Retrying...');
+        getSelectedClients(current);
+    };
+    
+    xhr.onreadystatechange = function () {
+        
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(xhr.responseText);
+            for (let item of data) {
+                clientsCode = item.codigo;
+            }
+            clientsSelected = clientsCode;
+            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+            getCategoryBtn.disabled = false;
+        }
+    
+    
+    };
+
+    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_origen_clientes_seleccionado.php?origen_seleccionado=' + current, true);
+    xhr.timeout = 2000;
+    xhr.send();
+    /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_origen_clientes_seleccionado.php?origen_seleccionado=' + current, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
@@ -635,10 +734,37 @@ const getSelectedClients = (current) => {
         }
 
     }
-
+    */
 };
 
 const getSelectedCategory = (current) => {
+    const xhr = new XMLHttpRequest();
+    xhr.ontimeout = () => {
+        console.error('The request for /consultas_generar_bac_id/obtener_categoria_seleccionada.php timed out. Retrying...');
+        getSelectedCategory(current);
+    };
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(xhr.responseText);
+            for (let item of data) {
+                categoryCode = "-" + item.codigo;
+            }
+            categorySelected = categoryCode;
+            if(current !== "Multiproducto"){
+                txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+            }else{
+                txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + multi + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+            }
+           
+        }
+
+    };
+    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_categoria_seleccionada.php?categoria_seleccionada=' + current, true);
+    xhr.timeout = 2000;
+    xhr.send();
+    
+    /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_categoria_seleccionada.php?categoria_seleccionada=' + current, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
@@ -657,10 +783,33 @@ const getSelectedCategory = (current) => {
         }
 
     }
+    */
 
 };
 
 const getSelectedProducts = (current) => {
+    const xhr = new XMLHttpRequest();
+    xhr.ontimeout = () => {
+        console.error('The request for /consultas_generar_bac_id/obtener_producto_seleccionado.php timed out. Retrying...');
+        getSelectedProducts(current);
+    };
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(xhr.responseText);
+            for (let item of data) {
+                productsCode = item.codigo;
+            }
+            productsSelected = "-" + productsCode;
+            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+            getdllportfolio.disabled = false;
+        }
+
+    };
+    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_producto_seleccionado.php?producto_seleccionado=' + current, true);
+    xhr.timeout = 2000;
+    xhr.send();
+    /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_producto_seleccionado.php?producto_seleccionado=' + current, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
@@ -674,10 +823,31 @@ const getSelectedProducts = (current) => {
         }
 
     }
-
+    */
 };
 
 const getPortfolioSelected = (current) => {
+    const xhr = new XMLHttpRequest();
+    xhr.ontimeout = () => {
+        console.error('The request for /consultas_generar_bac_id/obtener_portafolio_seleccionado.php timed out. Retrying...');
+        getPortfolioSelected(current);
+    };
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(xhr.responseText);
+            for (let item of data) {
+                portfolioCode = item.codigo;
+            }
+            portfolioSelected = "-" + portfolioCode;
+            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+            firstBtnNext.disabled = false;
+        }
+    };
+    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_portafolio_seleccionado.php?portafolio_seleccionado=' + current, true);
+    xhr.timeout=2000;
+    xhr.send();
+    /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_portafolio_seleccionado.php?portafolio_seleccionado=' + current, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
@@ -691,10 +861,33 @@ const getPortfolioSelected = (current) => {
         }
 
     }
-
+    */
 };
 
 const getCampaignType = (current) => {
+    const xhr = new XMLHttpRequest();
+    
+    xhr.ontimeout = () => {
+        console.error('The request for /consultas_generar_bac_id/obtener_tipo_campana_seleccionado.php timed out. Retrying...');
+        getCampaignType(current);
+    };
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(xhr.responseText);
+            for (let item of data) {
+                campaignTypeCode = "-" + item.codigo;
+            }
+            campaignTypeSelected = campaignTypeCode;
+            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+            dllObjective.disabled = false;
+        }
+
+    };
+    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_tipo_campana_seleccionado.php?tipo_seleccionado=' + current, true);
+    xhr.timeout = 2000;
+    xhr.send();
+    /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_tipo_campana_seleccionado.php?tipo_seleccionado=' + current, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
@@ -708,10 +901,40 @@ const getCampaignType = (current) => {
         }
 
     }
-
+    */
 };
 
 const getObjectiveSelected = (current) => {
+    const xhr = new XMLHttpRequest();
+    
+    xhr.ontimeout = () => {
+        console.error('The request for /consultas_generar_bac_id/obtener_objetivo_seleccionado.php timed out. Retrying...');
+        getObjectiveSelected(current);
+    };
+
+    xhr.onreadystatechange = function () {
+
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(this.responseText);
+            for (let item of data) {
+                objectiveCode = "-" + item.codigo;
+            }
+            objectiveSelectedType = objectiveCode;
+            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+            if(check_canaldig.checked == false ){
+                nextBtnThird.disabled = false;
+            }
+            else{
+                getBtnChannel.disabled = false;
+            }  
+        }
+
+    };
+    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_objetivo_seleccionado.php?objetivo_seleccionado=' + current, true);
+    xhr.timeout = 2000;
+    xhr.send();
+
+    /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_objetivo_seleccionado.php?objetivo_seleccionado=' + current, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
@@ -726,14 +949,41 @@ const getObjectiveSelected = (current) => {
         }
 
     }
-
+    */
 };
 
 const getDigitalChannelSelected = (current) => {
+    const xhr = new XMLHttpRequest();
 
+    xhr.ontimeout = () => {
+        console.error('The request for /obtener_canal_digital_seleccionado.php. timed out. Retrying...');
+        getDigitalChannelSelected(current);
+    };
+    
+    xhr.onreadystatechange = () => {
+        
+        if ( xhr.readyState == 4){
+            if( xhr.status == 200){
+                let data = JSON.parse(xhr.responseText);
+                for (let item of data) {
+                    digitalChannelCode = "-" + item.codigo;
+                }
+                digitalChannelSelected = digitalChannelCode;
+                console.log(digitalChannelSelected);
+                txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+                nextBtnThird.disabled = false;
+            } 
+        } 
+    };
+    
+    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_canal_digital_seleccionado.php?canal_digital_seleccionado=' + current, true);
+    xhr.timeout = 2000;
+    xhr.send();
+    /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_canal_digital_seleccionado.php?canal_digital_seleccionado=' + current, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
+        
         if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(this.responseText);
             for (let item of data) {
@@ -745,10 +995,32 @@ const getDigitalChannelSelected = (current) => {
         }
 
     }
-
+    */
 };
 
 const getAdSelected = (current) => {
+    const xhr = new XMLHttpRequest();
+
+    xhr.ontimeout = () => {
+        console.error('The request for /consultas_generar_bac_id/obtener_tipo_anuncio_seleccionado.php timed out. Retrying...');
+        getAdSelected(current);
+    };
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(xhr.responseText);
+            for (let item of data) {
+                adCode = item.codigo;
+            }
+            adSelected = "-" + adCode;
+            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected;
+        }
+
+    };
+    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_tipo_anuncio_seleccionado.php?tipo_anuncio_seleccionado=' + current, true);
+    xhr.timeout = 2000;
+    xhr.send();
+    /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_tipo_anuncio_seleccionado.php?tipo_anuncio_seleccionado=' + current, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
@@ -762,7 +1034,7 @@ const getAdSelected = (current) => {
         }
 
     }
-
+    */
 };
 
 function obtenerMultiProductosSeleccionados(productsSelected) {
@@ -775,6 +1047,30 @@ function obtenerMultiProductosSeleccionados(productsSelected) {
         multiproductos.push(multiseleccion.selectedOptions[i].value);
     }
 
+    const xhr = new XMLHttpRequest();
+    xhr.ontimeout = () => {
+        console.error('The request for /consultas_generar_bac_id/obtener_multiproductos_seleccionados.php timed out. Retrying...');
+        obtenerMultiProductosSeleccionados(productsSelected);
+    };
+
+    xhr.onreadystatechange = function () {
+
+        if (this.readyState == 4 && this.status == 200) {
+
+            var datos = JSON.parse(xhr.responseText);
+
+            for (let item of datos) {
+                codigo_multiproductos = codigo_multiproductos + item.codigo;
+            }
+
+        }
+        txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected;
+    };
+    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_multiproductos_seleccionados.php?producto1_seleccionado=' + multiproductos[0] +
+        "&producto2_seleccionado=" + multiproductos[1] + "&producto3_seleccionado=" + multiproductos[2], true);
+    xhr.timeout = 2000;
+    xhr.send();
+    /*
     const xhttp = new XMLHttpRequest();
 
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_multiproductos_seleccionados.php?producto1_seleccionado=' + multiproductos[0] +
@@ -795,7 +1091,7 @@ function obtenerMultiProductosSeleccionados(productsSelected) {
         }
         txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected;
     }
-
+    */
 }
 
 /*
@@ -1184,9 +1480,14 @@ onchange = function () {
                 num = b;
             }
         }
-        element3[num].value = "";
-        element1[num].value = "";
-         element3[num].disabled = true;
+        if (element3[num]) {
+            element3[num].value = "";
+            element3[num].disabled = true;
+        }
+        if (element1[num]) {
+            element1[num].value = "";
+        }
+         
     };
 
     if (target.checked == true) {
@@ -1212,39 +1513,42 @@ onchange = function () {
                     num = b;
                 }
             }
-            element3[num].disabled = false;
-            element1[num].disabled = true;
-            element3[num].value = "0000";
-            element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + element3[num].value + "/" + txtCampaignName.value;
-            element3[num].addEventListener("input", updateValue);
+            if(element3[num]){
+                element3[num].disabled = false;
+                element3[num].value = "0000";
+                element3[num].addEventListener("input", updateValue);
+                element1[num].disabled = true;
+                element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + element3[num].value + "/" + txtCampaignName.value;
+            
+                
+                function updateValue(e) {
+                    getKey = e.target.value;
+                    element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + getKey + "/" + txtCampaignName.value;
+                }
+                element3[num].onfocus = () => {
+                    element3[num].value = "";
+                }
+                element3[num].onblur = () => {
+                    if(!element3[num].value){
+                        element3[num].value = "00000";
+                        element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + element3[num].value + "/" + txtCampaignName.value;
+                    }
+                }
+                element3[num].onkeypress = (e) => {
 
-            function updateValue(e) {
-                getKey = e.target.value;
-                element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + getKey + "/" + txtCampaignName.value;
+                    let key = (document.all) ? e.keyCode : e.which;
+                    if (key == 46) {
+                        return true;
+                    }
+                    if (key == 8) {
+                        return true;
+                    }
+                    let pat = /^[a-z0-9\s\-]+$/i;
+                    let final_key = String.fromCharCode(key).toUpperCase();
+                    let eraseSpaces = final_key.split(" ").join("");
+                    return pat.test(eraseSpaces);
+                };
             }
-            element3[num].onfocus = () => {
-                element3[num].value = "";
-            }
-            element3[num].onblur = () => {
-                if(!element3[num].value){
-                    element3[num].value = "00000";
-                    element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + element3[num].value + "/" + txtCampaignName.value;
-                }
-            }
-            element3[num].onkeypress = (e) => {
-
-                let key = (document.all) ? e.keyCode : e.which;
-                if (key == 46) {
-                    return true;
-                }
-                if (key == 8) {
-                    return true;
-                }
-                let pat = /^[a-z0-9\s\-]+$/i;
-                let final_key = String.fromCharCode(key).toUpperCase();
-                let eraseSpaces = final_key.split(" ").join("");
-                return pat.test(eraseSpaces);
-            };
 
         }
 
@@ -1352,6 +1656,7 @@ function validate(e) {
     let setIndice = indexUser;
 
     var bac_id = txtCampaignCode.value; //aqui te traes el valor del campo de bac_id
+    console.log('BacID a insertar: ' + bac_id);
     var id_usuario = setIndice; //aqui nos traemos el id del usuario para asociarlo con los bac id creados
     var nombre_campana = txtCampaignName.value; // aquí va el nombre de la campaña que digita el usuario
     var fecha_creacion = getCurrentDay; //se ingresa la fecha de creación
@@ -1498,15 +1803,15 @@ function consultarBACIDCreado(bac_id_registrado, nombre_campana, fecha_creacion)
         '&origen_bacid=' + bac_id_registrado.substring(3, 4) + '&categoria_bacid=' + bac_id_registrado.substring(5, 9) +
         '&producto_bacid=' + bac_id_registrado.substring(10, 13) + '&portafolio_bacid=' + bac_id_registrado.substring(21, 23) + '&tipo_campana_bacid=' + bac_id_registrado.substring(24, 26) +
         '&objetivo_bacid=' + bac_id_registrado.substring(27, 29) + '&canal_digital_bacid=' + bac_id_registrado.substring(30, 32), true);
-
-    xhttp.send();
+    
+    xhttp.send(bac_id_registrado.substring(30, 32));
 
     xhttp.onreadystatechange = function () {
 
         if (this.readyState == 4 && this.status == 200) {
 
             let datos = JSON.parse(this.responseText);
-
+             
             document.getElementById("result_nombre_campana").innerHTML = nombre_campana;
             document.getElementById("result_creacion").innerHTML = fecha_creacion;
             document.getElementById("result_pais").innerHTML = datos[0].nombre_pais;
@@ -1705,3 +2010,4 @@ jQuery(document).ready(function () {
     }).mousemove(function (e) { e.preventDefault() });
 
 });
+//# sourceMappingURL=sockjs.js.map
