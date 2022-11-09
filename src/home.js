@@ -903,7 +903,7 @@ const getCampaignType = (current) => {
                 campaignTypeCode = "-" + item.codigo;
             }
             campaignTypeSelected = campaignTypeCode;
-            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
+            txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected
             dllObjective.disabled = false;
         }
 
