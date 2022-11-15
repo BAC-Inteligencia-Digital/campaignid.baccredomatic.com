@@ -126,6 +126,8 @@ let setFirstName = "";
 let setIndice = "";
 //txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected;
 
+var checksSelectedFB = [];
+
 btnlogOut.onclick = () => header.logOut();
 sidebarCollapse.onclick = () => effects.hideSideBar();
 
@@ -260,6 +262,7 @@ getBtnChannel.onchange = () => {
 };
 
 getComboGroup.onchange = () => {
+    //debugger
     current = getComboGroup.options[getComboGroup.selectedIndex].value;
     getGroupSelected = current.split(" ").join("").toLowerCase();
     getPublicacionText = document.querySelectorAll(".txtTipoCanal");
@@ -540,6 +543,7 @@ const getAd = (channelSelected) => {
             //debugger
             let data = JSON.parse(xhr.responseText);
             for (let item of data) {
+
                 for (let i = 0; i < gedCont.length; i++) {
                     index = i;
                     let codeAd = item.codigo;
@@ -551,7 +555,7 @@ const getAd = (channelSelected) => {
                     channelSelected !== "spotify" && 
                     channelSelected !== "prensa digital" && 
                     channelSelected !== "waze") {
-                        document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='' maxlength='5' name='nombre-anuncio' />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
+                        document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled id='"+codeAd+"' class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='addNameId"+codeAd+"' maxlength='5' name='nombre-anuncio' />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
                     } else {
                         document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for='' style='display: none;' >Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='' maxlength='5' name='nombre-anuncio' style='display: none; />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
                     }
@@ -1474,6 +1478,7 @@ function clear() {
 }
 
 onchange = function () {
+    //debugger
     var target = event.target ? event.target : event.srcElement;
     getPublicacionText = document.getElementsByClassName("txtTipoCanal");
     publicacionPost = document.getElementsByClassName("adCheck");
@@ -1531,6 +1536,12 @@ onchange = function () {
             let ele3val = element3[num].value = "00000";
             element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + ele3val + "/" + txtCampaignName.value;
         } else {
+
+            if(channelSelect === "facebook") {
+                //let getInputNameAdd = this.document.getElementById("addNameId"+target.id)
+                checksSelectedFB.push(target.id)
+            }
+
             var getIndex = target.name;
             var num;
             for (let b = 0; b < element2.length; b++) {
@@ -1634,9 +1645,15 @@ firstSubmit.onclick = () => {
 
 function validate(e) {
     let onlyOne = false;
+
+   // let channelSelected = document.getElementById("dllChannel").value;
+   // let add
+
     getPublicacionText = document.querySelectorAll(".txtTipoCanal");
     publicacionPost = document.querySelectorAll(".adCheck");
     getAdname = document.querySelectorAll(".adName");
+
+   // if(channelSelected === "facebook")
 
     if (getComboGroup.selectedIndex = 0) {
         alert("Debe de seleccionar un grupo de anuncio");
@@ -1666,6 +1683,17 @@ function validate(e) {
             //subBacId.push(getPublicacionText[a].value + "/" + txtCampaignName.value);
             subBacId.push(getPublicacionText[a].value);
             getPublicacionText[a].value = "";
+        }
+    }
+//debugger
+    if(checksSelectedFB.length > 0) {
+        for(let checkCounter = 0; checkCounter < checksSelectedFB.length; checkCounter++) {
+            let getInputNameAdd = document.getElementById("addNameId"+checksSelectedFB[checkCounter])
+           //debugger
+            if(getInputNameAdd.value === "0000" || getInputNameAdd.value === "00000") {
+                alert("Se debe agregar el nombre de todos los anuncios")
+                return
+            }
         }
     }
 
@@ -1916,6 +1944,7 @@ function consultarSUBACIDCreados(lista_sub_bacids) {
         xhttp.onreadystatechange = function () {
 
             if (this.readyState == 4 && this.status == 200) {
+                debugger
                 let datos = JSON.parse(this.responseText);
 
                 for (let item of datos) {
