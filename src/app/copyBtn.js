@@ -1,7 +1,7 @@
 const copyBtns = (() => {
 
     const copyCodeBtn = (ele) => {
-       debugger;
+      // debugger;
         var row = ele.closest('tr');
         var getBacId = row.cells[4].textContent;
         var getValue = row.cells[5].value = /*"?bacid=" + */getBacId;
