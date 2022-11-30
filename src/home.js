@@ -124,6 +124,7 @@ let multiProduct = "";
 let multi = "";
 let setFirstName = "";
 let setIndice = "";
+
 //txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + codigo_creado + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected;
 
 var checksSelectedFB = [];
@@ -386,6 +387,7 @@ nextBtnThird.onclick = (e) => {
     secondFormBtnWrapper.classList.add("d-none");
     secondFormBtnWrapper.classList.remove("d-block")
     lastFormBtnWrapper.classList.add("d-block");
+    checksSelectedFB = [];
     loadAdsByChannel();
     loadsAdsGroupsByChannel();
     e.preventDefault();
@@ -549,16 +551,8 @@ const getAd = (channelSelected) => {
                     let codeAd = item.codigo;
                     let ads = item.nombre;
                     let ids = ads.split(" ").join("");
-                    
-                    if(channelSelected !== "google" && 
-                    channelSelected !== "Linkedin" && 
-                    channelSelected !== "spotify" && 
-                    channelSelected !== "prensa digital" && 
-                    channelSelected !== "waze") {
-                        document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled id='"+codeAd+"' class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='addNameId"+codeAd+"' maxlength='5' name='nombre-anuncio' />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
-                    } else {
-                        document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for='' style='display: none;' >Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='' maxlength='5' name='nombre-anuncio' style='display: none; />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
-                    }
+                    document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled id='"+codeAd+"' class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='addNameId"+codeAd+"' maxlength='5' name='nombre-anuncio' />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
+                    //document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='idAdName' maxlength='5' name='nombre-anuncio' />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
                     
                 }
             }
@@ -1490,6 +1484,7 @@ onchange = function () {
     let element1 = [];
     let element2 = [];
     for (let i = 0; i < getPublicacionText.length; i++) {
+        console.log("txtCanal: "+getPublicacionText[i].value);
         element1.push(getPublicacionText[i]);
     };
 
@@ -1523,115 +1518,105 @@ onchange = function () {
     if (target.checked == true) {
         let channelSelect = getBtnChannel.options[getBtnChannel.selectedIndex].value;
         //debugger;
-        if (channelSelect === "google" || channelSelect === "prensa digital" || channelSelect === "banca en línea" || channelSelect === "youtube" || channelSelect === "Banca Móvil") {
-            var getIndex = target.name;
-            var num;
-            for (let b = 0; b < element2.length; b++) {
-                if (element2[b].name == getIndex) {
-                    num = b;
-                }
+        //if(channelSelect === "facebook" || channelSelect === "google") {
+            //let getInputNameAdd = this.document.getElementById("addNameId"+target.id)
+            console.log("TargetId " + target.id);
+            checksSelectedFB.push(target.id)
+        //}
+
+        var getIndex = target.name;
+        var num;
+        for (let b = 0; b < element2.length; b++) {
+            if (element2[b].name == getIndex) {
+                num = b;
             }
-            element3[num].disabled = true;
+        }
+        if(element3[num]){
+            element3[num].disabled = false;
+            element3[num].value = "00000";
+            element3[num].addEventListener("input", updateValue);
             element1[num].disabled = true;
-            let ele3val = element3[num].value = "00000";
-            element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + ele3val + "/" + txtCampaignName.value;
-        } else {
-
-            if(channelSelect === "facebook") {
-                //let getInputNameAdd = this.document.getElementById("addNameId"+target.id)
-                checksSelectedFB.push(target.id)
-            }
-
-            var getIndex = target.name;
-            var num;
-            for (let b = 0; b < element2.length; b++) {
-                if (element2[b].name == getIndex) {
-                    num = b;
-                }
-            }
-            if(element3[num]){
-                element3[num].disabled = false;
-                element3[num].value = "0000";
-                element3[num].addEventListener("input", updateValue);
-                element1[num].disabled = true;
-                element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + element3[num].value + "/" + txtCampaignName.value;
+            element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + element3[num].value + "/" + txtCampaignName.value;
             
                 
-                function updateValue(e) {
-                    getKey = e.target.value;
-                    element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + getKey + "/" + txtCampaignName.value;
-                }
-                element3[num].onfocus = () => {
-                    element3[num].value = "";
-                }
-                element3[num].onblur = () => {
-                    if(!element3[num].value){
-                        element3[num].value = "00000";
-                        element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + element3[num].value + "/" + txtCampaignName.value;
-                    }
-                }
-                element3[num].onkeypress = (e) => {
-
-                    let key = (document.all) ? e.keyCode : e.which;
-                    if (key == 46) {
-                        return true;
-                    }
-                    if (key == 8) {
-                        return true;
-                    }
-                    let pat = /^[a-z0-9\s\-]+$/i;
-                    let final_key = String.fromCharCode(key).toUpperCase();
-                    let eraseSpaces = final_key.split(" ").join("");
-                    return pat.test(eraseSpaces);
-                };
+            function updateValue(e) {
+                getKey = e.target.value;
+                element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + getKey + "/" + txtCampaignName.value;
             }
+            element3[num].onfocus = () => {
+                element3[num].value = "";
+            }
+            element3[num].onblur = () => {
+                if(!element3[num].value){
+                    element3[num].value = "00000";
+                    element1[num].value = getGroupSelected + "-" + target.defaultValue + "-" + element3[num].value + "/" + txtCampaignName.value;
+                }
+            }
+            element3[num].onkeypress = (e) => {
 
+                let key = (document.all) ? e.keyCode : e.which;
+                if (key == 46) {
+                    return true;
+                }
+                if (key == 8) {
+                    return true;
+                }
+                let pat = /^[a-z0-9\s\-]+$/i;
+                let final_key = String.fromCharCode(key).toUpperCase();
+                let eraseSpaces = final_key.split(" ").join("");
+                return pat.test(eraseSpaces);
+            };
         }
+
+        
 
     }
 }
 
 addMore.onclick = () => {
-    document.querySelector(".alert-success").classList.remove("show");
-    document.querySelector(".alert-success").classList.add("hide");
-    getPublicacionText = document.querySelectorAll(".txtTipoCanal");
-    publicacionPost = document.querySelectorAll(".adCheck");
-    getAdname = document.querySelectorAll(".adName");
-
-    for (let a = 0; a < getPublicacionText.length; a++) {
-        if (getPublicacionText[a].value.length !== 0) {
-            subBacId.push(getPublicacionText[a].value);
-            getPublicacionText[a].value = "";
-        }
-    }
-
-    for (let a = 0; a < getAdname.length; a++) {
-        if (getAdname[a].value.length !== 0) {
-            getAdname[a].value = "";
-            getAdname[a].disabled = true;
-        }
-    }
-
-    for (let a = 0; a < publicacionPost.length; a++) {
-        publicacionPost[a].checked = false;
-    }
-
-    getComboGroup.selectedIndex = 0;
-
-    document.querySelector(".alert-success").classList.remove("d-none");
-    document.querySelector(".alert-success").classList.add("show");
-    document.querySelector(".alert-success").classList.add("d-block");
-    effects.scrollIt(
-        document.querySelector('.sidebar-header'),
-        300,
-        'easeOutQuad'
-    );
-
-    setTimeout(function () {
+    if(validarAdNameLleno()){
         document.querySelector(".alert-success").classList.remove("show");
-        document.querySelector(".alert-success").classList.remove("d-block");
-        document.querySelector(".alert-success").classList.add("d-none");
-    }, 4000);
+        document.querySelector(".alert-success").classList.add("hide");
+        getPublicacionText = document.querySelectorAll(".txtTipoCanal");
+        publicacionPost = document.querySelectorAll(".adCheck");
+        getAdname = document.querySelectorAll(".adName");
+
+        for (let a = 0; a < getPublicacionText.length; a++) {
+            if (getPublicacionText[a].value.length !== 0) {
+                subBacId.push(getPublicacionText[a].value);
+                getPublicacionText[a].value = "";
+            }
+        }
+
+        for (let a = 0; a < getAdname.length; a++) {
+            if (getAdname[a].value.length !== 0) {
+                getAdname[a].value = "";
+                getAdname[a].disabled = true;
+            }
+        }
+
+        for (let a = 0; a < publicacionPost.length; a++) {
+            publicacionPost[a].checked = false;
+        }
+
+        getComboGroup.selectedIndex = 0;
+
+        document.querySelector(".alert-success").classList.remove("d-none");
+        document.querySelector(".alert-success").classList.add("show");
+        document.querySelector(".alert-success").classList.add("d-block");
+        effects.scrollIt(
+            document.querySelector('.sidebar-header'),
+            300,
+            'easeOutQuad'
+        );
+
+        setTimeout(function () {
+            document.querySelector(".alert-success").classList.remove("show");
+            document.querySelector(".alert-success").classList.remove("d-block");
+            document.querySelector(".alert-success").classList.add("d-none");
+        }, 4000);
+    }
+    
 
 }
 
@@ -1669,7 +1654,20 @@ function validate(e) {
         alert("Debe seleccionar al menos un tipo de anuncio y completar el nombre de anuncio");
         return;
     }
-    if (subBacId === undefined || subBacId.length == 0) {
+    
+    
+    console.log("valor combo: "+ getGroupSelected)
+                
+    if(validarAdNameLleno()){
+        if (subBacId === undefined || subBacId.length == 0) {
+            for (let a = 0; a < getPublicacionText.length; a++) {
+                if (getPublicacionText[a].value.length !== 0) {
+                    //subBacId.push(getPublicacionText[a].value + "/" + txtCampaignName.value);
+                    subBacId.push(getPublicacionText[a].value);
+                    getPublicacionText[a].value = "";
+                }
+            }
+        }
         for (let a = 0; a < getPublicacionText.length; a++) {
             if (getPublicacionText[a].value.length !== 0) {
                 //subBacId.push(getPublicacionText[a].value + "/" + txtCampaignName.value);
@@ -1677,62 +1675,43 @@ function validate(e) {
                 getPublicacionText[a].value = "";
             }
         }
-    }
-    for (let a = 0; a < getPublicacionText.length; a++) {
-        if (getPublicacionText[a].value.length !== 0) {
-            //subBacId.push(getPublicacionText[a].value + "/" + txtCampaignName.value);
-            subBacId.push(getPublicacionText[a].value);
-            getPublicacionText[a].value = "";
+    //debugger
+        
+        bacIdForm.remove();
+        resultWrapper = document.getElementById("resultWrapper");
+        resultWrapper.classList.remove("d-none");
+        resultWrapper.classList.add("d-block");
+    
+        let userInfo = localStorage.getItem('name');
+        let userData = JSON.parse(userInfo);
+        let getUserIndex = userData.shift();
+        let indexUser = parseInt(getUserIndex);
+        let setIndice = indexUser;
+    
+        var bac_id = txtCampaignCode.value; //aqui te traes el valor del campo de bac_id
+        console.log('BacID a insertar: ' + bac_id);
+        var id_usuario = setIndice; //aqui nos traemos el id del usuario para asociarlo con los bac id creados
+        var nombre_campana = txtCampaignName.value; // aquí va el nombre de la campaña que digita el usuario
+        var fecha_creacion = getCurrentDay; //se ingresa la fecha de creación
+        var lista_sub_bacids = subBacId;
+    
+        const xhttp = new XMLHttpRequest();
+        xhttp.open('GET', cnxn + '/insertar_bac_id/insertar_bac_id.php?bac_id=' + bac_id + '&id_usuario=' + id_usuario
+            + '&nombre_campana=' + nombre_campana + '&fecha_creacion=' + fecha_creacion, true);
+        xhttp.send();
+    
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                        }
         }
-    }
-//debugger
-    if(checksSelectedFB.length > 0) {
-        for(let checkCounter = 0; checkCounter < checksSelectedFB.length; checkCounter++) {
-            let getInputNameAdd = document.getElementById("addNameId"+checksSelectedFB[checkCounter])
-           //debugger
-            if(getInputNameAdd.value === "0000" || getInputNameAdd.value === "00000") {
-                alert("Se debe agregar el nombre de todos los anuncios")
-                return
-            }
+        for (var i = 0; i < lista_sub_bacids.length; i++) {
+            insertarSUBBACID(bac_id, lista_sub_bacids[i]); //se inserta uno por uno los sub_bac_id
         }
+    
+        consultarBACIDCreado(bac_id, nombre_campana, fecha_creacion); //llamamos esta función para mostrar los datos correspondientes al BAC ID Creado
+        consultarSUBACIDCreados(lista_sub_bacids);
     }
-
-    bacIdForm.remove();
-    resultWrapper = document.getElementById("resultWrapper");
-    resultWrapper.classList.remove("d-none");
-    resultWrapper.classList.add("d-block");
-
-    let userInfo = localStorage.getItem('name');
-    let userData = JSON.parse(userInfo);
-    let getUserIndex = userData.shift();
-    let indexUser = parseInt(getUserIndex);
-    let setIndice = indexUser;
-
-    var bac_id = txtCampaignCode.value; //aqui te traes el valor del campo de bac_id
-    console.log('BacID a insertar: ' + bac_id);
-    var id_usuario = setIndice; //aqui nos traemos el id del usuario para asociarlo con los bac id creados
-    var nombre_campana = txtCampaignName.value; // aquí va el nombre de la campaña que digita el usuario
-    var fecha_creacion = getCurrentDay; //se ingresa la fecha de creación
-    var lista_sub_bacids = subBacId;
-
-    const xhttp = new XMLHttpRequest();
-    xhttp.open('GET', cnxn + '/insertar_bac_id/insertar_bac_id.php?bac_id=' + bac_id + '&id_usuario=' + id_usuario
-        + '&nombre_campana=' + nombre_campana + '&fecha_creacion=' + fecha_creacion, true);
-    xhttp.send();
-
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-
-
-        }
-
-    }
-    for (var i = 0; i < lista_sub_bacids.length; i++) {
-        insertarSUBBACID(bac_id, lista_sub_bacids[i]); //se inserta uno por uno los sub_bac_id
-    }
-
-    consultarBACIDCreado(bac_id, nombre_campana, fecha_creacion); //llamamos esta función para mostrar los datos correspondientes al BAC ID Creado
-    consultarSUBACIDCreados(lista_sub_bacids);
+    
 
 }
 
@@ -1769,6 +1748,23 @@ function firstValidation(){
     consultarBACIDCreado2(bac_id, nombre_campana, fecha_creacion); //llamamos esta función para mostrar los datos correspondientes al BAC ID Creado
 }
 
+function validarAdNameLleno(){
+    if(checksSelectedFB.length > 0) {
+        for(let checkCounter = 0; checkCounter < checksSelectedFB.length; checkCounter++) {
+            console.log("error: "+"addNameId"+checksSelectedFB[checkCounter])
+            let getInputNameAdd = document.getElementById("addNameId"+checksSelectedFB[checkCounter])
+           //debugger
+            if(getInputNameAdd.value === "0000" || getInputNameAdd.value === "00000") {
+            
+                alert("Se debe agregar el nombre de todos los anuncios")
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    }
+}
 function insertarSUBBACID(bac_id_padre, sub_bacid) {
     //debugger;
     const xhttp = new XMLHttpRequest();
@@ -1944,7 +1940,7 @@ function consultarSUBACIDCreados(lista_sub_bacids) {
         xhttp.onreadystatechange = function () {
 
             if (this.readyState == 4 && this.status == 200) {
-                debugger
+                //debugger
                 let datos = JSON.parse(this.responseText);
 
                 for (let item of datos) {
