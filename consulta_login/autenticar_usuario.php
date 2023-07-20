@@ -1,5 +1,6 @@
 <?php
-   	include '../archivo_conexion_db/conexion_base_datos.php';
+   	include_once "../config/cors.php";
+    include '../archivo_conexion_db/conexion_base_datos.php';
 
     $usuario_ingresado = $_GET['usuario_ingresado'];
     $contrasena_ingresada = $_GET['contrasena_ingresada'];

@@ -1,9 +1,15 @@
 <?php
-   	include '../archivo_conexion_db/conexion_base_datos.php';
+   	
+   include '../archivo_conexion_db/conexion_base_datos.php';
 
-    $id_usuario = $_GET['id_usuario'];
+   $dominioPermitido = "https://campaignid.baccredomatic.com";
+   header("Access-Control-Allow-Origin: $dominioPermitido");
+   header("Access-Control-Allow-Headers: content-type");
+   header("Access-Control-Allow-Methods: OPTIONS,GET,PUT,POST,DELETE");
+
+   $id_usuario = $_GET['id_usuario'];
  
-    $return_arr = array();
+   $return_arr = array();
 	
 	// creación de la conexión a la base de datos con mysql_connect()
 	$conexion = mysqli_connect( $servidor, $usuario, $password ) or die ("No se ha podido conectar al servidor de Base de datos");
