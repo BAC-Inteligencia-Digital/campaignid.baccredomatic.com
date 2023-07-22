@@ -13,6 +13,13 @@
     $app->getAllProducto("option/producto/{$params[2]}/");
     $app->getAllMultiproducto("option/multiproducto/");
     $app->getAllObjetivo("option/objetivo/");
+    $app->getAllPortafolio("option/portafolio/");
+    $app->getAllOrigen("option/origen/");
+    $app->getAllCanal("option/canal/");
+    $app->getAllCanalDigital("option/canaldigital/");
+    $app->getAllTipoCampana("option/tipocampana/");
+    $app->getAllGrupoAnuncio("option/grupoanuncio/{$params[2]}/");
+    $app->getAllTipoAnuncio("option/tipoanuncio/{$params[2]}/");
 
     /****************Error 404*****************/
     echo json_encode(ResponseHttp::status404());
