@@ -1,3 +1,73 @@
-[21-Jul-2023 18:35:48 America/Costa_Rica] conexion exitosa
-[21-Jul-2023 18:36:02 America/Costa_Rica] conexion exitosa
-[21-Jul-2023 18:36:03 America/Costa_Rica] La contraseña es incorrecta
+[21-Jul-2023 22:24:59 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:25:03 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:25:32 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:25:32 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:25:32 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:25:33 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:25:33 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:25:33 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:25:33 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:25:33 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:26:22 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:26:22 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:26:22 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:27:40 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:27:56 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:27:57 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:28:00 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:28:04 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:28:42 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:28:46 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:33:06 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:40:25 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:40:52 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 22:41:08 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:41:15 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:43:18 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:43:40 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:43:47 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:44:19 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:46:33 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:57:02 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:57:22 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:57:23 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:57:31 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:57:49 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:58:33 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:59:14 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:59:40 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 22:59:44 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:01:17 America/Costa_Rica] esto es una prueba
+[21-Jul-2023 23:02:39 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:03:11 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:03:18 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:03:38 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:04:04 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:04:13 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:05:07 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:09:06 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:11:31 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:11:43 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:11:52 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:14:19 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:14:34 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:16:42 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:16:42 America/Costa_Rica] OptionModel::getAllProducto -> PDOException: SQLSTATE[21000]: Cardinality violation: 1222 The used SELECT statements have a different number of columns in C:\xampp\htdocs\API_BACKEND_BACID\src\Models\OptionModel.php:49
+Stack trace:
+#0 C:\xampp\htdocs\API_BACKEND_BACID\src\Models\OptionModel.php(49): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\API_BACKEND_BACID\src\Controllers\OptionController.php(37): App\Models\OptionModel::getAllProducto('5')
+#2 C:\xampp\htdocs\API_BACKEND_BACID\src\Routes\option.php(13): App\Controllers\OptionController->getAllProducto('option/producto...')
+#3 C:\xampp\htdocs\API_BACKEND_BACID\public\index.php(24): require('C:\\xampp\\htdocs...')
+#4 {main}
+[21-Jul-2023 23:17:35 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:17:53 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:19:51 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:20:03 America/Costa_Rica] conexion exitosa
+[21-Jul-2023 23:20:03 America/Costa_Rica] OptionModel::getAllObjetivo -> PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'base_datos_bac_id.objetivo' doesn't exist in C:\xampp\htdocs\API_BACKEND_BACID\src\Models\OptionModel.php:80
+Stack trace:
+#0 C:\xampp\htdocs\API_BACKEND_BACID\src\Models\OptionModel.php(80): PDOStatement->execute()
+#1 C:\xampp\htdocs\API_BACKEND_BACID\src\Controllers\OptionController.php(59): App\Models\OptionModel::getAllObjetivo()
+#2 C:\xampp\htdocs\API_BACKEND_BACID\src\Routes\option.php(15): App\Controllers\OptionController->getAllObjetivo('option/objetivo...')
+#3 C:\xampp\htdocs\API_BACKEND_BACID\public\index.php(24): require('C:\\xampp\\htdocs...')
+#4 {main}
+[21-Jul-2023 23:20:32 America/Costa_Rica] conexion exitosa

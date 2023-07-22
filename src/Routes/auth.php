@@ -11,4 +11,4 @@
     $app->getLogin("auth/{$params[1]}/{$params[2]}/");
 
     /****************Error 404*****************/
-    //echo json_encode(ResponseHttp::status404());
+    echo json_encode(ResponseHttp::status404());

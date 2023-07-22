@@ -42,7 +42,7 @@ class Security {
     {
         $payload =  [
             "iat" => time(),
-            "exp" => time() + (10),
+            "exp" => time() + 60,
             "data" => $data
         ];
 
