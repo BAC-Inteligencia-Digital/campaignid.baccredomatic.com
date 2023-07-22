@@ -8,4 +8,5 @@ deny from all
 </files>
 
 #URL amigable con un solo parametro
-RewriteRule ^([0-9a-zA-Z-_@./]+)$ index.php?route=$1 [QSA]
+RewriteRule ^([0-9a-zA-Z-_@.:=/]+)$ index.php?route=$1 [QSA,B]
+

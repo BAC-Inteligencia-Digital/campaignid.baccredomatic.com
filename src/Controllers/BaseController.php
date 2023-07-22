@@ -52,7 +52,7 @@ class BaseController {
         if ($this->getHeader('Content-Type') == 'application/json') {
            $param = json_decode(file_get_contents("php://input"),true);
         } else {
-            $param = $_POST;
+           $param = $_POST;
         }
         return $param;
     }
