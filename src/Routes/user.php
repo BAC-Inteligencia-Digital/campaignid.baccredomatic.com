@@ -11,6 +11,8 @@
 
     /*************Rutas***************/
     $app->postSave('user/');
+    $app->getUser("user/{$params[1]}/");
+    $app->updateSave('user/update/');
 
     /****************Error 404*****************/
     echo json_encode(ResponseHttp::status404());

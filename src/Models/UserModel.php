@@ -23,7 +23,6 @@ class UserModel extends ConnectionDB {
 
     public function __construct(array $data)
     {
-        self::$id           = $data['id'];
         self::$usuario_red  = $data['usuario_red'];
         self::$contraseña   = $data['contrasena'];
         self::$correo       = $data['correo'];        
@@ -124,7 +123,6 @@ class UserModel extends ConnectionDB {
     /*******************************************Registrar usuario************************************************/
     final public static function postSave()
     {
-
         if (Sql::exists("SELECT usuario_red FROM usuarios WHERE usuario_red = :usuario",":usuario",self::getUsuario())) {  
             return ResponseHttp::status400('El Usuario ya esta registrado');
         } else if (Sql::exists("SELECT correo FROM usuarios WHERE correo = :correo",":correo",self::getCorreo())) {
@@ -140,7 +138,7 @@ class UserModel extends ConnectionDB {
                 $query->execute([
                     ':usuario_red' => self::getUsuario(),
                     ':contrasena'  => Security::createPassword(self::getPass()),
-                    ':correo'      => self::getCorreo(),
+                    ':correo'      => Security::cryptEmail(self::getCorreo()),
                     ':tipo_usuario'=> self::getRol(),                    
                     ':pais'        => self::getPais(),
                     ':nombre'      => self::getNombre(),
@@ -160,5 +158,67 @@ class UserModel extends ConnectionDB {
         }
     }
 
-       
+     /******************************Actualizar la información del usuario********************************/
+     final public static function updateSave()
+     {
+         self::setIDToken(hash('sha512',self::getUsuario().self::getCorreo()));
+         try {
+             $con = self::getConnection();
+             $query = $con->prepare("UPDATE usuarios set usuario_red = :usuario_red, contraseña = :contrasena, correo = :correo, 
+             tipo_usuario = :tipo_usuario, pais = :pais, nombre = :nombre, apellidos= :apellidos, estado = :estado, IDToken = :IDToken 
+             where id = :id");           
+             $query->execute([
+                ':id' => self::getId(),
+                ':usuario_red' => self::getUsuario(),
+                ':contrasena'  => Security::createPassword(self::getPass()),
+                ':correo'      => Security::cryptEmail(self::getCorreo()),
+                ':tipo_usuario'=> self::getRol(),                    
+                ':pais'        => self::getPais(),
+                ':nombre'      => self::getNombre(),
+                ':apellidos'   => self::getApellidos(),
+                ':estado'      => self::getEstado(),
+                ':IDToken'     => self::getIDToken()
+             ]);
+             if ($query->rowCount() > 0) {
+             return ResponseHttp::status200('El usuario se ha actualizado exitosamente');
+             } else {
+             return ResponseHttp::status500('Error al actualizar los datos del usuario');
+             }
+         } catch (\PDOException $e) {
+             error_log("UserModel::updateSave -> " . $e);
+             die(json_encode(ResponseHttp::status500()));
+         }
+     }
+
+     /**************************Consultar usuario según nombre de usuario**************************************/
+    final public static function getUser()
+    {
+        try {
+            $con = self::getConnection();
+            $query = $con->prepare("SELECT * FROM usuarios WHERE usuario_red = :usuario");
+            $query->execute([
+                ':usuario' => self::getUsuario()
+            ]);
+
+            if ($query->rowCount() == 0) {
+                return ResponseHttp::status400('El usuario ingresado no esta registrado');
+            } else {
+                    $rs = $query->fetchAll(\PDO::FETCH_ASSOC);
+                    $usuarioBuscado['id']                = $rs[0]['id'];
+                    $usuarioBuscado['usuario_red']       = $rs[0]['usuario_red'];
+                    $usuarioBuscado['contrasena']        = $rs[0]['contraseña'];
+                    $usuarioBuscado['correo']            = Security::decryptEmail($rs[0]['correo']);
+                    $usuarioBuscado['nombre_usuario']    = $rs[0]['nombre'];
+                    $usuarioBuscado['apellidos_usuario'] = $rs[0]['apellidos'];
+                    $usuarioBuscado['pais']              = $rs[0]['pais'];
+                    $usuarioBuscado['tipo_usuario']      = $rs[0]['tipo_usuario'];
+                    $usuarioBuscado['estado']            = $rs[0]['estado'];
+                    return $usuarioBuscado;
+            }          
+        } catch (\PDOException $e) {
+            error_log("UserModel::getUser -> ".$e);
+            die(json_encode(ResponseHttp::status500('No se pueden obtener los datos del usuario')));
+        }
+    }
+        
 }

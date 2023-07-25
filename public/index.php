@@ -5,6 +5,8 @@ use App\Config\ResponseHttp;
 
     require dirname(__DIR__) . '/vendor/autoload.php';
 
+    ResponseHttp::headerHttpDev($_SERVER['REQUEST_METHOD']);
+    //ResponseHttp::headerHttpPro($_SERVER['REQUEST_METHOD'],$_SERVER['HTTP_ORIGIN']);
     ErrorLog::activateErrorLog();
 
     if (isset($_GET['route'])){
