@@ -27,6 +27,8 @@ class UserController extends BaseController{
         }
     }
 
+
+    /************************************Función para crear un usuario nuevo***********************************************/
     final public function postSave(string $endPoint)
     {
         if ($this->getMethod() == 'post' && $endPoint == $this->getRoute()) {

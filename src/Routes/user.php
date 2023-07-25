@@ -13,4 +13,4 @@
     $app->postSave('user/');
 
     /****************Error 404*****************/
-    //echo json_encode(ResponseHttp::status404());
+    echo json_encode(ResponseHttp::status404());

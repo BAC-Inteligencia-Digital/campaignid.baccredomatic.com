@@ -1,4 +1,15 @@
-[22-Jul-2023 17:49:58 America/Costa_Rica] PHP Warning:  Undefined array key "Content-Type" in C:\xampp\htdocs\API_BACKEND_BACID\src\Controllers\BaseController.php on line 46
-[22-Jul-2023 17:49:58 America/Costa_Rica] conexion exitosa
-[22-Jul-2023 17:50:19 America/Costa_Rica] PHP Warning:  Undefined array key "Content-Type" in C:\xampp\htdocs\API_BACKEND_BACID\src\Controllers\BaseController.php on line 46
-[22-Jul-2023 17:50:19 America/Costa_Rica] conexion exitosa
+[24-Jul-2023 21:37:03 America/Costa_Rica] PHP Warning:  Undefined array key "Content-Type" in C:\xampp\htdocs\API_BACKEND_BACID\src\Controllers\BaseController.php on line 46
+[24-Jul-2023 21:40:58 America/Costa_Rica] PHP Warning:  Undefined array key "Content-Type" in C:\xampp\htdocs\API_BACKEND_BACID\src\Controllers\BaseController.php on line 46
+[24-Jul-2023 21:40:58 America/Costa_Rica] conexion exitosa
+[24-Jul-2023 21:40:58 America/Costa_Rica] PHP Fatal error:  Uncaught TypeError: array_push(): Argument #1 ($array) must be of type array, null given in C:\xampp\htdocs\API_BACKEND_BACID\src\Models\SubBacIDModel.php:94
+Stack trace:
+#0 C:\xampp\htdocs\API_BACKEND_BACID\src\Models\SubBacIDModel.php(94): array_push(NULL, Array)
+#1 C:\xampp\htdocs\API_BACKEND_BACID\src\Controllers\BacIDController.php(103): App\Models\SubBacIDModel::getSUBBACID('a7-la-loolk/TAR...')
+#2 C:\xampp\htdocs\API_BACKEND_BACID\src\Routes\bacid.php(16): App\Controllers\BacIDController->getSUBBACID('bacid/detailsub...')
+#3 C:\xampp\htdocs\API_BACKEND_BACID\public\index.php(24): require('C:\\xampp\\htdocs...')
+#4 {main}
+  thrown in C:\xampp\htdocs\API_BACKEND_BACID\src\Models\SubBacIDModel.php on line 94
+[24-Jul-2023 21:41:28 America/Costa_Rica] PHP Warning:  Undefined array key "Content-Type" in C:\xampp\htdocs\API_BACKEND_BACID\src\Controllers\BaseController.php on line 46
+[24-Jul-2023 21:41:28 America/Costa_Rica] conexion exitosa
+[24-Jul-2023 21:41:46 America/Costa_Rica] PHP Warning:  Undefined array key "Content-Type" in C:\xampp\htdocs\API_BACKEND_BACID\src\Controllers\BaseController.php on line 46
+[24-Jul-2023 21:41:47 America/Costa_Rica] conexion exitosa
