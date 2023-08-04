@@ -10,7 +10,7 @@
     /***********************Rutas*********************/
     $app->getAllPais("option/pais/");
     $app->getAllCategoria("option/categoria/");
-    $app->getAllProducto("option/producto/{$params[2]}/");
+    $app->getAllProducto("option/producto/");
     $app->getAllMultiproducto("option/multiproducto/");
     $app->getAllObjetivo("option/objetivo/");
     $app->getAllPortafolio("option/portafolio/");

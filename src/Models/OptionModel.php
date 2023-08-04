@@ -44,9 +44,12 @@ class OptionModel extends ConnectionDB {
      {
          try {
              $con = self::getConnection();
-             $query = $con->prepare("SELECT 0 as indice, null as codigo, 'Seleccione un producto' as nombre_producto, 0 as codigo_categoria union SELECT * FROM producto WHERE codigo_categoria = :codigo_categoria");
+             $query = $con->prepare("SELECT 0 as indice, null as codigo, 'Seleccione un producto' as nombre_producto, 0 as codigo_categoria union SELECT a.* FROM producto as a 
+             inner join categoria as b
+             on a.codigo_categoria = b.indice
+             WHERE nombre_categoria = :nombre_categoria");
              $query->execute([
-                ':codigo_categoria' => $categoria
+                ':nombre_categoria' => $categoria
             ]);        
             $rs['data'] = $query->fetchAll(\PDO::FETCH_ASSOC);
             return $rs;

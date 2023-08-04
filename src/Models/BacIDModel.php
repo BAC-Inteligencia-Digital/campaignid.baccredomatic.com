@@ -222,5 +222,32 @@ class BacIDModel extends ConnectionDB {
             error_log('BacIDModel::getBACID -> ' . $e);            
             die(json_encode(ResponseHttp::status500()));
         }        
+    } 
+    
+    /*******************************************Consultar el identificador de un ID PADRE************************************************/
+    final public static function getIdentificador(string $nombreBACID )
+    {
+    
+        try {
+            $con = self::getConnection();
+            
+            $query = $con->prepare("SELECT id FROM bac_id_generados WHERE nombre_bac_id = :nombre");
+            $query->execute([
+                ':nombre' => $nombreBACID
+            ]);
+
+            if ($query->rowCount() == 0) {
+
+                die(json_encode(ResponseHttp::status500()));
+            
+            } else {
+                $res = $query->fetch(\PDO::FETCH_ASSOC);               
+                return $res;                    
+            }
+        
+        } catch (\PDOException $e) {
+            error_log('BacIDModel::getBACID -> ' . $e);            
+            die(json_encode(ResponseHttp::status500()));
+        }        
     }       
 }

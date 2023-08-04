@@ -6,32 +6,33 @@ use App\Config\ResponseHttp;
 use App\Config\Security;
 use App\DB\ConnectionDB;
 use App\DB\Sql;
+use App\Models\BacIDModel;
 
 class SubBacIDModel extends ConnectionDB {
 
     //Propiedades de la base de datos
     private static int $id_sub_bacid;
     private static string $nombre_subbacid;
-    private static int $id_bacid_padre;
+    private static string $bacid_padre;
     private static string  $fecha_modificacion;
 
     public function __construct(array $data)
     {
         self::$nombre_subbacid  = $data['nombre_subbacid'];
-        self::$id_bacid_padre   = $data['id_bacid_padre'];        
+        self::$bacid_padre   = $data['bacid_padre'];        
   
     }
 
     /************************Metodos Getter**************************/
     final public static function getIdSubBacid(){  return self::$id_sub_bacid;}
     final public static function getNombreSubBacID(){ return self::$nombre_subbacid;}
-    final public static function getIDBacIDPadre(){   return self::$id_bacid_padre;}
+    final public static function getBacIDPadre(){   return self::$bacid_padre;}
     final public static function getFechaModificacion(){  return self::$fecha_modificacion;} 
     
     /**********************************Metodos Setter***********************************/
     final public static function setIdSubBacid(int $id_sub_bacid) {  self::$id_sub_bacid = $id_sub_bacid;}
     final public static function setNombreSubBacID(string $nombre_subbacid){  self::$nombre_subbacid = $nombre_subbacid;}
-    final public static function setIDBacIDPadre(int $id_bacid_padre){ self::$id_bacid_padre = $id_bacid_padre;}
+    final public static function setBacIDPadre(string $bacid_padre){ self::$bacid_padre = $bacid_padre;}
     final public static function setFechaModificacion(string $fecha_modificacion){ self::$fecha_modificacion = $fecha_modificacion;}
 
     
@@ -39,14 +40,15 @@ class SubBacIDModel extends ConnectionDB {
 
     final public static function postSave()
     {
+
+        $idBacIDPadre = BacIDModel::getIdentificador(self::getBacIDPadre());
         try {
             $con = self::getConnection();
-            $query1 = "INSERT INTO sub_bacid_generados (nombre_subbacid,id_bacid_padre) VALUES";
-            $query2 = "(:nombre_subbacid,:id_bacid_padre)";
-            $query = $con->prepare($query1 . $query2);
+            $query1 = "INSERT INTO sub_bacid_generados (nombre_subbacid,id_bacid_padre) VALUES (:nombre_subbacid,:bacid_padre)";
+            $query = $con->prepare($query1);
             $query->execute([                
                 ':nombre_subbacid' => self::getNombreSubBacID(),
-                ':id_bacid_padre'  => self::getIDBacIDPadre()       
+                ':bacid_padre'  => $idBacIDPadre["id"]       
             ]);
             if ($query->rowCount() > 0) {
                 return ResponseHttp::status200('Código de campañá registrado exitosamente');

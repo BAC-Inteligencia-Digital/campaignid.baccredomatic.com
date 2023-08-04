@@ -48,7 +48,7 @@ class SelectModel extends ConnectionDB {
      {
          try {
              $con = self::getConnection();
-             $query = $con->prepare("SELECT select codigo from producto where nombre_producto = :producto");
+             $query = $con->prepare("SELECT codigo from producto where nombre_producto = :producto");
              $query->execute([
                 ':producto' => $producto
             ]);        

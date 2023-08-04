@@ -72,7 +72,7 @@ class SelectController extends BaseController{
       
         if ($this->getMethod() == 'post' && $endPoint == $this->getRoute()) {
             //Security::validateTokenJwt(Security::secretKey());
-            $portafolio  = $this->getParam()['portafolio'];
+            $portafolio  = $this->getParam()['valor'];
             echo json_encode(SelectModel::getPortafolio($portafolio));
             exit;
         }    

@@ -31,10 +31,10 @@ class OptionController extends BaseController{
     /**********************Consultar todos los productos*********************/
     final public function getAllProducto(string $endPoint)
     {
-        if ($this->getMethod() == 'get' && $endPoint == $this->getRoute()) {
+        if ($this->getMethod() == 'post' && $endPoint == $this->getRoute()) {
             //Security::validateTokenJwt(Security::secretKey());
-            $codigo_categoria  = $this->getAttribute()[2];
-            echo json_encode(OptionModel::getAllProducto($codigo_categoria));
+            $categoria  = $this->getParam()['valor'];
+            echo json_encode(OptionModel::getAllProducto($categoria));
             exit;
         }    
     }

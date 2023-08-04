@@ -105,6 +105,9 @@ class UserModel extends ConnectionDB {
                                 'nombre'       => $res['nombre'],
                                 'apellidos'    => $res['apellidos'],
                                 'tipo_usuario' => $res['tipo_usuario'],
+                                'id'           => $res['id'],
+                                'pais'         => $res['pais'],
+                                'estado'       => $res['estado'],
                                 'token' => $token
                             ];
                             return ResponseHttp::status200($data);

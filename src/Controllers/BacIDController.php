@@ -70,7 +70,7 @@ class BacIDController extends BaseController{
             
             $validation = $validator->validate($this->getParam(), [
                 'nombre_subbacid' => 'required|regex:/^(?!\s*$).+$/',
-                'id_bacid_padre'  => 'required|regex:/\d+/'
+                'bacid_padre'  => 'required|regex:/^[0-9-A-Z-]+$/'
             ]);      
 
         if ($validation->fails()) {            
