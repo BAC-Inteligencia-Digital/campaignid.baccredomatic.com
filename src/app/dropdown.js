@@ -1,7 +1,9 @@
 export class dropDown {
 
     getCountries() {
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        
+       // let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/pais/'; //cambiarCAMBIAR
         let countries = [];
         const xhr = new XMLHttpRequest();
         xhr.ontimeout = () => {
@@ -13,8 +15,8 @@ export class dropDown {
             if ( xhr.readyState == 4){
                 if( xhr.status == 200){
                     let datos = JSON.parse(xhr.responseText);
-                    console.log(datos);
-                    for (let item of datos) {
+                    
+                    for (let item of datos.data) {
                         countries.push(item.nombre);
                     }
                     for (let i in countries) {
@@ -23,7 +25,7 @@ export class dropDown {
                 } 
             }
         };
-        xhr.open('GET', cnxn + 'obtener_paises.php', true);
+        xhr.open('GET', cnxn, true);
         xhr.timeout = 2000;
         xhr.send();
        /* let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
@@ -46,7 +48,8 @@ export class dropDown {
     };
 
     clientOrigin() {
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/origen/'; //cambiarCAMBIAR
         const xhr = new XMLHttpRequest();
         let clientsOrigin = [];
 
@@ -59,7 +62,7 @@ export class dropDown {
             if ( xhr.readyState == 4){
                 if( xhr.status == 200){
                     let data = JSON.parse(xhr.responseText);
-                    for (let item of data) {
+                    for (let item of data.data) {
                         clientsOrigin.push(item.nombre_origen);
                     }
                     for (let i in clientsOrigin) {
@@ -68,7 +71,7 @@ export class dropDown {
                 } 
             }
         };
-        xhr.open('GET', cnxn + 'obtener_origen_clientes.php', true);
+        xhr.open('GET', cnxn, true);
         xhr.timeout = 2000;
         xhr.send();
         /*
@@ -93,7 +96,8 @@ export class dropDown {
 
     getCategories() {
         let categories = [];
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/categoria/'; //cambiarCAMBIAR
         const xhr = new XMLHttpRequest();
 
         xhr.ontimeout = () => {
@@ -105,7 +109,7 @@ export class dropDown {
             if ( xhr.readyState == 4){
                 if( xhr.status == 200){
                     let data = JSON.parse(xhr.responseText);
-                    for (let item of data) {
+                    for (let item of data.data) {
                         categories.push(item.nombre_categoria);
                     }
                     for (let i in categories) {
@@ -116,7 +120,7 @@ export class dropDown {
             }
         };
 
-        xhr.open('GET', cnxn + 'obtener_categoria.php', true);
+        xhr.open('GET', cnxn, true);
         xhr.timeout = 2000;
         xhr.send();
         /*
@@ -141,7 +145,8 @@ export class dropDown {
     };
 
     getPortfolio() {
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/portafolio/'; //cambiarCAMBIAR
         const xhr = new XMLHttpRequest();
 
         xhr.ontimeout = () => {
@@ -153,7 +158,7 @@ export class dropDown {
             if ( xhr.readyState == 4){
                 if( xhr.status == 200){
                     let data = JSON.parse(xhr.responseText);
-                    for (let item of data) {
+                    for (let item of data.data) {
                         let portName = item.nombre_portafolio;
                         let portCode = item.codigo;
                         document.getElementById("dllportfolio").innerHTML += "<option value='" + portCode + "' id='" + portCode + "'>" + portName + "</option>";
@@ -161,7 +166,7 @@ export class dropDown {
                 } 
             }
         };
-        xhr.open('GET', cnxn + 'obtener_portafolio.php', true);
+        xhr.open('GET', cnxn, true);
         xhr.timeout = 2000;
         xhr.send();
         /*
@@ -195,7 +200,8 @@ export class dropDown {
         document.getElementById("dllgetCampaignType").innerHTML = "<option>Seleccine tipo</option>";
         let types = [];
         const xhr = new XMLHttpRequest();
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/tipocampana/'; //cambiarCAMBIAR
 
         xhr.ontimeout = () => {
             console.error('The request for /consultas_para_dropdownlist/obtener_tipo_campana.php timed out. Retrying...');
@@ -206,8 +212,8 @@ export class dropDown {
             if ( xhr.readyState == 4){
                 if( xhr.status == 200){
                     let data = JSON.parse(xhr.responseText);
-                    for (let item of data) {
-                        types.push(item.nombre);
+                    for (let item of data.data) {
+                        types.push(item.nombre_campaña);
                     }
                     for (let i in types) {
                         document.getElementById("dllgetCampaignType").innerHTML += "<option value='" + types[i] + "'>" + types[i] + "</option>";
@@ -217,7 +223,7 @@ export class dropDown {
             }
         };
 
-        xhr.open('GET', cnxn + 'obtener_tipo_campana.php', true);
+        xhr.open('GET', cnxn, true);
         xhr.timeout = 2000;
         xhr.send();
         /*
@@ -249,8 +255,9 @@ export class dropDown {
 
     getObjectives() {
         const xhr = new XMLHttpRequest();
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
-        
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/objetivo/'; //cambiarCAMBIAR
+
         xhr.ontimeout = () => {
             console.error('The request for /consultas_para_dropdownlist/obtener_objetivos.php timed out. Retrying...');
             this.getObjectives();
@@ -260,14 +267,14 @@ export class dropDown {
             if ( xhr.readyState == 4){
                 if( xhr.status == 200){
                     let data = JSON.parse(xhr.responseText);
-                    for (let item of data) {
+                    for (let item of data.data) {
                         let objectives = item.nombre_objetivo;
                         document.getElementById("dllObjective").innerHTML += "<option value='" + objectives + "'>" + objectives+ "</option>";
                     }
                 } 
             }
         };
-        xhr.open('GET', cnxn + 'obtener_objetivos.php', true);
+        xhr.open('GET', cnxn, true);
         xhr.timeout = 2000;
         xhr.send();
 
@@ -294,7 +301,8 @@ export class dropDown {
     getDigitalChannels() {
         let channels = [];
         const xhr = new XMLHttpRequest();
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/canaldigital/'; //cambiarCAMBIAR
 
         xhr.ontimeout = () => {
             console.error('The request for /consultas_para_dropdownlist/obtener_canal_digital.php timed out. Retrying...');
@@ -305,8 +313,8 @@ export class dropDown {
             if ( xhr.readyState == 4){
                 if( xhr.status == 200){
                     let data = JSON.parse(xhr.responseText);
-                    for (let item of data) {
-                        channels.push(item.nombre);
+                    for (let item of data.data) {
+                        channels.push(item.nombre_canal_digital);
                     }
                     for (let i in channels) {
                         document.getElementById("dllChannel").innerHTML += "<option value='" + channels[i] + "'>" + channels[i] + "</option>";
@@ -315,7 +323,7 @@ export class dropDown {
                 }
             }
         };
-        xhr.open('GET', cnxn + 'obtener_canal_digital.php', true);
+        xhr.open('GET', cnxn, true);
         xhr.timeout = 2000;
         xhr.send();
         /*
@@ -341,7 +349,9 @@ export class dropDown {
     };
 
     getMultiProducts() {
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/multiproducto/'; //cambiarCAMBIAR
+        
         const xhr = new XMLHttpRequest();
 
         xhr.ontimeout = () => {
@@ -354,7 +364,7 @@ export class dropDown {
                 if( xhr.status == 200){
                     let datos = JSON.parse(xhr.responseText);
 
-                    for (let item of datos) {
+                    for (let item of datos.data) {
                         let nombre = item.nombre_campana;
                         let valor = item.codigo;
                         document.getElementById("selectMultiProductos").innerHTML += "<option value='" + valor + "'>" + nombre + "</option>";
@@ -362,7 +372,7 @@ export class dropDown {
                 } 
             }
         };
-        xhr.open('GET', cnxn + 'obtener_multiproducto.php', true);
+        xhr.open('GET', cnxn, true);
         xhr.timeout = 2000;
         xhr.send();
         /*

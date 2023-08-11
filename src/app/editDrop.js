@@ -1,17 +1,18 @@
 const dropDowns = (() => {
 
     const getCountries = () => {
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/pais/'; //cambiarCAMBIAR
         const xhttp = new XMLHttpRequest();
         let countries = [];
-        xhttp.open('GET', cnxn + 'obtener_paises.php', true);
+        xhttp.open('GET', cnxn, true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {    
             if (this.readyState == 4 && this.status == 200) {
                 let datos = JSON.parse(this.responseText);
-                console.log(datos);
-                for (let item of datos) {
+                
+                for (let item of datos.data) {
                     countries.push(item.nombre);
                 }
                 for (let i in countries) {
@@ -22,16 +23,17 @@ const dropDowns = (() => {
     }
 
     const clientOrigin = () => {
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/origen/'; //cambiarCAMBIAR
         const xhttp = new XMLHttpRequest();
         let clientsOrigin = [];
-        xhttp.open('GET', cnxn + 'obtener_origen_clientes.php', true);
+        xhttp.open('GET', cnxn, true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let data = JSON.parse(this.responseText);
-                for (let item of data) {
+                for (let item of data.data) {
                     clientsOrigin.push(item.nombre_origen);
                 }
                 for (let i in clientsOrigin) {
@@ -43,14 +45,15 @@ const dropDowns = (() => {
 
     const getCategories = () =>  {
        // let categories = [];
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/categoria/'; //cambiarCAMBIAR
         const xhttp = new XMLHttpRequest();
-        xhttp.open('GET', cnxn + 'obtener_categoria.php', true);
+        xhttp.open('GET', cnxn, true);
         xhttp.send();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let data = JSON.parse(this.responseText);
-                for (let item of data) {
+                for (let item of data.data) {
                     document.getElementById("dllCategory").innerHTML += "<option value='" + item.nombre_categoria  + "' id='" + item.codigo + "'>" + item.nombre_categoria + "</option>";
                     //categories.push(item.nombre_categoria);
                 }
@@ -59,15 +62,16 @@ const dropDowns = (() => {
     }
 
     const getPortfolio = () => {
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/portafolio/'; //cambiarCAMBIAR
         const xhttp = new XMLHttpRequest();
-        xhttp.open('GET', cnxn + 'obtener_portafolio.php', true);
+        xhttp.open('GET', cnxn, true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let data = JSON.parse(this.responseText);
-                for (let item of data) {
+                for (let item of data.data) {
                     let portName = item.nombre_portafolio;
                     let portCode = item.codigo;
                     document.getElementById("dllportfolio").innerHTML += "<option value='" + portCode + "' id='" + portCode + "'>" + portName + "</option>";
@@ -82,15 +86,16 @@ const dropDowns = (() => {
         document.getElementById("dllgetCampaignType").innerHTML = "<option>Seleccine tipo</option>";
         let types = [];
         const xhttp = new XMLHttpRequest();
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
-        xhttp.open('GET', cnxn + 'obtener_tipo_campana.php', true);
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/tipocampana/'; //cambiarCAMBIAR
+        xhttp.open('GET', cnxn, true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let data = JSON.parse(this.responseText);
-                for (let item of data) {
-                    let name = item.nombre;
+                for (let item of data.data) {
+                    let name = item.nombre_campana;
                     let code = item.codigo;
                     //types.push(item.nombre);
                     document.getElementById("dllgetCampaignType").innerHTML += "<option value='" + name + "' id='" + code +"'>" + name + "</option>";
@@ -103,14 +108,15 @@ const dropDowns = (() => {
 
     const getObjectives = () => {
         const xhttp = new XMLHttpRequest();
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
-        xhttp.open('GET', cnxn + 'obtener_objetivos.php', true);
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/objetivo/'; //cambiarCAMBIAR
+        xhttp.open('GET', cnxn, true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let data = JSON.parse(this.responseText);
-                for (let item of data) {
+                for (let item of data.data) {
                     let objectives = item.nombre_objetivo;
                     let code = item.codigo;
                     document.getElementById("dllObjective").innerHTML += "<option value='" + objectives + "' id='" + code + "'>" + objectives+ "</option>";
@@ -124,15 +130,17 @@ const dropDowns = (() => {
     const getDigitalChannels = () => {
         //let channels = [];
         const xhttp = new XMLHttpRequest();
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
-        xhttp.open('GET', cnxn + 'obtener_canal_digital.php', true);
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/canaldigital/'; //cambiarCAMBIAR
+        
+        xhttp.open('GET', cnxn, true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let data = JSON.parse(this.responseText);
-                for (let item of data) {
-                    let channel = item.nombre;
+                for (let item of data.data) {
+                    let channel = item.nombre_canal_digital;
                     let code = item.codigo;
                     document.getElementById("dllChannel").innerHTML += "<option value='" + channel + "' id='" + code + "'>" + channel + "</option>";
                 }
@@ -141,10 +149,11 @@ const dropDowns = (() => {
     }
 
     const getMultiProducts = () => {
-        let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
-
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/multiproducto/'; //cambiarCAMBIAR
+        
         const xhttp = new XMLHttpRequest();
-        xhttp.open('GET', cnxn + 'obtener_multiproducto.php', true);
+        xhttp.open('GET', cnxn, true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {
@@ -154,7 +163,7 @@ const dropDowns = (() => {
                 let datos = JSON.parse(this.responseText);
 
 
-                for (let item of datos) {
+                for (let item of datos.data) {
                     let nombre = item.nombre_campana;
                     let valor = item.codigo;
                     document.getElementById("selectMultiProductos").innerHTML += "<option value='" + valor + "'>" + nombre + "</option>";

@@ -6,7 +6,8 @@ let btnLogin = document.getElementById("btnLogin");
 let getCloseBtn = document.querySelector(".dangerClose");
 
 //const cnxn = 'https://bac-id-new.azurewebsites.net'; // CONEXION A BD DE PRODUCCION
-const cnxn = 'https://bac-id-new-test.azurewebsites.net'; // CONEXION A BD DE TEST
+//const cnxn = 'https://bac-id-new-test.azurewebsites.net'; // CONEXION A BD DE TEST
+const cnxn = 'http://localhost/API_BACKEND_BACID/public/'; //CAMBIARcambiar
 
 btnLogin.onclick = () => {
     localStorage.clear();
@@ -32,19 +33,21 @@ btnLogin.onclick = () => {
 
         const xhttp = new XMLHttpRequest();
 
-        xhttp.open('GET', cnxn + '/consulta_login/autenticar_usuario.php?usuario_ingresado=' + usuario + '&contrasena_ingresada=' + contrasena, true);
+        //xhttp.open('GET', cnxn + '/consulta_login/autenticar_usuario.php?usuario_ingresado=' + usuario + '&contrasena_ingresada=' + contrasena, true);
+        xhttp.open('GET', cnxn + 'auth/'+usuario+'/'+contrasena+'/', true);
+        //
         xhttp.send();
         xhttp.onreadystatechange = function () {
 
-            if (this.readyState == 4 && this.status == 200) {
+            if (this.status == 200) {
                 let datos = JSON.parse(this.responseText);
-                for (let item of datos) {
-                    id = item.id; // si este ID es mayor a cero es por que el usuario está registrado
-                    userName = item.nombre_usuario;
-                    userLastName = item.apellidos_usuario;
-                    country = item.pais;
-                    userState = item.estado;
-                }
+              
+                id = datos.message.id; // si este ID es mayor a cero es por que el usuario está registrado
+                userName = datos.message.nombre;
+                userLastName = datos.message.apellidos;
+                country = datos.message.pais;
+                userState = datos.message.estado;
+                
 
                 if (id < 0 || id === undefined) {
                     message = "El usuario o la contraseña es incorrecta, favor intente de nuevo.";

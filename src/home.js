@@ -15,6 +15,7 @@ const initController = (() => {
      * Método que se ejecuta en el load pero del body del index en específico
      * Funciona como un init pero fake init
      */
+    
     currentBody.onload = () => {
         checkLogin()
         let date = new Date();
@@ -30,8 +31,7 @@ const initController = (() => {
         drops.getDigitalChannels();
         procedurs.getUser();
         datePicker();
-        procedurs.showUserAdminBtn();
-        
+        procedurs.showUserAdminBtn();    
     };
 
 })();
@@ -93,7 +93,8 @@ const txtCampaignCode = document.getElementById("txtCampaignCode");
 //settings
 const xhttp = new XMLHttpRequest();
 //const cnxn = 'https://bac-id-new.azurewebsites.net'; // CONEXION A BD DE PRODUCCION
-const cnxn = 'https://bac-id-new-test.azurewebsites.net'; // CONEXION A BD DE TEST
+//const cnxn = 'https://bac-id-new-test.azurewebsites.net'; // CONEXION A BD DE TEST
+const cnxn = 'http://localhost/API_BACKEND_BACID/public/'; //CAMBIARcambiar
 
 let drops = new dropDown();
 let current;
@@ -486,6 +487,9 @@ const getProducts = (categorySelected) => {
         getdllProducts.classList.remove("d-none");
         getdllProducts.classList.add("d-block");
         
+        var valor = new FormData();
+        
+        valor.append('valor', categorySelected);    
         
         const xhr = new XMLHttpRequest();
         xhr.ontimeout = () => {
@@ -496,7 +500,7 @@ const getProducts = (categorySelected) => {
             if ( xhr.readyState == 4){
                 if( xhr.status == 200){
                     let data = JSON.parse(xhr.responseText);
-                    for (let item of data) {
+                    for (let item of data.data) {
                         let products = item.nombre_producto;
                         document.getElementById("dllProducts").innerHTML += "<option value='" + products + "'>" + products + "</option>";
                     }
@@ -504,9 +508,9 @@ const getProducts = (categorySelected) => {
                 } 
             }
         };
-        xhr.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_producto.php?categoria=' + encodeURIComponent(categorySelected), true);
+        xhr.open('POST', cnxn + 'option/producto/', true);
         xhr.timeout = 2000;
-        xhr.send();
+        xhr.send(valor);
     }
 
 };
@@ -531,6 +535,7 @@ const loadProductsByCategory = () => {
 
 const getAd = (channelSelected) => {
     //debugger
+    
     let index = "";
     let gedCont = document.getElementsByClassName("dllAd");
     const xhr = new XMLHttpRequest();
@@ -541,15 +546,16 @@ const getAd = (channelSelected) => {
     };
 
     xhr.onreadystatechange = function () {
+
         if (this.readyState == 4 && this.status == 200) {
             //debugger
             let data = JSON.parse(xhr.responseText);
-            for (let item of data) {
+            for (let item of data.data) {
 
                 for (let i = 0; i < gedCont.length; i++) {
                     index = i;
                     let codeAd = item.codigo;
-                    let ads = item.nombre;
+                    let ads = item.nombre_tipo_anuncio;
                     let ids = ads.split(" ").join("");
                     document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled id='"+codeAd+"' class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='addNameId"+codeAd+"' maxlength='5' name='nombre-anuncio' />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
                     //document.getElementsByClassName("dllAd")[index].innerHTML += "<div class='row mt-2'>" + "<div class='col-12 col-md-4'>" + "<label class='w-100' for=''>Seleccione tipo</label>" + "<label><input disabled class='custom-checkbox adCheck " + ids + "'" + "type='checkbox'" + "value='" + codeAd + "'" + "name='" + ids + "'>" + ads + "</label>" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Nombre de Anuncio</label>" + "<input disabled type='text' class='form-control adName' id='idAdName' maxlength='5' name='nombre-anuncio' />" + "</div>" + "<div class='col-12 col-md-4'>" + "<label class='col-12' for=''>Código creado</label>" + "<input type='text' class='form-control txtTipoCanal txt" + ids + "'" + "maxlength='5' name='codigo' disabled='true'/>" + "</div>" + "</div>" + "<hr>";
@@ -558,7 +564,7 @@ const getAd = (channelSelected) => {
             }
         }
     };
-    xhr.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_tipo_anuncio.php?canal_digital=' + channelSelected, true);
+    xhr.open('GET', cnxn + 'option/tipoanuncio/'+channelSelected+'/', true);
     xhr.timeout = 2000;
     xhr.send();
     /*
@@ -599,9 +605,10 @@ function getGroups(channelSelected) {
 
     xhr.onreadystatechange = function () {
 
+      
         if (this.readyState == 4 && this.status == 200) {
             let datos = JSON.parse(xhr.responseText);
-            for (let item of datos) {
+            for (let item of datos.data) {
                 //debugger
                 let groupCode = item.codigo_grupo;
                 let groups = item.nombre_categoria;
@@ -612,7 +619,7 @@ function getGroups(channelSelected) {
         }
     }
 
-    xhr.open('GET', cnxn + '/consultas_para_dropdownlist/obtener_grupos_anuncios.php?canal_digital=' + channelSelected, true);
+    xhr.open('GET', cnxn + 'option/grupoanuncio/'+channelSelected+'/', true);
     xhr.timeout = 2000;
     xhr.send();
     /*
@@ -676,6 +683,10 @@ const loadsAdsGroupsByChannel = () => {
 }
 
 const getSelectedCountry = (current) => {
+    
+    var valor = new FormData();
+    valor.append('valor', current);
+
     const xhr = new XMLHttpRequest();
     xhr.ontimeout = () => {
         console.error('The request for /consultas_generar_bac_id/obtener_pais_seleccionado.php timed out. Retrying...');
@@ -685,7 +696,7 @@ const getSelectedCountry = (current) => {
 
         if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(xhr.responseText);
-            for (let item of data) {
+            for (let item of data.data) {
                 countryCode = item.abreviatura;
             }
             countrySelected = countryCode;
@@ -694,9 +705,9 @@ const getSelectedCountry = (current) => {
         }
 
     }
-    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_pais_seleccionado.php?pais_seleccionado=' + current, true);
+    xhr.open('POST', cnxn + '/select/pais/', true);
     xhr.timeout = 2000;
-    xhr.send();
+    xhr.send(valor);
     
     /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_pais_seleccionado.php?pais_seleccionado=' + current, true);
@@ -717,8 +728,11 @@ const getSelectedCountry = (current) => {
 };
 
 const getSelectedClients = (current) => {
+ 
+    var valor = new FormData();
+    valor.append('valor', current);
+
     const xhr = new XMLHttpRequest();
-   
     xhr.ontimeout = () => {
         console.error('The request for /consultas_generar_bac_id/obtener_origen_clientes_seleccionado.php timed out. Retrying...');
         getSelectedClients(current);
@@ -728,7 +742,7 @@ const getSelectedClients = (current) => {
         
         if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(xhr.responseText);
-            for (let item of data) {
+            for (let item of data.data) {
                 clientsCode = item.codigo;
             }
             clientsSelected = clientsCode;
@@ -739,9 +753,9 @@ const getSelectedClients = (current) => {
     
     };
 
-    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_origen_clientes_seleccionado.php?origen_seleccionado=' + current, true);
+    xhr.open('POST', cnxn + '/select/origen/', true);
     xhr.timeout = 2000;
-    xhr.send();
+    xhr.send(valor);
     /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_origen_clientes_seleccionado.php?origen_seleccionado=' + current, true);
     xhttp.send();
@@ -760,6 +774,9 @@ const getSelectedClients = (current) => {
 };
 
 const getSelectedCategory = (current) => {
+    var valor = new FormData();
+    valor.append('valor', current);
+
     const xhr = new XMLHttpRequest();
     xhr.ontimeout = () => {
         console.error('The request for /consultas_generar_bac_id/obtener_categoria_seleccionada.php timed out. Retrying...');
@@ -769,7 +786,7 @@ const getSelectedCategory = (current) => {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(xhr.responseText);
-            for (let item of data) {
+            for (let item of data.data) {
                 categoryCode = "-" + item.codigo;
             }
             categorySelected = categoryCode;
@@ -782,9 +799,9 @@ const getSelectedCategory = (current) => {
         }
 
     };
-    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_categoria_seleccionada.php?categoria_seleccionada=' + current, true);
+    xhr.open('POST', cnxn + '/select/categoria/', true);
     xhr.timeout = 2000;
-    xhr.send();
+    xhr.send(valor);
     
     /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_categoria_seleccionada.php?categoria_seleccionada=' + current, true);
@@ -810,6 +827,9 @@ const getSelectedCategory = (current) => {
 };
 
 const getSelectedProducts = (current) => {
+    var valor = new FormData();
+    valor.append('valor', current);
+
     const xhr = new XMLHttpRequest();
     xhr.ontimeout = () => {
         console.error('The request for /consultas_generar_bac_id/obtener_producto_seleccionado.php timed out. Retrying...');
@@ -819,7 +839,7 @@ const getSelectedProducts = (current) => {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(xhr.responseText);
-            for (let item of data) {
+            for (let item of data.data) {
                 productsCode = item.codigo;
             }
             productsSelected = "-" + productsCode;
@@ -828,9 +848,9 @@ const getSelectedProducts = (current) => {
         }
 
     };
-    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_producto_seleccionado.php?producto_seleccionado=' + current, true);
+    xhr.open('POST', cnxn + 'select/producto/', true);
     xhr.timeout = 2000;
-    xhr.send();
+    xhr.send(valor);
     /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_producto_seleccionado.php?producto_seleccionado=' + current, true);
     xhttp.send();
@@ -849,6 +869,10 @@ const getSelectedProducts = (current) => {
 };
 
 const getPortfolioSelected = (current) => {
+
+    var valor = new FormData();
+    valor.append('valor', current);
+
     const xhr = new XMLHttpRequest();
     xhr.ontimeout = () => {
         console.error('The request for /consultas_generar_bac_id/obtener_portafolio_seleccionado.php timed out. Retrying...');
@@ -858,7 +882,7 @@ const getPortfolioSelected = (current) => {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(xhr.responseText);
-            for (let item of data) {
+            for (let item of data.data) {
                 portfolioCode = item.codigo;
             }
             portfolioSelected = "-" + portfolioCode;
@@ -866,9 +890,9 @@ const getPortfolioSelected = (current) => {
             firstBtnNext.disabled = false;
         }
     };
-    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_portafolio_seleccionado.php?portafolio_seleccionado=' + current, true);
+    xhr.open('POST', cnxn + 'select/portafolio/', true);
     xhr.timeout=2000;
-    xhr.send();
+    xhr.send(valor);
     /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_portafolio_seleccionado.php?portafolio_seleccionado=' + current, true);
     xhttp.send();
@@ -887,6 +911,10 @@ const getPortfolioSelected = (current) => {
 };
 
 const getCampaignType = (current) => {
+
+    var valor = new FormData();
+    valor.append('valor', current);
+
     const xhr = new XMLHttpRequest();
     
     xhr.ontimeout = () => {
@@ -897,7 +925,7 @@ const getCampaignType = (current) => {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(xhr.responseText);
-            for (let item of data) {
+            for (let item of data.data) {
                 campaignTypeCode = "-" + item.codigo;
             }
             campaignTypeSelected = campaignTypeCode;
@@ -906,9 +934,9 @@ const getCampaignType = (current) => {
         }
 
     };
-    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_tipo_campana_seleccionado.php?tipo_seleccionado=' + current, true);
+    xhr.open('POST', cnxn + 'select/tipocampana/', true);
     xhr.timeout = 2000;
-    xhr.send();
+    xhr.send(valor);
     /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_tipo_campana_seleccionado.php?tipo_seleccionado=' + current, true);
     xhttp.send();
@@ -927,8 +955,11 @@ const getCampaignType = (current) => {
 };
 
 const getObjectiveSelected = (current) => {
-    const xhr = new XMLHttpRequest();
     
+    var valor = new FormData();
+    valor.append('valor', current);
+
+    const xhr = new XMLHttpRequest();
     xhr.ontimeout = () => {
         console.error('The request for /consultas_generar_bac_id/obtener_objetivo_seleccionado.php timed out. Retrying...');
         getObjectiveSelected(current);
@@ -938,7 +969,7 @@ const getObjectiveSelected = (current) => {
 
         if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(this.responseText);
-            for (let item of data) {
+            for (let item of data.data) {
                 objectiveCode = "-" + item.codigo;
             }
             objectiveSelectedType = objectiveCode;
@@ -952,9 +983,9 @@ const getObjectiveSelected = (current) => {
         }
 
     };
-    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_objetivo_seleccionado.php?objetivo_seleccionado=' + current, true);
+    xhr.open('POST', cnxn + 'select/objetivo/', true);
     xhr.timeout = 2000;
-    xhr.send();
+    xhr.send(valor);
 
     /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_objetivo_seleccionado.php?objetivo_seleccionado=' + current, true);
@@ -975,6 +1006,10 @@ const getObjectiveSelected = (current) => {
 };
 
 const getDigitalChannelSelected = (current) => {
+
+    var valor = new FormData();
+    valor.append('valor', current);
+
     const xhr = new XMLHttpRequest();
 
     xhr.ontimeout = () => {
@@ -987,7 +1022,7 @@ const getDigitalChannelSelected = (current) => {
         if ( xhr.readyState == 4){
             if( xhr.status == 200){
                 let data = JSON.parse(xhr.responseText);
-                for (let item of data) {
+                for (let item of data.data) {
                     digitalChannelCode = "-" + item.codigo;
                 }
                 digitalChannelSelected = digitalChannelCode;
@@ -998,9 +1033,9 @@ const getDigitalChannelSelected = (current) => {
         } 
     };
     
-    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_canal_digital_seleccionado.php?canal_digital_seleccionado=' + current, true);
+    xhr.open('POST', cnxn + 'select/canaldigital/', true);
     xhr.timeout = 2000;
-    xhr.send();
+    xhr.send(valor);
     /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_canal_digital_seleccionado.php?canal_digital_seleccionado=' + current, true);
     xhttp.send();
@@ -1021,6 +1056,10 @@ const getDigitalChannelSelected = (current) => {
 };
 
 const getAdSelected = (current) => {
+    
+    var valor = new FormData();
+    valor.append('valor', current);
+
     const xhr = new XMLHttpRequest();
 
     xhr.ontimeout = () => {
@@ -1029,9 +1068,10 @@ const getAdSelected = (current) => {
     };
 
     xhr.onreadystatechange = function () {
+        
         if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(xhr.responseText);
-            for (let item of data) {
+            for (let item of data.data) {
                 adCode = item.codigo;
             }
             adSelected = "-" + adCode;
@@ -1039,9 +1079,9 @@ const getAdSelected = (current) => {
         }
 
     };
-    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_tipo_anuncio_seleccionado.php?tipo_anuncio_seleccionado=' + current, true);
+    xhr.open('POST', cnxn + 'select/tipoanuncio/', true);
     xhr.timeout = 2000;
-    xhr.send();
+    xhr.send(valor);
     /*
     xhttp.open('GET', cnxn + '/consultas_generar_bac_id/obtener_tipo_anuncio_seleccionado.php?tipo_anuncio_seleccionado=' + current, true);
     xhttp.send();
@@ -1060,7 +1100,7 @@ const getAdSelected = (current) => {
 };
 
 function obtenerMultiProductosSeleccionados(productsSelected) {
-
+    
     var codigo_multiproductos = "";
     var multiseleccion = document.getElementById("selectMultiProductos");
     var multiproductos = [];
@@ -1068,6 +1108,11 @@ function obtenerMultiProductosSeleccionados(productsSelected) {
     for (var i = 0; i < multiseleccion.selectedOptions.length; i++) {
         multiproductos.push(multiseleccion.selectedOptions[i].value);
     }
+
+    var valor = new FormData();
+    valor.append('producto1', multiproductos[0]);
+    valor.append('producto2', multiproductos[1]);
+    valor.append('producto3', multiproductos[2]);
 
     const xhr = new XMLHttpRequest();
     xhr.ontimeout = () => {
@@ -1081,17 +1126,16 @@ function obtenerMultiProductosSeleccionados(productsSelected) {
 
             var datos = JSON.parse(xhr.responseText);
 
-            for (let item of datos) {
+            for (let item of datos.data) {
                 codigo_multiproductos = codigo_multiproductos + item.codigo;
             }
 
         }
         txtCampaignCode.value = countrySelected + clientsSelected + categorySelected + productsSelected + "-" + portfolioSelected + campaignTypeSelected + objectiveSelectedType + digitalChannelSelected + adSelected;
     };
-    xhr.open('GET', cnxn + '/consultas_generar_bac_id/obtener_multiproductos_seleccionados.php?producto1_seleccionado=' + multiproductos[0] +
-        "&producto2_seleccionado=" + multiproductos[1] + "&producto3_seleccionado=" + multiproductos[2], true);
+    xhr.open('POST', cnxn + 'select/multiproducto/', true);
     xhr.timeout = 2000;
-    xhr.send();
+    xhr.send(valor);
     /*
     const xhttp = new XMLHttpRequest();
 
@@ -1688,6 +1732,8 @@ function validate(e) {
         let indexUser = parseInt(getUserIndex);
         let setIndice = indexUser;
     
+        
+    
         var bac_id = txtCampaignCode.value; //aqui te traes el valor del campo de bac_id
         console.log('BacID a insertar: ' + bac_id);
         var id_usuario = setIndice; //aqui nos traemos el id del usuario para asociarlo con los bac id creados
@@ -1695,10 +1741,16 @@ function validate(e) {
         var fecha_creacion = getCurrentDay; //se ingresa la fecha de creación
         var lista_sub_bacids = subBacId;
     
+        var valor = new FormData();
+        valor.append('nombre_bac_id', bac_id);
+        valor.append('id_usuario', id_usuario);
+        valor.append('nombre_campana', nombre_campana.toUpperCase());
+        valor.append('fecha_creacion', fecha_creacion);
+        valor.append('pais', bac_id.substring(0, 3));
+
         const xhttp = new XMLHttpRequest();
-        xhttp.open('GET', cnxn + '/insertar_bac_id/insertar_bac_id.php?bac_id=' + bac_id + '&id_usuario=' + id_usuario
-            + '&nombre_campana=' + nombre_campana + '&fecha_creacion=' + fecha_creacion, true);
-        xhttp.send();
+        xhttp.open('POST', cnxn + 'bacid/', true);
+        xhttp.send(valor);
     
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -1732,10 +1784,16 @@ function firstValidation(){
     var nombre_campana = txtCampaignName.value; // aquí va el nombre de la campaña que digita el usuario
     var fecha_creacion = getCurrentDay; //se ingresa la fecha de creación
 
+    var valor = new FormData();
+    valor.append('nombre_bac_id', bac_id);
+    valor.append('id_usuario', id_usuario);
+    valor.append('nombre_campana', nombre_campana.toUpperCase());
+    valor.append('fecha_creacion', fecha_creacion);
+    valor.append('pais', bac_id.substring(0, 3));
+
     const xhttp = new XMLHttpRequest();
-    xhttp.open('GET', cnxn + '/insertar_bac_id/insertar_bac_id.php?bac_id=' + bac_id + '&id_usuario=' + id_usuario
-        + '&nombre_campana=' + nombre_campana + '&fecha_creacion=' + fecha_creacion, true);
-    xhttp.send();
+    xhttp.open('POST', cnxn + 'bacid/', true);
+    xhttp.send(valor);
 
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -1767,11 +1825,16 @@ function validarAdNameLleno(){
 }
 function insertarSUBBACID(bac_id_padre, sub_bacid) {
     //debugger;
+    alert(bac_id_padre);
+    var valor = new FormData();
+    valor.append('nombre_subbacid', sub_bacid);
+    valor.append('bacid_padre', bac_id_padre);
+   
     const xhttp = new XMLHttpRequest();
 
-    xhttp.open('GET', cnxn + '/insertar_bac_id/insertar_sub_bacid.php?bac_id_padre=' + bac_id_padre + '&sub_bac_id=' + sub_bacid, true);
+    xhttp.open('POST', cnxn + 'bacid/sub/', true);
 
-    xhttp.send();
+    xhttp.send(valor);
 
     xhttp.onreadystatechange = function () {
 
@@ -1810,21 +1873,21 @@ function consultarBACIDCreado2(bac_id_registrado, nombre_campana, fecha_creacion
     id_registrado = bac_id_registrado
     document.getElementById("result_raiz_codigo").innerHTML = bac_id_registrado + "/" + nombre_campana.toUpperCase() + "<div class='col-12 text-center'><button onclick='getCopyCode(this);'  class='btn btn-outline-primary w-100 mt-2 copiar' value='' type='button' id='' name=''/><i class='far fa-copy'></i></button></div>"; //mostrar el codigo raiz en la tabla
 
+    var valor = new FormData();
+    valor.append('nombre_bac_id', bac_id_registrado);
+
     const xhttp = new XMLHttpRequest();
 
-    xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_bac_id_postinsercion.php?pais_bacid=' + bac_id_registrado.substring(0, 3) +
-        '&origen_bacid=' + bac_id_registrado.substring(3, 4) + '&categoria_bacid=' + bac_id_registrado.substring(5, 9) +
-        '&producto_bacid=' + bac_id_registrado.substring(10, 13) + '&portafolio_bacid=' + bac_id_registrado.substring(21, 23) + '&tipo_campana_bacid=' + bac_id_registrado.substring(24, 26) +
-        '&objetivo_bacid=' + bac_id_registrado.substring(27, 29) + '&canal_digital_bacid=' + bac_id_registrado.substring(30, 32), true);
+    xhttp.open('POST', cnxn + 'bacid/detail/', true);
 
-    xhttp.send();
+    xhttp.send(valor);
 
     xhttp.onreadystatechange = function () {
 
         if (this.readyState == 4 && this.status == 200) {
 
             let datos = JSON.parse(this.responseText);
-
+            alert(datos);
             document.getElementById("result_nombre_campana").innerHTML = nombre_campana;
             document.getElementById("result_creacion").innerHTML = fecha_creacion;
             document.getElementById("result_pais").innerHTML = datos[0].nombre_pais;
@@ -1846,14 +1909,14 @@ function consultarBACIDCreado(bac_id_registrado, nombre_campana, fecha_creacion)
     id_registrado = bac_id_registrado
     document.getElementById("result_raiz_codigo").innerHTML = bac_id_registrado + "-00-000-00-00000" + "/" + nombre_campana.toUpperCase() + "<div class='col-12 text-center'><button onclick='getCopyCode(this);'  class='btn btn-outline-primary w-100 mt-2 copiar' value='' type='button' id='' name=''/><i class='far fa-copy'></i></button></div>"; //mostrar el codigo raiz en la tabla
 
+    var valor = new FormData();
+    valor.append('nombre_bac_id', bac_id_registrado);
+
     const xhttp = new XMLHttpRequest();
 
-    xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_bac_id_postinsercion.php?pais_bacid=' + bac_id_registrado.substring(0, 3) +
-        '&origen_bacid=' + bac_id_registrado.substring(3, 4) + '&categoria_bacid=' + bac_id_registrado.substring(5, 9) +
-        '&producto_bacid=' + bac_id_registrado.substring(10, 13) + '&portafolio_bacid=' + bac_id_registrado.substring(21, 23) + '&tipo_campana_bacid=' + bac_id_registrado.substring(24, 26) +
-        '&objetivo_bacid=' + bac_id_registrado.substring(27, 29) + '&canal_digital_bacid=' + bac_id_registrado.substring(30, 32), true);
-    
-    xhttp.send(bac_id_registrado.substring(30, 32));
+    xhttp.open('POST', cnxn + 'bacid/detail/', true);
+
+    xhttp.send(valor);
 
     xhttp.onreadystatechange = function () {
 
@@ -1869,7 +1932,7 @@ function consultarBACIDCreado(bac_id_registrado, nombre_campana, fecha_creacion)
             document.getElementById("result_producto").innerHTML = datos[3].nombre_producto;
             obtenerCanalesInsertados(bac_id_registrado.substring(14, 20));//la función siguiente
             document.getElementById("result_portafolio").innerHTML = datos[4].nombre_portafolio;
-            document.getElementById("result_tipocampana").innerHTML = datos[5].nombre_campana;
+            document.getElementById("result_tipocampana").innerHTML = datos[5].nombre_campaña;
             document.getElementById("result_objetivos").innerHTML = datos[6].nombre_objetivo;
             document.getElementById("result_canaldigital").innerHTML = datos[7].nombre_canal_digital;
 
@@ -1880,8 +1943,6 @@ function consultarBACIDCreado(bac_id_registrado, nombre_campana, fecha_creacion)
 }
 
 function obtenerCanalesInsertados(codigo_canales) { //esta función es para obtener los nombres de los canales según el siguiente valor: Ejemplo:001236
-
-    console.log(codigo_canales.substring(1, 1));
 
     var resultado = [];
 
@@ -1927,43 +1988,42 @@ function obtenerCanalesInsertados(codigo_canales) { //esta función es para obte
 
 function consultarSUBACIDCreados(lista_sub_bacids) {
    // debugger;
-
+    
     for (var i = 0; i < lista_sub_bacids.length; i++) {
+
+        var valor = new FormData();
+        valor.append('sub_bac_id', lista_sub_bacids[i]);
 
         const xhttp = new XMLHttpRequest();
 
-        xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_sub_bacids_postinsercion.php?nombre_grupo=' + lista_sub_bacids[i].split("-")[0] + '&codigo_anuncio=' + lista_sub_bacids[i].split("-")[1]
-            + '&nombre_anuncio=' + lista_sub_bacids[i].split("-")[2] + '&sub_codigo=' + lista_sub_bacids[i], true);
+        xhttp.open('POST', cnxn + 'bacid/detailsub/', true);
 
-        xhttp.send();
+        xhttp.send(valor);
 
         xhttp.onreadystatechange = function () {
 
             if (this.readyState == 4 && this.status == 200) {
                 //debugger
                 let datos = JSON.parse(this.responseText);
+                
+                var table = document.getElementById("t02");
+                {
+                    var row = table.insertRow(1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+                    var cell6 = row.insertCell(5);
 
-                for (let item of datos) {
-
-                    var table = document.getElementById("t02");
-                    {
-                        var row = table.insertRow(1);
-                        var cell1 = row.insertCell(0);
-                        var cell2 = row.insertCell(1);
-                        var cell3 = row.insertCell(2);
-                        var cell4 = row.insertCell(3);
-                        var cell5 = row.insertCell(4);
-                        var cell6 = row.insertCell(5);
-
-                        cell1.innerHTML = item.nombre_categoria;
-                        cell2.innerHTML = item.descripcion;
-                        cell3.innerHTML = item.nombre_tipo_anuncio;
-                        cell4.innerHTML = item.nombre_anuncio;
-                        cell5.innerHTML = txtCampaignCode.value + "-" + item.sub_codigo.toUpperCase();
-                        cell6.innerHTML = "<button onclick='getCopy(this);'  class='btn btn-outline-primary copiar' value='' type='button' id='' name=''/><i class='far fa-copy'></i></button>";
-                    }
+                    cell1.innerHTML = datos.nombre_categoria;
+                    cell2.innerHTML = datos.descripcion;
+                    cell3.innerHTML = datos.nombre_tipo_anuncio;
+                    cell4.innerHTML = datos.nombre_anuncio;
+                    cell5.innerHTML = txtCampaignCode.value + "-" + datos.sub_codigo.toUpperCase();
+                    cell6.innerHTML = "<button onclick='getCopy(this);'  class='btn btn-outline-primary copiar' value='' type='button' id='' name=''/><i class='far fa-copy'></i></button>";
                 }
-
+            
             }
 
         }
