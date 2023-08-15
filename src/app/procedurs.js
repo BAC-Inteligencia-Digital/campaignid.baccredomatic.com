@@ -1,5 +1,5 @@
 //const cnxn = 'https://bac-id-new.azurewebsites.net'; // CONEXION A BD DE PRODUCCION
-const cnxn = 'https://bac-id-new-test.azurewebsites.net'; // CONEXION A BD DE TEST
+const cnxn = 'http://localhost/API_BACKEND_BACID/public/';// CONEXION A BD DE TEST
 
 var cont = [];
 
@@ -142,23 +142,25 @@ const procedurs = (() => {
 
     const filters = (nombre_campana, nombre_pais, fecha_inicial, fecha_final,funcionalidad) => {
         let table = document.getElementById("t03");
-        let nameC = nombre_campana;
-        let nameCountry = nombre_pais;
         let startD = fecha_inicial;
         let endD = fecha_final //el formato de la fecha ay que acomodarlo así ejemplo dia/mes/año
+        
+        var valor = new FormData();
+        valor.append('fecha_desde', startD);
+        valor.append('fecha_hasta', endD);
+        valor.append('nombre_pais', nombre_pais);
+        valor.append('nombre_campana', nombre_campana);
 
         const xhttp = new XMLHttpRequest();
-        xhttp.open('GET', cnxn + '/consulta_bacid_historicos/consulta_bac_id_filtros.php?nombre_campana=' + nameC +
-            "&nombre_pais=" + nameCountry + "&fecha_desde=" + startD + "&fecha_hasta=" + endD, true);
-        xhttp.send();
+        xhttp.open('POST', cnxn + 'bacid/filters/', true);
+        xhttp.send(valor);
         xhttp.onreadystatechange = function () {
 
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("t03").innerHTML = "";
                 let datos = JSON.parse(this.responseText);
-
-                for (let item of datos) {
-
+                for (let item of datos.data) {
+                
                     {
                         var row = table.insertRow(0);
                         var cell1 = row.insertCell(0);
@@ -169,8 +171,6 @@ const procedurs = (() => {
                         var cell6 = row.insertCell(5);
                         var cell7 = row.insertCell(6);
 
-                        //cell1.innerHTML = "<input type='hidden' value='"+item.id+"'>";
-                        //cell1.innerHTML = item.id;
                         cell1.innerHTML = item.nombre_bac_id + "<input type='hidden' value='" + item.id + "'>";
                         cell2.innerHTML = item.nombre_campana;
                         cell3.innerHTML = item.nombre_pais;
@@ -839,22 +839,22 @@ const procedurs = (() => {
     };
 
     const insertarUsuario = (netUserName, pass, email, userType, country, name, firstName, userState) => {
-        var capa_datos_insertaruser = cnxn + "/consultas_usuario/";
-        var usuario_red = netUserName;
-        var contrasena = pass;
-        var correo = email;
-        var tipo_usuario = userType;
-        var pais = country;
-        var nombre = name;
-        var apellidos = firstName;
-        var estado = userState; 
+     
+        var valor = new FormData();
+        valor.append('usuario_red', netUserName);
+        valor.append('contrasena', pass);
+        valor.append('correo', email);
+        valor.append('tipo_usuario', userType);
+        valor.append('pais', country);
+        valor.append('nombre', name);
+        valor.append('apellidos', firstName);
+        valor.append('estado', userState);
 
         const xhttp = new XMLHttpRequest();
 
-        xhttp.open('GET', capa_datos_insertaruser + 'insertar_usuario.php?usuario_red=' + usuario_red + '&contrasena=' + contrasena
-            + '&correo=' + correo + '&tipo_usuario=' + tipo_usuario + '&pais=' + pais + '&nombre=' + nombre + '&apellidos=' + apellidos + '&estado' + estado, true);
+        xhttp.open('POST', cnxn + "user/" , true);
 
-        xhttp.send();
+        xhttp.send(valor);
 
         xhttp.onreadystatechange = function () {
 
@@ -899,12 +899,10 @@ const procedurs = (() => {
     }
 
     const buscarUsuario = (user) => {
-        var capa_datos_insertaruser = cnxn + "/consultas_usuario/";
-        var usuario_ingresado = user; //aquí se manda el campo que corresponde al usuario de red o al correo 
-        var showCountry = "";
+
         const xhttp = new XMLHttpRequest();
     
-        xhttp.open('GET',capa_datos_insertaruser+'buscar_usuario.php?usuario_ingresado='+usuario_ingresado,true);
+        xhttp.open('GET',cnxn + "user/"+user+"/",true);
     
         xhttp.send();
         
@@ -914,57 +912,55 @@ const procedurs = (() => {
     
                     let datos = JSON.parse(this.responseText);
                     
-                    for(let item of datos){
-                        document.getElementById("txtUserId").value = item.id;
-                        document.getElementById("txtNombre").value = item.nombre_usuario;
-                        document.getElementById("txtApellido").value = item.apellidos_usuario;
-                        document.getElementById("txtUsuarioRed").value = item.usuario_red;
-                        document.getElementById("txtEmail").value = item.correo;
-                        document.getElementById("txtPassword").value = item.contrasena;
-                        setCountryValue(item.pais);
+                    document.getElementById("txtUserId").value = datos.id;
+                    document.getElementById("txtNombre").value = datos.nombre_usuario;
+                    document.getElementById("txtApellido").value = datos.apellidos_usuario;
+                    document.getElementById("txtUsuarioRed").value = datos.usuario_red;
+                    document.getElementById("txtEmail").value = datos.correo;
+                    document.getElementById("txtPassword").value = datos.contrasena;
+                    setCountryValue(datos.pais);
 
-                        switch(item.tipo_usuario){
-                            case "1":
-                            document.getElementById("admin").selected = "true";
-                            break;
-                            default:
-                            document.getElementById("edit").selected = "true";
-                            break;
-                        }
+                    switch(datos.tipo_usuario){
+                        case "1":
+                        document.getElementById("admin").selected = "true";
+                        break;
+                        default:
+                        document.getElementById("edit").selected = "true";
+                        break;
+                    }
 
-                        switch(item.estado){
-                            case "1":
-                            document.getElementById('dllActive').selected = "true";
-                            break;
-                            default:
-                            document.getElementById('dllInactive').selected = "true";
-                            break;
-                        }
-                   }   
+                    switch(datos.estado){
+                        case "1":
+                        document.getElementById('dllActive').selected = "true";
+                        break;
+                        default:
+                        document.getElementById('dllInactive').selected = "true";
+                        break;
+                    }
+                      
                 }
                 
         }
     }
 
     const actualizarUsuario = (idUser,netUserName, pass, email, userType, country, name, firstName, userState) => {
-        var capa_datos_insertaruser = cnxn + "/consultas_usuario/";
-        var id_usuario = idUser; //Este id sería ideal que lo guarde en un local storage luego de llamar la función buscar_usuario
         
-        var usuario_red = netUserName;
-        var contrasena = pass;
-        var correo = email;
-        var tipo_usuario = userType; //1 si es administrador 2 si es usuario normal
-        var pais = country;// CRI, GUA, NIC, etc
-        var nombre = name;
-        var apellidos = firstName;
-        var estado = userState;// 1 si está activo ; 0 si no está activo
+        var valor = new FormData();
+        valor.append('id_usuario', idUser);
+        valor.append('usuario_red', netUserName);
+        valor.append('contrasena', pass);
+        valor.append('correo', email);
+        valor.append('tipo_usuario', userType);
+        valor.append('pais', country);
+        valor.append('nombre', name);
+        valor.append('apellidos', firstName);
+        valor.append('estado', userState);
     
         const xhttp = new XMLHttpRequest();
     
-        xhttp.open('GET',capa_datos_insertaruser+'actualizar_usuario.php?id_usuario='+id_usuario+'&usuario_red='+usuario_red+'&contrasena='+contrasena
-        +'&correo='+correo+'&tipo_usuario='+tipo_usuario+'&pais='+pais+'&nombre='+nombre+'&apellidos='+apellidos+'&estado='+estado,true);
+        xhttp.open('POST',cnxn + "user/update/",true);
     
-        xhttp.send();
+        xhttp.send(valor);
         
         xhttp.onreadystatechange = function(){
     

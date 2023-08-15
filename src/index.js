@@ -33,7 +33,6 @@ btnLogin.onclick = () => {
 
         const xhttp = new XMLHttpRequest();
 
-        //xhttp.open('GET', cnxn + '/consulta_login/autenticar_usuario.php?usuario_ingresado=' + usuario + '&contrasena_ingresada=' + contrasena, true);
         xhttp.open('GET', cnxn + 'auth/'+usuario+'/'+contrasena+'/', true);
         //
         xhttp.send();

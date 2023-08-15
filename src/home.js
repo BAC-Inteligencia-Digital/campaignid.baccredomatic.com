@@ -1824,8 +1824,7 @@ function validarAdNameLleno(){
     }
 }
 function insertarSUBBACID(bac_id_padre, sub_bacid) {
-    //debugger;
-    alert(bac_id_padre);
+
     var valor = new FormData();
     valor.append('nombre_subbacid', sub_bacid);
     valor.append('bacid_padre', bac_id_padre);
