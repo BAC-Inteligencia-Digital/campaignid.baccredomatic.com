@@ -256,7 +256,7 @@ class BacIDModel extends ConnectionDB {
         }        
     }
 
-    /**************************Consultar los códigos de campañan según filtros del usuario***************************/
+    /**************************Consultar los códigos de campaña según filtros del usuario***************************/
     final public static function getBacIDFilters()
     {
         try {
@@ -287,5 +287,68 @@ class BacIDModel extends ConnectionDB {
            die(json_encode(ResponseHttp::status500('No se pueden obtener los datos')));
         }
     }
+
+    /**************************Consultar los códigos de campaña según historico de país***************************/
+    final public static function getBacIDHistPais()
+    {
+        try {
+            $con = self::getConnection();
+            $query = $con->prepare("SELECT  a.id, STR_TO_DATE(a.fecha_creacion, '%d/%m/%Y') as fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
+            c.nombre_origen, d.nombre_categoria, e.nombre_producto FROM bac_id_generados as a
+            join pais as b 
+            on SUBSTRING(a.nombre_bac_id, 1, 3) = b.abreviatura
+            join origen_clientes as c
+            on SUBSTRING(a.nombre_bac_id, 4, 1) = c.codigo
+            join categoria as d
+            on SUBSTRING(a.nombre_bac_id, 6, 4) = d.codigo
+            join producto as e
+            on SUBSTRING(a.nombre_bac_id, 11, 3) = e.codigo
+            where a.pais = :nombre_pais");
+            $query->execute([               
+               ':nombre_pais'   => self::getPais()               
+           ]);        
+           $rs['data'] = $query->fetchAll(\PDO::FETCH_ASSOC);
+           return $rs;
+        } catch (\PDOException $e) {
+           error_log("BacIDModel::getBacIDHistPais -> ".$e);
+           die(json_encode(ResponseHttp::status500('No se pueden obtener los datos')));
+        }
+    }
+
+    /**************************Consultar el detalle de un BAC ID***************************/
+    final public static function getBacIDDetalle()
+    {
+        try {
+            $con = self::getConnection();
+            $query = $con->prepare("SELECT a.nombre_bac_id, a.nombre_campana, a.fecha_creacion,b.nombre as nombre_pais, c.nombre_origen, d.nombre_categoria, e.nombre_producto,
+            f.nombre_portafolio, g.nombre_campaña, h.nombre_objetivo, i.nombre_canal_digital from bac_id_generados as a
+                join pais as b
+                on b.abreviatura = substring(a.nombre_bac_id,1,3)
+                join origen_clientes as c
+                on c.codigo = substring(a.nombre_bac_id,4,1)
+                join categoria as d
+                on d.codigo = substring(a.nombre_bac_id,6,4)
+                join producto as e
+                on e.codigo = substring(nombre_bac_id,11,3)
+                join portafolio as f
+                on f.codigo = substring(nombre_bac_id,22,2)
+                join tipo_campaña as g
+                on g.codigo = substring(nombre_bac_id,25,2)
+                join objetivos as h
+                on h.codigo = substring(nombre_bac_id,28,2)
+                join canal_digital as i
+                on i.codigo = substring(nombre_bac_id,31,2)
+                where a.id = :id");
+            $query->execute([               
+               ':id'   => self::getId()               
+           ]);        
+           $rs['data'] = $query->fetchAll(\PDO::FETCH_ASSOC);
+           return $rs;
+        } catch (\PDOException $e) {
+           error_log("BacIDModel::getBacIDDetalle -> ".$e);
+           die(json_encode(ResponseHttp::status500('No se pueden obtener los datos')));
+        }
+    }
+    
 }
 

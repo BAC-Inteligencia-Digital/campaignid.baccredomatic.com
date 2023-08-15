@@ -107,7 +107,7 @@ class BacIDController extends BaseController{
        }
     }
 
-     /************************************Consultar el BACID POST INSERCION***********************************************/
+     /************************************CONSULTA HISTORICO DE BAC IDS SEGÚN FILTROS***********************************************/
      final public function getBacIDFilters(string $endPoint)
      {
          if ($this->getMethod() == 'post' && $endPoint == $this->getRoute()) {
@@ -133,5 +133,56 @@ class BacIDController extends BaseController{
          exit;
         }
      }
+
+    /************************************CONSULTA HISTORICO DE BAC IDS SEGÚN PAIS***********************************************/
+    final public function getBacIDHistPais(string $endPoint)
+    { 
+        if ($this->getMethod() == 'post' && $endPoint == $this->getRoute()) {
+            
+            $pais   = $this->getParam()['pais'];
+
+            if(empty($pais)){  
+                echo json_encode(ResponseHttp::status400('Todos los campos son necesarios'));
+            }else{
+                BacIDModel::setPais($pais);
+                echo json_encode(BacIDModel::getBacIDHistPais());           
+            }  
+        exit;
+        }
+    }
+
+    /************************************Consultar el detalle de un BAC ID***********************************************/
+    final public function getBacIDDetalle(string $endPoint)
+    { 
+        if ($this->getMethod() == 'get' && $endPoint == $this->getRoute()) {
+            
+            $id = $this->getAttribute()[2];
+
+            if(empty($id)){  
+                echo json_encode(ResponseHttp::status400('Todos los campos son necesarios'));
+            }else{                
+                BacIDModel::setId($id);
+                echo json_encode(BacIDModel::getBacIDDetalle());           
+            }  
+        exit;
+        }
+    }
+
+    /************************************Consultar el detalle de un SUB BAC ID***********************************************/
+    final public function getSubBacIDDetalle(string $endPoint)
+    { 
+        if ($this->getMethod() == 'get' && $endPoint == $this->getRoute()) {
+            
+            $id = $this->getAttribute()[2];
+
+            if(empty($id)){  
+                echo json_encode(ResponseHttp::status400('Todos los campos son necesarios'));
+            }else{                
+                SubBacIDModel::setBacIDPadre($id);
+                echo json_encode(SubBacIDModel::getSubBacIDDetalle());           
+            }  
+        exit;
+        }
+    }
     
 }

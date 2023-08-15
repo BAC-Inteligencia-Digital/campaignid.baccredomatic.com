@@ -68,9 +68,7 @@ class SubBacIDModel extends ConnectionDB {
 
         $nombre_anuncio = explode("/",$subbacid)[0];
         $nombre_anuncio = substr($nombre_anuncio, 6, strlen($nombre_anuncio));     
-       
-        $sub_codigo = explode("/",$subbacid)[1];
-	
+       	
         try {
             $con = self::getConnection();             
             $query = $con->prepare("SELECT distinct a.nombre_categoria, a.descripcion, b.nombre_tipo_anuncio, :nombre_anuncio as nombre_anuncio, :sub_codigo as sub_codigo from 
@@ -82,7 +80,7 @@ class SubBacIDModel extends ConnectionDB {
                 ':nombre_grupo'   => $nombre_grupo,
                 ':codigo_anuncio' => $codigo_anuncio,
                 ':nombre_anuncio' => $nombre_anuncio,
-                ':sub_codigo'     => $sub_codigo 
+                ':sub_codigo'     => $subbacid
             ]);
  
             if ($query->rowCount() == 0) {
@@ -100,5 +98,22 @@ class SubBacIDModel extends ConnectionDB {
          }        
      }
      
+     /**************************Consultar el detalle de un SUB BAC ID***************************/
+    final public static function getSubBacIDDetalle()
+    {
+        try {
+            $con = self::getConnection();
+            $query = $con->prepare("SELECT nombre_subbacid from sub_bacid_generados
+            where id_bacid_padre = :id");
+            $query->execute([               
+               ':id'   => self::getBacIDPadre()               
+           ]);        
+           $rs['data'] = $query->fetchAll(\PDO::FETCH_ASSOC);
+           return $rs;
+        } catch (\PDOException $e) {
+           error_log("SubBacIDModel::getSubBacIDDetalle -> ".$e);
+           die(json_encode(ResponseHttp::status500('No se pueden obtener los datos')));
+        }
+    }
          
 }
