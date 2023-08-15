@@ -6,7 +6,6 @@ use App\Config\ResponseHttp;
 use App\Config\Security;
 use App\DB\ConnectionDB;
 use App\DB\Sql;
-use App\Models\BacIDModel;
 
 class SubBacIDModel extends ConnectionDB {
 
@@ -40,7 +39,6 @@ class SubBacIDModel extends ConnectionDB {
 
     final public static function postSave()
     {
-
         $idBacIDPadre = BacIDModel::getIdentificador(self::getBacIDPadre());
         try {
             $con = self::getConnection();
@@ -51,7 +49,7 @@ class SubBacIDModel extends ConnectionDB {
                 ':bacid_padre'  => $idBacIDPadre["id"]       
             ]);
             if ($query->rowCount() > 0) {
-                return ResponseHttp::status200('Código de campañá registrado exitosamente');
+                return ResponseHttp::status200('Código de campaña registrado exitosamente');
             } else {
                 return ResponseHttp::status500('No se puede registrar el SUB BACID');
             }

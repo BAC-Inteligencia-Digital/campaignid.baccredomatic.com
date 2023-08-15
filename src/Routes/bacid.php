@@ -14,6 +14,7 @@
     $app->postSaveSub('bacid/sub/');
     $app->getBACID('bacid/detail/');
     $app->getSUBBACID('bacid/detailsub/');
+    $app->getBacIDFilters('bacid/filters/');
 
     /****************Error 404*****************/
     echo json_encode(ResponseHttp::status404());

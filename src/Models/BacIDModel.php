@@ -17,6 +17,8 @@ class BacIDModel extends ConnectionDB {
     private static string  $fecha_creacion;
     private static string  $fecha_modificacion;
     private static string  $pais;
+    private static string  $fechaInicio;
+    private static string  $fechaFin;
 
     public function __construct(array $data)
     {
@@ -34,7 +36,9 @@ class BacIDModel extends ConnectionDB {
     final public static function getNombreCampana(){  return self::$nombre_campana;}     
     final public static function getFechaCreacion(){  return self::$fecha_creacion;}
     final public static function getFechaModificacion(){  return self::$fecha_modificacion;}
-    final public static function getPais(){  return self::$pais;}       
+    final public static function getPais(){  return self::$pais;}
+    final public static function getFechaInicio(){  return self::$fechaInicio;}
+    final public static function getFechaFin(){  return self::$fechaFin;}       
     
     /**********************************Metodos Setter***********************************/
     final public static function setId(int $id) {  self::$id = $id;}
@@ -44,6 +48,8 @@ class BacIDModel extends ConnectionDB {
     final public static function setFechaCreacion(string $fecha_creacion){ self::$fecha_creacion = $fecha_creacion;}
     final public static function setFechaModificacion(string $fecha_modificacion){ self::$fecha_modificacion = $fecha_modificacion;}
     final public static function setPais(string $pais){ self::$pais = $pais;}
+    final public static function setFechaInicio(string $fechaInicio){ self::$fechaInicio = $fechaInicio;}
+    final public static function setFechaFin(string $fechaFin){ self::$fechaFin = $fechaFin;}
     
     /*******************************************Registrar BAC ID************************************************/
     final public static function postSave()
@@ -222,9 +228,8 @@ class BacIDModel extends ConnectionDB {
             error_log('BacIDModel::getBACID -> ' . $e);            
             die(json_encode(ResponseHttp::status500()));
         }        
-    } 
-    
-    /*******************************************Consultar el identificador de un ID PADRE************************************************/
+    }       
+
     final public static function getIdentificador(string $nombreBACID )
     {
     
@@ -249,5 +254,38 @@ class BacIDModel extends ConnectionDB {
             error_log('BacIDModel::getBACID -> ' . $e);            
             die(json_encode(ResponseHttp::status500()));
         }        
-    }       
+    }
+
+    /**************************Consultar los códigos de campañan según filtros del usuario***************************/
+    final public static function getBacIDFilters()
+    {
+        try {
+            $con = self::getConnection();
+            $query = $con->prepare("SELECT  a.id, STR_TO_DATE(a.fecha_creacion, '%d/%m/%Y') as fecha_creacion,a.nombre_bac_id,a.nombre_campana, b.nombre as nombre_pais, 
+            c.nombre_origen, d.nombre_categoria, e.nombre_producto FROM bac_id_generados as a
+            join pais as b 
+            on SUBSTRING(a.nombre_bac_id, 1, 3) = b.abreviatura
+            join origen_clientes as c
+            on SUBSTRING(a.nombre_bac_id, 4, 1) = c.codigo
+            join categoria as d
+            on SUBSTRING(a.nombre_bac_id, 6, 4) = d.codigo
+            join producto as e
+            on SUBSTRING(a.nombre_bac_id, 11, 3) = e.codigo
+            where str_to_date(a.fecha_creacion, '%d/%m/%Y') between STR_TO_DATE(:fecha_desde, '%d/%m/%Y') and STR_TO_DATE(:fecha_hasta, '%d/%m/%Y')
+            and a.nombre_campana like :nombre_campana
+            and a.pais = (SELECT abreviatura FROM pais WHERE nombre = :nombre_pais)");
+            $query->execute([
+               ':fecha_desde'   => self::getFechaInicio(),
+               ':fecha_hasta'   => self::getFechaFin(),
+               ':nombre_pais'   => self::getPais(),
+               ':nombre_campana' => "%".self::getNombreCampana()."%"
+           ]);        
+           $rs['data'] = $query->fetchAll(\PDO::FETCH_ASSOC);
+           return $rs;
+        } catch (\PDOException $e) {
+           error_log("BacIDModel::getBacIDFilters -> ".$e);
+           die(json_encode(ResponseHttp::status500('No se pueden obtener los datos')));
+        }
+    }
 }
+

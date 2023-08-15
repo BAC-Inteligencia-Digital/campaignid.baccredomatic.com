@@ -102,8 +102,8 @@ class UserModel extends ConnectionDB {
                             $token = Security::createTokenJwt(Security::secretKey(),$payload);
 
                             $data = [
-                                'nombre'       => $res['nombre'],
-                                'apellidos'    => $res['apellidos'],
+                                'nombre'       => Security::decryptName($res['nombre']),
+                                'apellidos'    => Security::decryptName($res['apellidos']),
                                 'tipo_usuario' => $res['tipo_usuario'],
                                 'id'           => $res['id'],
                                 'pais'         => $res['pais'],
@@ -144,8 +144,8 @@ class UserModel extends ConnectionDB {
                     ':correo'      => Security::cryptEmail(self::getCorreo()),
                     ':tipo_usuario'=> self::getRol(),                    
                     ':pais'        => self::getPais(),
-                    ':nombre'      => self::getNombre(),
-                    ':apellidos'   => self::getApellidos(),
+                    ':nombre'      => Security::cryptName(self::getNombre()),
+                    ':apellidos'   => Security::cryptName(self::getApellidos()),
                     ':estado'      => self::getEstado(),
                     ':IDToken'     => self::getIDToken()            
                 ]);
@@ -177,8 +177,8 @@ class UserModel extends ConnectionDB {
                 ':correo'      => Security::cryptEmail(self::getCorreo()),
                 ':tipo_usuario'=> self::getRol(),                    
                 ':pais'        => self::getPais(),
-                ':nombre'      => self::getNombre(),
-                ':apellidos'   => self::getApellidos(),
+                ':nombre'      => Security::cryptName(self::getNombre()),
+                ':apellidos'   => Security::cryptName(self::getApellidos()),
                 ':estado'      => self::getEstado(),
                 ':IDToken'     => self::getIDToken()
              ]);
@@ -193,7 +193,7 @@ class UserModel extends ConnectionDB {
          }
      }
 
-     /**************************Consultar usuario según nombre de usuario**************************************/
+    /**************************Consultar usuario según nombre de usuario**************************************/
     final public static function getUser()
     {
         try {
@@ -211,8 +211,8 @@ class UserModel extends ConnectionDB {
                     $usuarioBuscado['usuario_red']       = $rs[0]['usuario_red'];
                     $usuarioBuscado['contrasena']        = $rs[0]['contraseña'];
                     $usuarioBuscado['correo']            = Security::decryptEmail($rs[0]['correo']);
-                    $usuarioBuscado['nombre_usuario']    = $rs[0]['nombre'];
-                    $usuarioBuscado['apellidos_usuario'] = $rs[0]['apellidos'];
+                    $usuarioBuscado['nombre_usuario']    = Security::decryptName($rs[0]['nombre']);
+                    $usuarioBuscado['apellidos_usuario'] = Security::decryptName($rs[0]['apellidos']);
                     $usuarioBuscado['pais']              = $rs[0]['pais'];
                     $usuarioBuscado['tipo_usuario']      = $rs[0]['tipo_usuario'];
                     $usuarioBuscado['estado']            = $rs[0]['estado'];

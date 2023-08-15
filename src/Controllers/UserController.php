@@ -36,7 +36,7 @@ class UserController extends BaseController{
             $validator = new Validator;
             
             $validation = $validator->validate($this->getParam(), [
-                'usuario_red'        => 'required|regex:/^[a-zA-Z. ]+$/',
+                'usuario_red'        => 'required|regex:/^[a-zA-Z0-9_.-]+$/',
                 'contrasena'         => 'required|min:8',
                 'correo'             => 'required|email',
                 'tipo_usuario'       => 'required|numeric|min:1|regex:/^[12]+$/',
@@ -83,7 +83,7 @@ class UserController extends BaseController{
                 $validator = new Validator;
             
                 $validation = $validator->validate($this->getParam(), [
-                    'usuario_red'        => 'required|regex:/^[a-zA-Z. ]+$/',
+                    'usuario_red'        => 'required|regex:/^[a-zA-Z0-9_.-]+$/',
                     'contrasena'         => 'required|min:8',
                     'correo'             => 'required|email',
                     'tipo_usuario'       => 'required|numeric|min:1|regex:/^[12]+$/',

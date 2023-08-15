@@ -20,7 +20,7 @@ class BacIDController extends BaseController{
             $validation = $validator->validate($this->getParam(), [
                 'nombre_bac_id'   => 'required|regex:/^[0-9-A-Z-]+$/',
                 'id_usuario'      => 'required|regex:/\d+/',
-                'nombre_campana'  => 'required|regex:/^[0-9-A-Z-]++$/',
+                'nombre_campana'  => 'required|regex:/^[0-9-A-Z-]+$/',
                 'fecha_creacion'  => 'required|regex:/^[0-9]{1,2}\\/[0-9]{1,2}\\/[0-9]{4}$/',
                 'pais'            => 'required|regex:/^[A-Z]+$/',
 
@@ -106,5 +106,32 @@ class BacIDController extends BaseController{
         exit;
        }
     }
+
+     /************************************Consultar el BACID POST INSERCION***********************************************/
+     final public function getBacIDFilters(string $endPoint)
+     {
+         if ($this->getMethod() == 'post' && $endPoint == $this->getRoute()) {
+        
+             $validator = new Validator;
+             
+             $validation = $validator->validate($this->getParam(), [
+                 'fecha_desde'    => 'required|regex:/^[0-9]{1,2}\\/[0-9]{1,2}\\/[0-9]{4}$/',
+                 'fecha_hasta'    => 'required|regex:/^[0-9]{1,2}\\/[0-9]{1,2}\\/[0-9]{4}$/'
+             ]);      
+ 
+         if ($validation->fails()) {            
+             $errors = $validation->errors();            	
+             echo json_encode(ResponseHttp::status400($errors->all()[0]));
+         } else {
+            BacIDModel::setFechaInicio($this->getParam()['fecha_desde']);
+            BacIDModel::setFechaFin($this->getParam()['fecha_hasta']);
+            BacIDModel::setPais($this->getParam()['nombre_pais']);
+            BacIDModel::setNombreCampana($this->getParam()['nombre_campana']);
+            echo json_encode(BacIDModel::getBacIDFilters());
+         }              
+                           
+         exit;
+        }
+     }
     
 }
