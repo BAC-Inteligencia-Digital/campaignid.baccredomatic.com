@@ -20,15 +20,19 @@ const procedurs = (() => {
         let userData = JSON.parse(userInfo);
         let countryCode = userData[3];
         let table = document.getElementById("t03");
+      
+        var valor = new FormData();
+        valor.append('pais', countryCode);
+
         const xhttp = new XMLHttpRequest();
-        xhttp.open('GET', cnxn + '/consulta_bacid_historicos/consulta_historico_bacids.php?nombre_pais=' + countryCode, true);
-        xhttp.send();
+        xhttp.open('POST', cnxn + 'bacid/filterpais/', true);
+        xhttp.send(valor);
         xhttp.onreadystatechange = function () {
 
             if (this.readyState == 4 && this.status == 200) {
                 let datos = JSON.parse(this.responseText);
 
-                for (let item of datos) {
+                for (let item of datos.data) {
 
                     {
                         let row = table.insertRow(0);
@@ -40,17 +44,14 @@ const procedurs = (() => {
                         let cell6 = row.insertCell(5);
                         let cell7 = row.insertCell(6);
                         let cell8 = row.insertCell(7);
-
-                        //cell1.innerHTML = "<input type='hidden' value='"+item.id+"'>";
-                        //cell1.innerHTML = item.id;
+                    
                         cell1.innerHTML = item.nombre_bac_id + "<input type='hidden' value='" + item.id + "'>";
                         cell2.innerHTML = item.nombre_campana;
                         cell3.innerHTML = item.nombre_pais;
                         cell4.innerHTML = item.nombre_origen;
                         cell5.innerHTML = item.nombre_categoria;
                         cell6.innerHTML = item.nombre_producto;
-                        //cell7.classList.add('text-center');
-                        //cell7.innerHTML = "<button onclick='editConfirmation(this);' class='btn btn-outline-primary' value='ver' type='button' id='" + item.nombre_bac_id + "' name='" + item.nombre_bac_id + "'/><i class='far fa-edit'></i></button>";
+
                         cell7.classList.add('text-center');
                         
                         if(funcionalidad == 'consultar'){
@@ -233,7 +234,7 @@ const procedurs = (() => {
 
         const xhttp = new XMLHttpRequest();
 
-        xhttp.open('GET', cnxn + '/consulta_bacid_historicos/consulta_detalle_bacid.php?id=' + indice, true);
+        xhttp.open('GET', cnxn + 'bacid/detail/'+indice+'/', true);
 
         xhttp.send();
 
@@ -242,7 +243,7 @@ const procedurs = (() => {
             if (this.readyState == 4 && this.status == 200) {
                 let datos = JSON.parse(this.responseText);
 
-                for (let item of datos) {
+                for (let item of datos.data) {
 
                     document.getElementById("detalle_raiz_codigo").innerHTML = item.nombre_bac_id + "-00-000-00-00000" + "/" + item.nombre_campana.toUpperCase() + "<div class='col-12 text-center'><button onclick='getCopyCode(this);'  class='btn btn-outline-primary w-100 mt-2 copiar' value='' type='button' id='' name=''/><i class='far fa-copy'></i></button></div>";
                     document.getElementById("detalle_nombre_campana").innerHTML = item.nombre_campana;
@@ -315,7 +316,7 @@ const procedurs = (() => {
 
             const xhttp = new XMLHttpRequest();
 
-            xhttp.open('GET', cnxn + '/consulta_bacid_historicos/consulta_detalle_subacid.php?id=' + id_padre, true);
+            xhttp.open('GET', cnxn + 'bacid/detailsub/'+id_padre+'/', true);
 
             xhttp.send();
 
@@ -325,7 +326,7 @@ const procedurs = (() => {
 
                     let datos = JSON.parse(this.responseText);
 
-                    for (let item of datos) {
+                    for (let item of datos.data) {
                         lista_sub_bacids.push(item.nombre_subbacid);
 
                     }
@@ -341,37 +342,37 @@ const procedurs = (() => {
 
             for (var i = 0; i < lista_sub_bacids.length; i++) {
 
-                const xhttp = new XMLHttpRequest();
-                xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_sub_bacids_postinsercion.php?nombre_grupo=' + lista_sub_bacids[i].split("-")[0] + '&codigo_anuncio=' + lista_sub_bacids[i].split("-")[1]
-                    + '&nombre_anuncio=' + lista_sub_bacids[i].split("-")[2] + '&sub_codigo=' + lista_sub_bacids[i], true);
+                var valor = new FormData();
+                valor.append('sub_bac_id', lista_sub_bacids[i]);
 
-                xhttp.send();
+                const xhttp = new XMLHttpRequest();
+                xhttp.open('POST', cnxn + 'bacid/detailsub/', true);
+
+                xhttp.send(valor);
                 xhttp.onreadystatechange = function () {
 
                     if (this.readyState == 4 && this.status == 200) {
+                        
                         let datos = JSON.parse(this.responseText);
 
-                        for (let item of datos) {
+                        var table = document.getElementById("t06");
+                        {
+                            var row = table.insertRow(1);
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            var cell3 = row.insertCell(2);
+                            var cell4 = row.insertCell(3);
+                            var cell5 = row.insertCell(4);
+                            var cell6 = row.insertCell(5);
 
-                            var table = document.getElementById("t06");
-                            {
-                                var row = table.insertRow(1);
-                                var cell1 = row.insertCell(0);
-                                var cell2 = row.insertCell(1);
-                                var cell3 = row.insertCell(2);
-                                var cell4 = row.insertCell(3);
-                                var cell5 = row.insertCell(4);
-                                var cell6 = row.insertCell(5);
-
-                                cell1.innerHTML = item.nombre_categoria;
-                                cell2.innerHTML = item.descripcion;
-                                cell3.innerHTML = item.nombre_tipo_anuncio;
-                                cell4.innerHTML = item.nombre_anuncio;
-                                cell5.innerHTML = bacId.toUpperCase() + "-" + item.sub_codigo.toUpperCase();
-                                cell6.innerHTML = "<button onclick='getCopy(this);'  class='btn btn-outline-primary copiar' value='' type='button' id='' name=''/><i class='far fa-copy'></i></button>";
-                            }
+                            cell1.innerHTML = datos.nombre_categoria;
+                            cell2.innerHTML = datos.descripcion;
+                            cell3.innerHTML = datos.nombre_tipo_anuncio;
+                            cell4.innerHTML = datos.nombre_anuncio;
+                            cell5.innerHTML = bacId.toUpperCase() + "-" + datos.sub_codigo.toUpperCase();
+                            cell6.innerHTML = "<button onclick='getCopy(this);'  class='btn btn-outline-primary copiar' value='' type='button' id='' name=''/><i class='far fa-copy'></i></button>";
                         }
-
+                        
                     }
 
                 }
