@@ -2,7 +2,7 @@ export class dropDown {
 
     getCountries() {
         
-       // let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+       // let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/pais/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/pais/'; //cambiarCAMBIAR
         let countries = [];
         const xhr = new XMLHttpRequest();
@@ -48,7 +48,7 @@ export class dropDown {
     };
 
     clientOrigin() {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/origen/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/origen/'; //cambiarCAMBIAR
         const xhr = new XMLHttpRequest();
         let clientsOrigin = [];
@@ -96,7 +96,7 @@ export class dropDown {
 
     getCategories() {
         let categories = [];
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/categoria/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/categoria/'; //cambiarCAMBIAR
         const xhr = new XMLHttpRequest();
 
@@ -145,7 +145,7 @@ export class dropDown {
     };
 
     getPortfolio() {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/portafolio/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/portafolio/'; //cambiarCAMBIAR
         const xhr = new XMLHttpRequest();
 
@@ -200,7 +200,7 @@ export class dropDown {
         document.getElementById("dllgetCampaignType").innerHTML = "<option>Seleccine tipo</option>";
         let types = [];
         const xhr = new XMLHttpRequest();
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/tipocampana/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/tipocampana/'; //cambiarCAMBIAR
 
         xhr.ontimeout = () => {
@@ -255,7 +255,7 @@ export class dropDown {
 
     getObjectives() {
         const xhr = new XMLHttpRequest();
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/objetivo/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/objetivo/'; //cambiarCAMBIAR
 
         xhr.ontimeout = () => {
@@ -301,7 +301,7 @@ export class dropDown {
     getDigitalChannels() {
         let channels = [];
         const xhr = new XMLHttpRequest();
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/canaldigital/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/canaldigital/'; //cambiarCAMBIAR
 
         xhr.ontimeout = () => {
@@ -349,7 +349,7 @@ export class dropDown {
     };
 
     getMultiProducts() {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/multiproducto/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/multiproducto/'; //cambiarCAMBIAR
         
         const xhr = new XMLHttpRequest();

@@ -5,8 +5,7 @@ let dllPassword = document.getElementById("inputPassword");
 let btnLogin = document.getElementById("btnLogin");
 let getCloseBtn = document.querySelector(".dangerClose");
 
-//const cnxn = 'https://bac-id-new.azurewebsites.net'; // CONEXION A BD DE PRODUCCION
-//const cnxn = 'https://bac-id-new-test.azurewebsites.net'; // CONEXION A BD DE TEST
+//const cnxn = 'https://bac-id-new.azurewebsites.net/public/'; // CONEXION A BD DE PRODUCCION
 const cnxn = 'http://localhost/API_BACKEND_BACID/public/'; //CAMBIARcambiar
 
 btnLogin.onclick = () => {

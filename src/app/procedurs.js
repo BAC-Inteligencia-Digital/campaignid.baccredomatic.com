@@ -1,4 +1,4 @@
-//const cnxn = 'https://bac-id-new.azurewebsites.net'; // CONEXION A BD DE PRODUCCION
+//const cnxn = 'https://bac-id-new.azurewebsites.net/public/'; // CONEXION A BD DE PRODUCCION
 const cnxn = 'http://localhost/API_BACKEND_BACID/public/';// CONEXION A BD DE TEST
 
 var cont = [];
@@ -118,27 +118,9 @@ const procedurs = (() => {
     const deleteCode = (ele) => {
         let retVal = prompt("Está seguro que desea eliminar este Código? ", "Contraseña...");
         let userData = localStorage.getItem('name');
-        let userId = JSON.parse(userData).toString().split(",")[0];
-
-        if (retVal == cont) {
-
-            let row = ele.closest('tr');
-            let getInput = row.cells[0].childNodes;
-            let getValue = getInput[1].value.toString();        
-
-            eliminarBACID(userId,getValue);/// llamamos la función de eliminar bac id
-
-            // Quitamos el elemento de la tabla
-            var i = ele.parentNode.parentNode.rowIndex;
-            document.getElementById("tableDeleteBACID").deleteRow(i);
-
-            alert("El código de campaña fue eliminado con éxito!!");
-            
-            return true;
-        } else {
-            alert("Error!. Ingrese de manera correcta su contraseña!");
-            return false;
-        }
+        let userId = JSON.parse(userData).toString().split(",")[0];        
+        validatePassUserDeleteBACID(retVal,ele);        
+        
     }
 
     const filters = (nombre_campana, nombre_pais, fecha_inicial, fecha_final,funcionalidad) => {
@@ -195,26 +177,45 @@ const procedurs = (() => {
         }
     }
 
-    const validatePassUser = () => { 
+    const validatePassUserDeleteBACID = (passIngresada,ele) => { 
 
         let userData = localStorage.getItem('name');
         let userId = JSON.parse(userData).toString().split(",")[0];
+        
+        var valor = new FormData();
+        valor.append('id', userId);
+        valor.append('pass', passIngresada);
+
         const xhttp = new XMLHttpRequest();
-        xhttp.open('GET', cnxn + '/consultas_usuario/validar_contrasena.php?id_usuario='+userId, true);
-        xhttp.send();
+        xhttp.open('POST', cnxn + 'user/passvalidate/', true);
+        xhttp.send(valor);
         xhttp.onreadystatechange = function () {
 
-            if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState == 4) {
                 
                 let datos = JSON.parse(this.responseText);
+                                
+                if (datos.status == "ok") {
 
-                for (let item of datos) {
-                                        
-                    cont.push(item.contrasena);
+                    let row = ele.closest('tr');
+                    let getInput = row.cells[0].childNodes;
+                    let getValue = getInput[1].value.toString();        
+        
+                    eliminarBACID(userId,getValue);/// llamamos la función de eliminar bac id
+        
+                    // Quitamos el elemento de la tabla
+                    var i = ele.parentNode.parentNode.rowIndex;
+                    document.getElementById("tableDeleteBACID").deleteRow(i);
+        
+                    alert("El código de campaña fue eliminado con éxito!!");
                     
+                    return true;
+                } else {
+                    alert("Error!. Ingrese de manera correcta su contraseña!");
+                    return false;
                 }
                 
-            }
+            }            
                        
         }
 
@@ -253,7 +254,7 @@ const procedurs = (() => {
                     document.getElementById("detalle_categoria").innerHTML = item.nombre_categoria;
                     document.getElementById("detalle_producto").innerHTML = item.nombre_producto;
                     document.getElementById("detalle_portafolio").innerHTML = item.nombre_portafolio;
-                    document.getElementById("detalle_tipocampana").innerHTML = item.nombre_tipo;
+                    document.getElementById("detalle_tipocampana").innerHTML = item.nombre_campaña;
                     document.getElementById("detalle_objetivos").innerHTML = item.nombre_objetivo;
                     document.getElementById("detalle_canaldigital").innerHTML = item.nombre_canal_digital;
                     bacId = item.nombre_bac_id;
@@ -267,46 +268,37 @@ const procedurs = (() => {
 
         function obtenerCanalesBACID(codigo_canales) { //esta función es para obtener los nombres de los canales según el siguiente valor: Ejemplo:001236
 
-            var resultado = [];
+            var listaCanales = [codigo_canales.substring(0, 1) , codigo_canales.substring(1, 2), codigo_canales.substring(2, 3), codigo_canales.substring(3, 4), codigo_canales.substring(4, 5), codigo_canales.substring(5, 6)]
+            
+            for (var i = 0; i < listaCanales.length; i++) {
+                
+                if(listaCanales[i] != 0){ 
 
-            const xhttp = new XMLHttpRequest();
+                    const xhttp = new XMLHttpRequest();
 
-            xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_canales_insertados.php?canal1_seleccionado=' + codigo_canales.substring(0, 1) +
-                '&canal2_seleccionado=' + codigo_canales.substring(1, 2) + '&canal3_seleccionado=' + codigo_canales.substring(2, 3) +
-                '&canal4_seleccionado=' + codigo_canales.substring(3, 4) + '&canal5_seleccionado=' + codigo_canales.substring(4, 5) +
-                '&canal6_seleccionado=' + codigo_canales.substring(5, 6), true);
+                    xhttp.open('GET', cnxn + 'select/canal/'+listaCanales[i]+'/', true);
 
-            xhttp.send();
+                    xhttp.send();
 
-            xhttp.onreadystatechange = function () {
+                    xhttp.onreadystatechange = function () {
 
-                if (this.readyState == 4 && this.status == 200) {
+                        if (this.readyState == 4 && this.status == 200) {
 
-                    let datos = JSON.parse(this.responseText);
+                            let datos = JSON.parse(this.responseText);
 
-                    if (!datos[0].nombre_canal1 == "") {
-                        resultado.push(datos[0].nombre_canal1);
+                            for (let item of datos.data) {
+                                
+                                document.getElementById("detalle_canales").innerHTML = document.getElementById("detalle_canales").innerHTML +' - '+ item.nombre_canal;
+                            }                            
+                            
+                        }                        
+                        
                     }
-                    if (!datos[1].nombre_canal2 == "") {
-                        resultado.push(datos[1].nombre_canal2);
-                    }
-                    if (!datos[2].nombre_canal3 == "") {
-                        resultado.push(datos[2].nombre_canal3);
-                    }
-                    if (!datos[3].nombre_canal4 == "") {
-                        resultado.push(datos[3].nombre_canal4);
-                    }
-                    if (!datos[4].nombre_canal5 == "") {
-                        resultado.push(datos[4].nombre_canal5);
-                    }
-                    if (!datos[5].nombre_canal6 == "") {
-                        resultado.push(datos[5].nombre_canal6);
-                    }
+                    
+                }                
 
-                }
-                document.getElementById("detalle_canales").innerHTML = resultado;
             }
-
+                     
 
         }
 
@@ -966,7 +958,7 @@ const procedurs = (() => {
         xhttp.onreadystatechange = function(){
     
                 if(this.readyState == 4 && this.status == 200){
-    
+                    
                         
                 }
                 
@@ -977,15 +969,16 @@ const procedurs = (() => {
                 
         const xhttp = new XMLHttpRequest();
     
-        xhttp.open('GET', cnxn + '/eliminar_bac_id/eliminar_bacid.php?cod_bacid=' + cod_bacid + '&id_usuario=' + id_usuario, true);
+        xhttp.open('GET', cnxn + 'bacid/delete/'+cod_bacid+'/', true);
     
         xhttp.send();
     
         xhttp.onreadystatechange = function () {
     
             if (this.readyState == 4 && this.status == 200) {
-    
-    
+                
+                let datos = JSON.parse(this.responseText);
+                alert(datos.status);
             }
     
         }
@@ -1010,9 +1003,10 @@ const procedurs = (() => {
         deleteCode,
         consultaHistoricoBACID,
         filters,
-        validatePassUser,
+        validatePassUserDeleteBACID,
         consularBACIDcreado,
         editBACIDcreado,
+        eliminarBACID,
         getCountries,
         insertarUsuario,
         buscarUsuario,

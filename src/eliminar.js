@@ -19,7 +19,7 @@ const initConsulta = (() => {
         getGetting.innerHTML = header.timeOfDay();
         procedurs.consultaHistoricoBACID('eliminar');
         procedurs.getUser();
-        procedurs.validatePassUser();
+        //procedurs.validatePassUser();
         localStorage.removeItem('items');
         getUserCountry();
         procedurs.showUserAdminBtn();

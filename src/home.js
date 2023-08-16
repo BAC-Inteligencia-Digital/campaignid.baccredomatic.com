@@ -92,8 +92,7 @@ let getAdname = "";
 const txtCampaignCode = document.getElementById("txtCampaignCode");
 //settings
 const xhttp = new XMLHttpRequest();
-//const cnxn = 'https://bac-id-new.azurewebsites.net'; // CONEXION A BD DE PRODUCCION
-//const cnxn = 'https://bac-id-new-test.azurewebsites.net'; // CONEXION A BD DE TEST
+//const cnxn = 'https://bac-id-new.azurewebsites.net/public/'; // CONEXION A BD DE PRODUCCION
 const cnxn = 'http://localhost/API_BACKEND_BACID/public/'; //CAMBIARcambiar
 
 let drops = new dropDown();
@@ -1886,7 +1885,7 @@ function consultarBACIDCreado2(bac_id_registrado, nombre_campana, fecha_creacion
         if (this.readyState == 4 && this.status == 200) {
 
             let datos = JSON.parse(this.responseText);
-            alert(datos);
+            
             document.getElementById("result_nombre_campana").innerHTML = nombre_campana;
             document.getElementById("result_creacion").innerHTML = fecha_creacion;
             document.getElementById("result_pais").innerHTML = datos[0].nombre_pais;
@@ -1943,44 +1942,36 @@ function consultarBACIDCreado(bac_id_registrado, nombre_campana, fecha_creacion)
 
 function obtenerCanalesInsertados(codigo_canales) { //esta función es para obtener los nombres de los canales según el siguiente valor: Ejemplo:001236
 
-    var resultado = [];
+    var listaCanales = [codigo_canales.substring(0, 1) , codigo_canales.substring(1, 2), codigo_canales.substring(2, 3), codigo_canales.substring(3, 4), codigo_canales.substring(4, 5), codigo_canales.substring(5, 6)]
+            
+            for (var i = 0; i < listaCanales.length; i++) {
+                
+                if(listaCanales[i] != 0){ 
 
-    const xhttp = new XMLHttpRequest();
+                    const xhttp = new XMLHttpRequest();
 
-    xhttp.open('GET', cnxn + '/insertar_bac_id/consulta_canales_insertados.php?canal1_seleccionado=' + codigo_canales.substring(0, 1) +
-        '&canal2_seleccionado=' + codigo_canales.substring(1, 2) + '&canal3_seleccionado=' + codigo_canales.substring(2, 3) +
-        '&canal4_seleccionado=' + codigo_canales.substring(3, 4) + '&canal5_seleccionado=' + codigo_canales.substring(4, 5) +
-        '&canal6_seleccionado=' + codigo_canales.substring(5, 6), true);
+                    xhttp.open('GET', cnxn + 'select/canal/'+listaCanales[i]+'/', true);
 
-    xhttp.send();
+                    xhttp.send();
 
-    xhttp.onreadystatechange = function () {
+                    xhttp.onreadystatechange = function () {
 
-        if (this.readyState == 4 && this.status == 200) {
+                        if (this.readyState == 4 && this.status == 200) {
 
-            let datos = JSON.parse(this.responseText);
+                            let datos = JSON.parse(this.responseText);
 
-            if (!datos[0].nombre_canal1 == "") {
-                resultado.push(datos[0].nombre_canal1);
+                            for (let item of datos.data) {
+                                
+                                document.getElementById("result_canales").innerHTML = document.getElementById("result_canales").innerHTML +' - '+ item.nombre_canal;
+                            }                            
+                            
+                        }                        
+                        
+                    }
+                    
+                }                
+
             }
-            if (!datos[1].nombre_canal2 == "") {
-                resultado.push(datos[1].nombre_canal2);
-            }
-            if (!datos[2].nombre_canal3 == "") {
-                resultado.push(datos[2].nombre_canal3);
-            }
-            if (!datos[3].nombre_canal4 == "") {
-                resultado.push(datos[3].nombre_canal4);
-            }
-            if (!datos[4].nombre_canal5 == "") {
-                resultado.push(datos[4].nombre_canal5);
-            }
-            if (!datos[5].nombre_canal6 == "") {
-                resultado.push(datos[5].nombre_canal6);
-            }
-        }
-        document.getElementById("result_canales").innerHTML = resultado;
-    }
 
 
 }

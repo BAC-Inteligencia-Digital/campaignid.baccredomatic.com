@@ -1,7 +1,7 @@
 const dropDowns = (() => {
 
     const getCountries = () => {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/pais/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/pais/'; //cambiarCAMBIAR
         const xhttp = new XMLHttpRequest();
         let countries = [];
@@ -23,7 +23,7 @@ const dropDowns = (() => {
     }
 
     const clientOrigin = () => {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/origen/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/origen/'; //cambiarCAMBIAR
         const xhttp = new XMLHttpRequest();
         let clientsOrigin = [];
@@ -45,7 +45,7 @@ const dropDowns = (() => {
 
     const getCategories = () =>  {
        // let categories = [];
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/categoria/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/categoria/'; //cambiarCAMBIAR
         const xhttp = new XMLHttpRequest();
         xhttp.open('GET', cnxn, true);
@@ -62,7 +62,7 @@ const dropDowns = (() => {
     }
 
     const getPortfolio = () => {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/portafolio/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/portafolio/'; //cambiarCAMBIAR
         const xhttp = new XMLHttpRequest();
         xhttp.open('GET', cnxn, true);
@@ -86,7 +86,7 @@ const dropDowns = (() => {
         document.getElementById("dllgetCampaignType").innerHTML = "<option>Seleccine tipo</option>";
         let types = [];
         const xhttp = new XMLHttpRequest();
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/tipocampana/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/tipocampana/'; //cambiarCAMBIAR
         xhttp.open('GET', cnxn, true);
         xhttp.send();
@@ -108,7 +108,7 @@ const dropDowns = (() => {
 
     const getObjectives = () => {
         const xhttp = new XMLHttpRequest();
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/objetivo/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/objetivo/'; //cambiarCAMBIAR
         xhttp.open('GET', cnxn, true);
         xhttp.send();
@@ -130,7 +130,7 @@ const dropDowns = (() => {
     const getDigitalChannels = () => {
         //let channels = [];
         const xhttp = new XMLHttpRequest();
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/canaldigital/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/canaldigital/'; //cambiarCAMBIAR
         
         xhttp.open('GET', cnxn, true);
@@ -149,7 +149,7 @@ const dropDowns = (() => {
     }
 
     const getMultiProducts = () => {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
+        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/multiproducto/';
         let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/multiproducto/'; //cambiarCAMBIAR
         
         const xhttp = new XMLHttpRequest();
