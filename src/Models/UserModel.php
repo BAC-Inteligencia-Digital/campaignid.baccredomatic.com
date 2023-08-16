@@ -223,5 +223,44 @@ class UserModel extends ConnectionDB {
             die(json_encode(ResponseHttp::status500('No se pueden obtener los datos del usuario')));
         }
     }
+
+    /*********************************************Validar contraseña de usuario para funcionalidades especificas******************************************/
+    final public static function validarPassFuncionalidad()
+    {
+        try {
+            $con = self::getConnection()->prepare("SELECT * FROM usuarios WHERE id = :id ");
+            $con->execute([
+                ':id' => self::getId()
+            ]);
+
+            if ($con->rowCount() === 0) {
+                return ResponseHttp::status400('El usuario o contraseña son incorrectos');
+            } else {
+                foreach ($con as $res) {
+                    if (Security::validatePassword(self::getPass() , $res['contraseña'])) {
+                            $payload = ['IDToken' => $res['IDToken']];
+                            $token = Security::createTokenJwt(Security::secretKey(),$payload);
+
+                            $data = [
+                                'nombre'       => Security::decryptName($res['nombre']),
+                                'apellidos'    => Security::decryptName($res['apellidos']),
+                                'tipo_usuario' => $res['tipo_usuario'],
+                                'id'           => $res['id'],
+                                'pais'         => $res['pais'],
+                                'estado'       => $res['estado'],
+                                'token' => $token
+                            ];
+                            return ResponseHttp::status200($data);
+                            //exit;
+                    } else {
+                        return ResponseHttp::status400('El usuario o contraseña son incorrectos');
+                    }
+                }
+            }
+        } catch (\PDOException $e) {
+            error_log("UserModel::validarPassFuncionalidad -> " .$e);
+            die(json_encode(ResponseHttp::status500()));           
+        }
+    }
         
 }

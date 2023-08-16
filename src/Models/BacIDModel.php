@@ -349,6 +349,50 @@ class BacIDModel extends ConnectionDB {
            die(json_encode(ResponseHttp::status500('No se pueden obtener los datos')));
         }
     }
+
+    /*******************************Función para eliminar un BAC ID**************************/
+    final public static function deleteBACID()
+    {
+        self::deleteSUBACIDS(); // Eliminamos primaremente los SUB BACIDs hijos
+
+        try {
+            $con   = self::getConnection();
+            $query = $con->prepare("DELETE FROM bac_id_generados WHERE id = :id");
+            $query->execute([
+                ':id' => self::getID()
+            ]);
+
+            if ($query->rowCount() > 0) {
+                return ResponseHttp::status200('Código de campaña eliminado exitosamente');
+            } else {
+                return ResponseHttp::status500('No se puede eliminar el código de campaña');
+            }
+        } catch (\PDOException $e) {
+            error_log("BacIDModel::deleteBACID -> " . $e);
+            die(json_encode(ResponseHttp::status500('No se puede eliminar el código de campaña')));
+        }
+    }
+
+    /*******************************Función para eliminar los subbacids del BAC ID a eliminar**************************/
+    final public static function deleteSUBACIDS()
+    {
+        try {
+            $con   = self::getConnection();
+            $query = $con->prepare("DELETE FROM sub_bacid_generados WHERE id_bacid_padre= :id");
+            $query->execute([
+                ':id' => self::getID()
+            ]);
+
+            if ($query->rowCount() > 0) {
+                return ResponseHttp::status200('Código de campaña eliminado exitosamente');
+            } else {
+                return ResponseHttp::status500('No se puede eliminar el código de campaña');
+            }
+        } catch (\PDOException $e) {
+            error_log("BacIDModel::deleteSUBACIDS -> " . $e);
+            die(json_encode(ResponseHttp::status500('No se puede eliminar el código de campaña')));
+        }
+    }
     
 }
 

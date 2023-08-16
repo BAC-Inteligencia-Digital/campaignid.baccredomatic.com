@@ -214,5 +214,22 @@ class SelectModel extends ConnectionDB {
               die(json_encode(ResponseHttp::status500('No se pueden obtener los datos')));
           }
       }
+
+      /**************************Consultar el canal general seleccionado***************************/
+      final public static function getCanalGeneral(string $codigo)
+      {
+          try {
+              $con = self::getConnection();
+              $query = $con->prepare("SELECT nombre_canal FROM canales where codigo = :codigo");
+              $query->execute([
+                ':codigo' => $codigo
+              ]);
+              $rs['data'] = $query->fetchAll(\PDO::FETCH_ASSOC);
+              return $rs;
+          } catch (\PDOException $e) {
+              error_log("SelectModel::getCanalGeneral -> ".$e);
+              die(json_encode(ResponseHttp::status500('No se pueden obtener los datos')));
+          }
+      }
        
 }

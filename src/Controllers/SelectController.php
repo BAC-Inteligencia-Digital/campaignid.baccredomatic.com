@@ -147,4 +147,16 @@ class SelectController extends BaseController{
             exit;
         }    
     }
+
+    /**********************Consultar el canal general seleccionado*********************/
+    final public function getCanalGeneral(string $endPoint)
+    {
+      
+        if ($this->getMethod() == 'get' && $endPoint == $this->getRoute()) {
+            //Security::validateTokenJwt(Security::secretKey());
+            $canal = $this->getAttribute()[2];
+            echo json_encode(SelectModel::getCanalGeneral($canal));
+            exit;
+        }    
+    }
 }

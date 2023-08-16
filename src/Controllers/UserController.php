@@ -130,4 +130,23 @@ class UserController extends BaseController{
             exit;
         }    
     }
+
+    /**********************Método para validar la contraseña de un usuario*******************************/
+    final public function validatePass(string $endPoint)
+    {
+        if ($this->getMethod() == 'post' && $endPoint == $this->getRoute()) {
+            //Security::validateTokenJwt(Security::secretKey());
+            $id   = $this->getParam()['id'];
+            $pass = $this->getParam()['pass'];
+            if (!isset($id)) {
+                echo json_encode(ResponseHttp::status400('Los datos son requeridos'));
+            } else {
+                UserModel::setId($id);
+                UserModel::setPass($pass);
+                echo json_encode(UserModel::validarPassFuncionalidad());
+                exit;
+            }  
+            exit;
+        }    
+    }
 }

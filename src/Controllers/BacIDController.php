@@ -184,5 +184,21 @@ class BacIDController extends BaseController{
         exit;
         }
     }
+
+    /****************************************Función para eliminar un BAC ID******************************/
+    final public function deleteBACID(string $endPoint)
+    {
+        if ($this->getMethod() == 'get' && $this->getRoute() == $endPoint){
+            //Security::validateTokenJwt(Security::secretKey());
+            $id = $this->getAttribute()[2];
+            if (empty($id)) {
+                echo json_encode(ResponseHttp::status400('Todos los campos son requeridos'));
+            } else {
+                BacIDModel::setID($id);
+                echo json_encode(BacIDModel::deleteBACID());
+            }
+        exit;
+        }
+    }
     
 }

@@ -19,6 +19,7 @@
     $app->getTipoCampana("select/tipocampana/");
     $app->getGrupoAnuncio("select/grupoanuncio/");
     $app->getTipoAnuncio("select/tipoanuncio/");
+    $app->getCanalGeneral("select/canal/{$params[2]}/");
 
     /****************Error 404*****************/
     echo json_encode(ResponseHttp::status404());
