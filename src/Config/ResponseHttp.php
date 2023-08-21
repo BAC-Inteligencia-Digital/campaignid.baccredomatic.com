@@ -16,7 +16,7 @@ class ResponseHttp {
             die(json_encode(ResponseHttp::status401('No tiene autorizacion para consumir esta API')));
         }
 
-        $list = ['https://int-dig-bac-id.azurewebsites.net'];        
+        $list = ['https://int-dig-bac-id.azurewebsites.net','http://localhost'];        
 
         if (in_array($origin,$list)){
 
