@@ -1,11 +1,13 @@
+//const cnxn = 'https://bac-id-new.azurewebsites.net/'; // CONEXION A BD DE PRODUCCION
+const cnxn = 'http://localhost/API_BACKEND_BACID/';// CONEXION A BD DE TEST
+
 const dropDowns = (() => {
 
     const getCountries = () => {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/pais/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/pais/'; //cambiarCAMBIAR
+    
         const xhttp = new XMLHttpRequest();
         let countries = [];
-        xhttp.open('GET', cnxn, true);
+        xhttp.open('GET', cnxn + 'option/pais/', true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {    
@@ -23,11 +25,10 @@ const dropDowns = (() => {
     }
 
     const clientOrigin = () => {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/origen/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/origen/'; //cambiarCAMBIAR
+
         const xhttp = new XMLHttpRequest();
         let clientsOrigin = [];
-        xhttp.open('GET', cnxn, true);
+        xhttp.open('GET', cnxn + 'option/origen/', true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {
@@ -45,10 +46,8 @@ const dropDowns = (() => {
 
     const getCategories = () =>  {
        // let categories = [];
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/categoria/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/categoria/'; //cambiarCAMBIAR
         const xhttp = new XMLHttpRequest();
-        xhttp.open('GET', cnxn, true);
+        xhttp.open('GET', cnxn + 'option/categoria/', true);
         xhttp.send();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -62,10 +61,9 @@ const dropDowns = (() => {
     }
 
     const getPortfolio = () => {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/portafolio/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/portafolio/'; //cambiarCAMBIAR
+     
         const xhttp = new XMLHttpRequest();
-        xhttp.open('GET', cnxn, true);
+        xhttp.open('GET', cnxn + 'option/portafolio/', true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {
@@ -86,9 +84,7 @@ const dropDowns = (() => {
         document.getElementById("dllgetCampaignType").innerHTML = "<option>Seleccine tipo</option>";
         let types = [];
         const xhttp = new XMLHttpRequest();
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/tipocampana/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/tipocampana/'; //cambiarCAMBIAR
-        xhttp.open('GET', cnxn, true);
+        xhttp.open('GET', cnxn + 'option/tipocampana/', true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {
@@ -108,9 +104,8 @@ const dropDowns = (() => {
 
     const getObjectives = () => {
         const xhttp = new XMLHttpRequest();
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/objetivo/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/objetivo/'; //cambiarCAMBIAR
-        xhttp.open('GET', cnxn, true);
+       
+        xhttp.open('GET', cnxn + 'option/objetivo/', true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {
@@ -130,10 +125,8 @@ const dropDowns = (() => {
     const getDigitalChannels = () => {
         //let channels = [];
         const xhttp = new XMLHttpRequest();
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/canaldigital/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/canaldigital/'; //cambiarCAMBIAR
         
-        xhttp.open('GET', cnxn, true);
+        xhttp.open('GET', cnxn + 'option/canaldigital/', true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {
@@ -149,11 +142,9 @@ const dropDowns = (() => {
     }
 
     const getMultiProducts = () => {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/multiproducto/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/multiproducto/'; //cambiarCAMBIAR
         
         const xhttp = new XMLHttpRequest();
-        xhttp.open('GET', cnxn, true);
+        xhttp.open('GET', cnxn + 'option/multiproducto/', true);
         xhttp.send();
 
         xhttp.onreadystatechange = function () {

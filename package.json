@@ -15,6 +15,7 @@
     "bootstrap": "^4.6.0",
     "bootstrap-multiselect": "^0.9.15",
     "datatables": "^1.10.18",
+    "dotenv": "^16.3.1",
     "js-datepicker": "^5.18.0",
     "popper.js": "^1.16.1",
     "prop-types": "^15.7.2"

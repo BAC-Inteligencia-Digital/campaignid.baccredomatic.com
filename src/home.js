@@ -92,8 +92,8 @@ let getAdname = "";
 const txtCampaignCode = document.getElementById("txtCampaignCode");
 //settings
 const xhttp = new XMLHttpRequest();
-//const cnxn = 'https://bac-id-new.azurewebsites.net/public/'; // CONEXION A BD DE PRODUCCION
-const cnxn = 'http://localhost/API_BACKEND_BACID/public/'; //CAMBIARcambiar
+//const cnxn = 'https://bac-id-new.azurewebsites.net/'; // CONEXION A BD DE PRODUCCION
+const cnxn = 'http://localhost/API_BACKEND_BACID/'; //CAMBIARcambiar
 
 let drops = new dropDown();
 let current;
@@ -1741,7 +1741,7 @@ function validate(e) {
         var lista_sub_bacids = subBacId;
     
         var valor = new FormData();
-        valor.append('nombre_bac_id', bac_id);
+        valor.append('nombre_bac_id', bac_id.trim());
         valor.append('id_usuario', id_usuario);
         valor.append('nombre_campana', nombre_campana.toUpperCase());
         valor.append('fecha_creacion', fecha_creacion);
@@ -1752,14 +1752,21 @@ function validate(e) {
         xhttp.send(valor);
     
         xhttp.onreadystatechange = function () {
+           
             if (this.readyState == 4 && this.status == 200) {
-                        }
+                consultarBACIDCreado(bac_id, nombre_campana, fecha_creacion); //llamamos esta función para mostrar los datos correspondientes al BAC ID Creado     
+            }
+            if (this.readyState == 4 && this.status == 400){
+                alert("El Código de Campaña ya existe!!");
+            }
         }
-        for (var i = 0; i < lista_sub_bacids.length; i++) {
-            insertarSUBBACID(bac_id, lista_sub_bacids[i]); //se inserta uno por uno los sub_bac_id
-        }
-    
-        consultarBACIDCreado(bac_id, nombre_campana, fecha_creacion); //llamamos esta función para mostrar los datos correspondientes al BAC ID Creado
+
+        setTimeout(function () {
+            for (var i = 0; i < lista_sub_bacids.length; i++) {
+                insertarSUBBACID(bac_id.trim(), lista_sub_bacids[i]); //se inserta uno por uno los sub_bac_id
+            }
+        }, 4000);
+        
         consultarSUBACIDCreados(lista_sub_bacids);
     }
     
@@ -1784,7 +1791,7 @@ function firstValidation(){
     var fecha_creacion = getCurrentDay; //se ingresa la fecha de creación
 
     var valor = new FormData();
-    valor.append('nombre_bac_id', bac_id);
+    valor.append('nombre_bac_id', bac_id.trim());
     valor.append('id_usuario', id_usuario);
     valor.append('nombre_campana', nombre_campana.toUpperCase());
     valor.append('fecha_creacion', fecha_creacion);

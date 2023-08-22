@@ -1,9 +1,11 @@
-export class dropDown {
 
+//const cnxn = 'https://bac-id-new.azurewebsites.net/'; // CONEXION A BD DE PRODUCCION
+const cnxn = 'http://localhost/API_BACKEND_BACID/';// CONEXION A BD DE TEST
+
+export class dropDown {
+    
     getCountries() {
         
-       // let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/pais/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/pais/'; //cambiarCAMBIAR
         let countries = [];
         const xhr = new XMLHttpRequest();
         xhr.ontimeout = () => {
@@ -25,7 +27,7 @@ export class dropDown {
                 } 
             }
         };
-        xhr.open('GET', cnxn, true);
+        xhr.open('GET', cnxn + 'option/pais/', true);
         xhr.timeout = 2000;
         xhr.send();
        /* let cnxn = 'https://bac-id-new.azurewebsites.net/consultas_para_dropdownlist/';
@@ -48,8 +50,7 @@ export class dropDown {
     };
 
     clientOrigin() {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/origen/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/origen/'; //cambiarCAMBIAR
+     
         const xhr = new XMLHttpRequest();
         let clientsOrigin = [];
 
@@ -71,7 +72,7 @@ export class dropDown {
                 } 
             }
         };
-        xhr.open('GET', cnxn, true);
+        xhr.open('GET', cnxn + 'option/origen/', true);
         xhr.timeout = 2000;
         xhr.send();
         /*
@@ -96,8 +97,7 @@ export class dropDown {
 
     getCategories() {
         let categories = [];
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/categoria/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/categoria/'; //cambiarCAMBIAR
+        
         const xhr = new XMLHttpRequest();
 
         xhr.ontimeout = () => {
@@ -120,7 +120,7 @@ export class dropDown {
             }
         };
 
-        xhr.open('GET', cnxn, true);
+        xhr.open('GET', cnxn + 'option/categoria/', true);
         xhr.timeout = 2000;
         xhr.send();
         /*
@@ -145,8 +145,7 @@ export class dropDown {
     };
 
     getPortfolio() {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/portafolio/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/portafolio/'; //cambiarCAMBIAR
+
         const xhr = new XMLHttpRequest();
 
         xhr.ontimeout = () => {
@@ -166,7 +165,7 @@ export class dropDown {
                 } 
             }
         };
-        xhr.open('GET', cnxn, true);
+        xhr.open('GET', cnxn + 'option/portafolio/', true);
         xhr.timeout = 2000;
         xhr.send();
         /*
@@ -200,8 +199,6 @@ export class dropDown {
         document.getElementById("dllgetCampaignType").innerHTML = "<option>Seleccine tipo</option>";
         let types = [];
         const xhr = new XMLHttpRequest();
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/tipocampana/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/tipocampana/'; //cambiarCAMBIAR
 
         xhr.ontimeout = () => {
             console.error('The request for /consultas_para_dropdownlist/obtener_tipo_campana.php timed out. Retrying...');
@@ -223,7 +220,7 @@ export class dropDown {
             }
         };
 
-        xhr.open('GET', cnxn, true);
+        xhr.open('GET', cnxn + 'option/tipocampana/', true);
         xhr.timeout = 2000;
         xhr.send();
         /*
@@ -255,9 +252,7 @@ export class dropDown {
 
     getObjectives() {
         const xhr = new XMLHttpRequest();
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/objetivo/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/objetivo/'; //cambiarCAMBIAR
-
+        
         xhr.ontimeout = () => {
             console.error('The request for /consultas_para_dropdownlist/obtener_objetivos.php timed out. Retrying...');
             this.getObjectives();
@@ -274,7 +269,7 @@ export class dropDown {
                 } 
             }
         };
-        xhr.open('GET', cnxn, true);
+        xhr.open('GET', cnxn + 'option/objetivo/', true);
         xhr.timeout = 2000;
         xhr.send();
 
@@ -301,9 +296,7 @@ export class dropDown {
     getDigitalChannels() {
         let channels = [];
         const xhr = new XMLHttpRequest();
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/canaldigital/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/canaldigital/'; //cambiarCAMBIAR
-
+    
         xhr.ontimeout = () => {
             console.error('The request for /consultas_para_dropdownlist/obtener_canal_digital.php timed out. Retrying...');
             this.getDigitalChannels();
@@ -323,7 +316,7 @@ export class dropDown {
                 }
             }
         };
-        xhr.open('GET', cnxn, true);
+        xhr.open('GET', cnxn + 'option/canaldigital/', true);
         xhr.timeout = 2000;
         xhr.send();
         /*
@@ -349,9 +342,7 @@ export class dropDown {
     };
 
     getMultiProducts() {
-        //let cnxn = 'https://bac-id-new.azurewebsites.net/public/option/multiproducto/';
-        let cnxn = 'http://localhost/API_BACKEND_BACID/public/option/multiproducto/'; //cambiarCAMBIAR
-        
+               
         const xhr = new XMLHttpRequest();
 
         xhr.ontimeout = () => {
@@ -372,7 +363,7 @@ export class dropDown {
                 } 
             }
         };
-        xhr.open('GET', cnxn, true);
+        xhr.open('GET', cnxn + 'option/multiproducto/', true);
         xhr.timeout = 2000;
         xhr.send();
         /*
