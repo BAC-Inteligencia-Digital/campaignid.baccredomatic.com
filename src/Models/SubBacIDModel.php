@@ -40,7 +40,7 @@ class SubBacIDModel extends ConnectionDB {
     final public static function postSave()
     {
         $idBacIDPadre = BacIDModel::getIdentificador(self::getBacIDPadre());
-        
+        echo $idBacIDPadre["id"];
         try {
             $con = self::getConnection();
             $query1 = "INSERT INTO sub_bacid_generados (nombre_subbacid,id_bacid_padre) VALUES (:nombre_subbacid,:bacid_padre)";
