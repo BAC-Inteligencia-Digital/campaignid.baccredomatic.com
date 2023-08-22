@@ -1,4 +1,0 @@
-RewriteEngine On
-#Options +Indexes
-Options All -Indexes
-
