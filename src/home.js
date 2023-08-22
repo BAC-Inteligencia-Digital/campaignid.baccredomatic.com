@@ -92,8 +92,8 @@ let getAdname = "";
 const txtCampaignCode = document.getElementById("txtCampaignCode");
 //settings
 const xhttp = new XMLHttpRequest();
-//const cnxn = 'https://bac-id-new.azurewebsites.net/'; // CONEXION A BD DE PRODUCCION
-const cnxn = 'http://localhost/API_BACKEND_BACID/'; //CAMBIARcambiar
+const cnxn = 'https://bac-id-new.azurewebsites.net/'; // CONEXION A BD DE PRODUCCION
+//const cnxn = 'http://localhost/API_BACKEND_BACID/'; //CAMBIARcambiar
 
 let drops = new dropDown();
 let current;

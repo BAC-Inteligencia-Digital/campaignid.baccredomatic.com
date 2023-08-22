@@ -1,5 +1,5 @@
-//const cnxn = 'https://bac-id-new.azurewebsites.net/'; // CONEXION A BD DE PRODUCCION
-const cnxn = 'http://localhost/API_BACKEND_BACID/';// CONEXION A BD DE TEST
+const cnxn = 'https://bac-id-new.azurewebsites.net/'; // CONEXION A BD DE PRODUCCION
+//const cnxn = 'http://localhost/API_BACKEND_BACID/';// CONEXION A BD DE TEST
 
 const dropDowns = (() => {
 
