@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon"
+        href="https://www.baccredomatic.com/sites/all/themes/custom/foundation_bac/bac-favicon.ico">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+</head>
+
+<body id="createUser">
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/images/bac-brand.png" alt="">
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="home.html">Crear Código</a>
+                </li>
+                
+                <li>
+                    <a href="crear-links.html">Crear URLs / Links</a>
+                </li>
+                
+                <li>
+                    <a href="consulta.html">Consultar ID</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Eliminar ID </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="eliminar.html">BAC ID</a></li>
+                        <li><a class="dropdown-item" href="#">SUB BACID</a></li>
+                    </ul>
+                </li>
+
+                <li class="pl-2 pr-2 logoutNav">
+                    <a class="w-100 btn btn-outline-light" href="#">Salir</a>
+                </li>
+
+                <li id="btnUserAdmin" class="d-none">
+                    <a href="crear-usuario.html">Administrar Usuarios</a>
+                </li>
+            </ul>
+
+        </nav>
+        <header id="header" class="container-fuild">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div id="userInfo" class="col-6">
+                            <p id="name" class="name"><span id="getting"></span> <span id="userName"></span></p>
+                            <p id="hora" class="hora">última visita: <span id="lastLog"></span></p>
+                        </div>
+                        <div class="col-6 d-flex">
+                            <div class="container-fluid">
+                                <div class="row justify-content-end menuWrapper">
+                                    <button type="button" class="btn btn-danger sidebarCollapse menuBtn">
+                                        <i class="fas fa-align-left"></i>
+                                        <span>Menú</span>
+                                    </button>
+                                    <button id="brnLogOut" type="button"
+                                        class="logoutBtn btn btn-danger sidebarCollapse">
+                                        <i class="logout"></i>
+                                        <span>Salir</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </header>
+        <!-- Page Content -->
+        <main id="content">
+
+            <div class="container mt-5 mb-5">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-6 offset-col-4">
+                        <div class="row">
+                            <div class="col-6 text-center">`
+                                <button id="btnAddNewUser" class="btn btn-outline-dark pt-4 pb-4 w-100 active"><i
+                                        class="fas fa-user-plus"></i> </br>Crear usuario</button>
+                            </div>
+                            <div class="col-6 text-center">`
+                                <button id="btnEditUser" class="btn btn-outline-primary pt-4 pb-4 w-100"><i
+                                        class="fas fa-user-edit"></i></br>Editar usuario</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form id="addUserForm" action="" class="mt-5">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="addUser">Creación de Usuario</h2>
+                            <h2 class="userEdit d-none">Editar Usuario</h2>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="alert alert-success alert-dismissible fade hide" role="alert">
+                                <strong>Atención!</strong> El grupo ha sido guardado correctamente.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="firstForm" class="row main-dataWrapper">
+                        <div class="col-12 serchUser d-none">
+                            <h3 class="">Buscar usuario</h3>
+                            <div class="row mt-3">
+                                <div class="col-12 col-md-4">
+                                    <input type="text" class="form-control txtCampaignName"
+                                        placeholder="Digite usuario de red" id="txtSearchUser">
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <button id="btnUserFilter" type="submit"
+                                        class="btn btn-primary mb-3">Buscar</button>
+                                        <button id="btnResetFilter" type="submit"
+                                        class="btn btn-outline-dark mb-3">reiniciar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 addUser">
+                            <h3>Datos personales</h3>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="row mb-4 mt-3">
+                                <div class="col-12 col-md-4 identidicador d-none">
+                                    <label for="txtUserId">ID de usuario</label>
+                                    <input type="text" class="form-control txtCampaignName"
+                                        placeholder="Campo identificador" id="txtUserId" disabled>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label for="txtNombre">Nombre</label>
+                                    <input type="text" class="form-control txtCampaignName" placeholder="Digite nombre"
+                                        id="txtNombre">
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label for="txtApellido">Apellidos</label>
+                                    <input type="text" class="form-control txtCampaignName"
+                                        placeholder="Digite apellido" id="txtApellido">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="row mb-4">
+                                <div class="col-12 col-md-4">
+                                    <label for="">País</label>
+                                    <select id="dllCountries" class="form-control">
+                                        <option value=" ">Seleccione país</option>
+                                        <option value="REG" id="Regional">Regional</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label for="txtUsuarioRed">Usuario de red</label>
+                                    <input type="text" class="form-control txtCampaignName" placeholder="Usuario de red"
+                                        id="txtUsuarioRed">
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label for="txtEmail">Correo Electrónico</label>
+                                    <input type="text" class="form-control txtCampaignName"
+                                        placeholder="Digite email" id="txtEmail">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="row mb-5">
+                                <div class="col-12 col-md-4">
+                                    <label for="txtPassword">Contraseña</label>
+                                    <input type="text" class="form-control txtCampaignName"
+                                        placeholder="Digite Contraseña" id="txtPassword">
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label for="dllRol">Tipo Usuario</label>
+                                    <select name="" id="dllRol" class="form-control">
+                                        <option value=" ">Seleccione rol</option>
+                                        <option value="1" id="admin">Administrador</option>
+                                        <option value="2" id="edit">Colaborador</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label for="dllState">Estado</label>
+                                    <select name="" id="dllState" class="form-control">
+                                        <option value=" ">Seleccione estado</option>
+                                        <option value="0" id="dllInactive">inactivo</option>
+                                        <option value="1" id="dllActive">activo</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="firstFormBtnWrapper" class="row text-right d-block">
+                        <div class="col-12">
+                            <button id="btnSaveUser" type="submit" class="btn btn-primary mt-4 mb-3">Guardar</button>
+                            <button id="btnUpdateUser" type="submit" class="d-none btn btn-primary mt-4 mb-3"
+                                >Actualizar</button>
+                        </div>
+                    </div>
+            </form>
+        </main>
+    </div>
+    <script src="https://kit.fontawesome.com/80ab089799.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+</body>
+
+</html>
