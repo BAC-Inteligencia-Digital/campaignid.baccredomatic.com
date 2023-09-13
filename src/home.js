@@ -9,7 +9,7 @@ import { resolve } from 'q';
 window.addEventListener("load", initController, false);
 
 const initController = (() => {
-    //wrappers
+    //wrapper
     const currentBody = document.getElementById("codIndex");
     /**
      * Método que se ejecuta en el load pero del body del index en específico
